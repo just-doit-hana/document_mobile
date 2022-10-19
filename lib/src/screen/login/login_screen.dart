@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/animation/routes_animation.dart';
 import '../../bussiness/auth/bloc/auth_bloc.dart';
+import '../../../app/util/dio/dio_client.dart';
 import '../home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,7 +21,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordVisible = true;
-  late AuthBloc _authBloc;
+  // late AuthBloc _authBloc;
+  final DioClient dioClient = DioClient();
   FormGroup get formgroup => fb.group({
         'username': [
           'huytq',
@@ -34,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     AppDimemsions().init(context);
-    _authBloc = context.read<AuthBloc>();
+    // _authBloc = context.read<AuthBloc>();
     // final formGroup = _authBloc.formGroup;
     // print('Form Group $formGroup');
 
@@ -108,9 +110,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   final value = formgroup.value;
                   print('value $value');
-                  _authBloc.add(AuthLogin(loginUser: LoginUser.fromMap(value)));
-                  Navigator.of(context)
-                      .push(CustomRoutesPage(widget: HomeScreen()));
+                  // _authBloc.add(AuthLogin(loginUser: LoginUser.fromMap(value)));
+                  Navigator.of(context).push(CustomRoutesPage(
+                      widget: HomeScreen(
+                          // dioClient: dioClient,
+                          )));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll<Color>(

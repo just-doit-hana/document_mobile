@@ -14,14 +14,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       : _loginRepository = loginRepository,
         super(const AuthState(null, DataStatus.initial, '')) {
     on<AuthLogin>((event, emit) async {
-      final result = await _loginRepository.loginUser(event.loginUser);
+      // final result = await _loginRepository.loginUser(event.loginUser);
       // if (state.status.isSubmitting) return;
       // if (result.success!) {
 
       // } else {
 
       // }
-      print('result $result');
+      // print('result $result');
     });
   }
 }

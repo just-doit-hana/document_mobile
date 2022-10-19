@@ -1,17 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceHelper {
-  static const String token = "TOKEN";
-  final SharedPreferences prefs;
-
-  SharedPreferenceHelper({required this.prefs});
-
-  Future<void> setUserToken({required String userToken}) async {
-    await prefs.setString(token, userToken);
-  }
-
-  String? getUsertoken() {
-    final userToken = prefs.getString(token);
-    return userToken;
-  }
+  static late final SharedPreferences instance;
+  static Future<SharedPreferences> init() async =>
+      instance = await SharedPreferences.getInstance();
 }

@@ -44,7 +44,7 @@ class AppThemes {
             subtitle1: subtitleLight),
         iconTheme: const IconThemeData(color: Colors.black45)),
     AppTheme.darkTheme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        // scaffoldBackgroundColor: Colors.white,
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: LightThemeColor.accent),
         appBarTheme: AppBarTheme(
@@ -58,19 +58,20 @@ class AppThemes {
             style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all<Color>(LightThemeColor.accent))),
-        hintColor: Colors.white60,
+        // hintColor: Colors.white60,
         inputDecorationTheme: InputDecorationTheme(
-            border: const OutlineInputBorder(borderSide: BorderSide.none),
-            enabledBorder: textFieldStyle,
-            focusedBorder: textFieldStyle,
-            filled: true,
-            contentPadding: const EdgeInsets.all(20),
-            fillColor: DarkThemColor.primaryLight),
-        bottomAppBarColor: DarkThemColor.primaryLight,
+          // border: const OutlineInputBorder(borderSide: BorderSide.none),
+          // enabledBorder: textFieldStyle,
+          // focusedBorder: textFieldStyle,
+          filled: true,
+          contentPadding: const EdgeInsets.all(20),
+          // fillColor: DarkThemColor.primaryLight
+        ),
+        // bottomAppBarColor: DarkThemColor.primaryLight,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.white,
-            unselectedItemColor: Colors.grey,
+            // unselectedItemColor: Colors.grey,
             selectedItemColor: LightThemeColor.accent),
         textTheme: TextTheme(
             headline1: h1Style.copyWith(color: Colors.white),

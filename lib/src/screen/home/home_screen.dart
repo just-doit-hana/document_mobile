@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({
+    Key? key,
+  }) : super(key: key);
+  // final DioClient dioClient;
 
   PreferredSizeWidget appBar(BuildContext context) {
     return AppBar(
