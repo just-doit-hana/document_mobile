@@ -113,8 +113,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   // _authBloc.add(AuthLogin(loginUser: LoginUser.fromMap(value)));
                   Navigator.of(context).push(CustomRoutesPage(
                       widget: HomeScreen(
-                          // dioClient: dioClient,
-                          )));
+                    dioClient: dioClient,
+                  )));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll<Color>(

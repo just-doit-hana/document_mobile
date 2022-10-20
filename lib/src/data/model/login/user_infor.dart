@@ -48,7 +48,7 @@ class UserInfor {
       sysToken: map['sysToken'] != null ? map['sysToken'] as String : null,
       sysTokenExpires:
           map['sysTokenExpires'] != null ? map['sysTokenExpires'] as int : null,
-      dmsToken: map['dmsToken'] != null ? map['dmsToken'] as String : null,
+      dmsToken: map['dmsToken'],
       dmsTokenExpires:
           map['dmsTokenExpires'] != null ? map['dmsTokenExpires'] as int : null,
       refreshToken:

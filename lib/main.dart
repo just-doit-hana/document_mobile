@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
 import 'package:document_appmobile/app/helper/shared_preference.dart';
 import 'package:document_appmobile/src/bussiness/theme/bloc/theme_bloc.dart';
+import 'package:document_appmobile/src/screen/home/home_screen.dart';
 import 'package:document_appmobile/src/screen/login/login_screen.dart';
 import 'package:document_appmobile/src/screen/splash/onboarding_page.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +24,18 @@ Future<void> main() async {
   // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   // initScreen = sharedPreferences.getInt('initScreen');
   // await sharedPreferences.setInt("initScreen", 1);
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(MyApp());
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -43,12 +58,14 @@ class MyApp extends StatelessWidget {
             title: 'Document Mobile',
             debugShowCheckedModeBanner: false,
             // theme: state.theme,
-            home: const LoginScreen(),
+            home: HomeScreen(
+              dioClient: dioClient,
+            ),
             initialRoute:
                 initScreen == 0 || initScreen == null ? 'onboard' : 'home',
             routes: {
-              "home": (context) => const LoginScreen(
-                  // dioClient: dioClient,
+              "home": (context) => HomeScreen(
+                    dioClient: dioClient,
                   ),
               "onboard": (context) => const OnboardingPage()
             },

@@ -2,28 +2,31 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:document_appmobile/app/helper/shared_preference.dart';
 import 'package:document_appmobile/app/util/dio/dio_exception.dart';
-import 'package:document_appmobile/app/util/dio/dior_authorization_interceptor.dart';
+import 'package:document_appmobile/src/data/model/login/login_user.dart';
+import 'package:document_appmobile/src/data/model/login/user_infor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../util.dart';
-import '../../../src/data/model/user_test.dart';
 
 class DioClient {
   late final Dio _dio;
+  final shaedpref = SharedPreferenceHelper.instance;
+
   DioClient()
       : _dio = Dio(BaseOptions(
-            // baseUrl: 'https://gorest.co.in/public/v2',
             connectTimeout: AppConstant.connectionTimeout,
             receiveTimeout: AppConstant.receiveTimeout,
             responseType: ResponseType.json,
             headers: {
               HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
-              // HttpHeaders.authorizationHeader: 'bearer'
+              HttpHeaders.authorizationHeader:
+                  'bearer ${SharedPreferenceHelper.instance.getString('dmsToken')}'
             }))
           ..interceptors.addAll([
             // LoggerInterceptor(),
-            AuthorizationInterceptor(),
+            // AuthorizationInterceptor(),
             if (AppConstant.DIO_CLIENT_DEBUG_LOG)
               PrettyDioLogger(
                   requestHeader: true,
@@ -35,17 +38,23 @@ class DioClient {
                   maxWidth: 90)
           ]);
 
-  // Future<User?> getUser({required int id}) async {
-  //   try {
-  //     final res = await _dio.get("/users/$id");
-  //     print('Res ${res.data}');
-  //     return User.fromJson(res.data);
-  //   } on DioError catch (e) {
-  //     final errorMessage = DiorException.fromDioError(e).toString();
-  //     throw errorMessage;
-  //   } catch (e) {
-  //     print(e);
-  //     throw e.toString();
-  //   }
-  // }
+  Future<UserInfor?> login(LoginUser loginUser) async {
+    try {
+      final res = await _dio.post("https://docgatewayapi.hisoft.vn/auth/login",
+          data: loginUser.toJson());
+      UserInfor userInfor = UserInfor.fromJson(res.data);
+      print('UserTest ${userInfor.dmsToken}');
+      // if (res.statusCode == 200) {
+      //   shaedpref.setString("dmsToken", '${userInfor.dmsToken}');
+      // }
+      return userInfor;
+    } on DioError catch (e) {
+      final errorMessage = DiorException.fromDioError(e).toString();
+      throw errorMessage;
+    } catch (e) {
+      print(e);
+      // throw e.toString();
+    }
+    return null;
+  }
 }
