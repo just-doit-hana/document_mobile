@@ -1,10 +1,8 @@
 import 'dart:io';
 
-import 'package:dio/adapter.dart';
+import 'package:document_appmobile/app.dart';
 import 'package:document_appmobile/app/helper/shared_preference.dart';
 import 'package:document_appmobile/src/bussiness/theme/bloc/theme_bloc.dart';
-import 'package:document_appmobile/src/screen/home/home_screen.dart';
-import 'package:document_appmobile/src/screen/login/login_screen.dart';
 import 'package:document_appmobile/src/screen/splash/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,13 +56,11 @@ class MyApp extends StatelessWidget {
             title: 'Document Mobile',
             debugShowCheckedModeBanner: false,
             // theme: state.theme,
-            home: HomeScreen(
-              dioClient: dioClient,
-            ),
+            home: App(dioClient: dioClient),
             initialRoute:
                 initScreen == 0 || initScreen == null ? 'onboard' : 'home',
             routes: {
-              "home": (context) => HomeScreen(
+              "home": (context) => App(
                     dioClient: dioClient,
                   ),
               "onboard": (context) => const OnboardingPage()

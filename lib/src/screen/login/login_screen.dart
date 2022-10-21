@@ -1,15 +1,12 @@
+import 'package:document_appmobile/app.dart';
+import 'package:document_appmobile/app/animation/routes_animation.dart';
 import 'package:document_appmobile/app/util/util.dart';
 import 'package:document_appmobile/app/widget/app_text_field.dart';
 import 'package:document_appmobile/app/widget/text_title.dart';
-import 'package:document_appmobile/src/data/model/login/login_user.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/animation/routes_animation.dart';
-import '../../bussiness/auth/bloc/auth_bloc.dart';
 import '../../../app/util/dio/dio_client.dart';
-import '../home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -107,12 +104,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     formgroup.markAllAsTouched();
                     return;
                   }
-
                   final value = formgroup.value;
                   print('value $value');
                   // _authBloc.add(AuthLogin(loginUser: LoginUser.fromMap(value)));
                   Navigator.of(context).push(CustomRoutesPage(
-                      widget: HomeScreen(
+                      widget: App(
                     dioClient: dioClient,
                   )));
                 },

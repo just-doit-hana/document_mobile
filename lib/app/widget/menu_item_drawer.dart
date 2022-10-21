@@ -17,7 +17,7 @@ class DrawerAppbar extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           SizedBox(
-            height: 100,
+            height: 120,
             child: DrawerHeader(
               decoration: BoxDecoration(
                   color: HexColor.fromHex(AppColor.primaryBtnColor)),
@@ -72,7 +72,7 @@ class DrawerAppbar extends StatelessWidget {
           // Padding(
           //   padding: EdgeInsets.symmetric(horizontal: 15),
           Column(
-            children: const [
+            children: [
               Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: LinearProgressIndicator(
@@ -80,9 +80,9 @@ class DrawerAppbar extends StatelessWidget {
                     minHeight: 5,
                     value: 3,
                     // valueColor: AlwaysStoppedAnimation(Colors.redAccent),
-                    // color: Colors.redAccent,
+                    color: HexColor.fromHex(AppColor.primaryBtnColor),
                   )),
-              SizedBox(
+              const SizedBox(
                 height: 6,
               ),
               // Text(
