@@ -48,33 +48,215 @@ class _PublicFolderState extends State<PublicFolder> {
                                 isType = !isType;
                               });
                             },
-                            icon: const Icon(Icons.list_outlined)),
-                        // IconButton(onPressed: () {}, icon: Icon(Icons.grid_on_outlined))
+                            icon: isType
+                                ? const Icon(Icons.grid_view_outlined)
+                                : const Icon(Icons.list_outlined)),
                       ],
                     )),
                 isType
-                    ? (MediaQuery.removePadding(
-                        context: context,
-                        removeTop: true,
-                        child:
-                            OrientationBuilder(builder: (context, orientation) {
-                          return GridView.count(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            crossAxisCount: 2,
-                            primary: false,
-                            padding: const EdgeInsets.all(20),
-                            children: List.generate(100, (index) {
-                              return Center(
-                                child: Text(
-                                  'Item $index',
-                                  style: Theme.of(context).textTheme.headline5,
+                    ? (GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        primary: false,
+                        children: List.generate(100, (index) {
+                          return Card(
+                            shadowColor: Colors.transparent,
+                            // color: Colors.blueGrey,
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.3,
+                              child: Padding(
+                                padding: const EdgeInsets.all(0.0),
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.folder_open_sharp,
+                                      size: 100,
+                                      color: HexColor.fromHex(
+                                          AppColor.primaryDarkBtnColor),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: SizedBox(
+                                        height: 80,
+                                        child: ListView(
+                                          scrollDirection: Axis.horizontal,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 4),
+                                              child: Chip(
+                                                // labelPadding:
+                                                //     EdgeInsets.fromLTRB(
+                                                //         6, -2, 0, -1),
+                                                padding:
+                                                    EdgeInsets.only(right: 4),
+                                                backgroundColor:
+                                                    HexColor.fromHex(AppColor
+                                                        .primaryBtnColor),
+                                                shape: const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    2),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    2),
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    2),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    2))),
+                                                label: Text(
+                                                  'Loan',
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontFamily: AppConstant
+                                                          .poppinsFont,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: HexColor.fromHex(
+                                                          AppColor
+                                                              .lightBackgroundColor)),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 4),
+                                              child: Chip(
+                                                backgroundColor:
+                                                    HexColor.fromHex(AppColor
+                                                        .primaryBtnColor),
+                                                shape: const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    2),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    2),
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    2),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    2))),
+                                                label: Text(
+                                                  'Document',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontFamily: AppConstant
+                                                          .poppinsFont,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: HexColor.fromHex(
+                                                          AppColor
+                                                              .lightBackgroundColor)),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 4),
+                                              child: Chip(
+                                                backgroundColor:
+                                                    HexColor.fromHex(AppColor
+                                                        .primaryBtnColor),
+                                                shape: const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    2),
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    2),
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    2),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                    2))),
+                                                label: Text(
+                                                  'Aaron Burr',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontFamily: AppConstant
+                                                          .poppinsFont,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: HexColor.fromHex(
+                                                          AppColor
+                                                              .lightBackgroundColor)),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            'Document management Document management Document management ',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            softWrap: false,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: HexColor.fromHex(
+                                                  AppColor.blackTextColor),
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              ShowModalSearchName(context);
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              elevation: 0.0,
+                                              backgroundColor:
+                                                  Colors.red.withOpacity(0),
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                        Radius.circular(2),
+                                                      ),
+                                                      side: BorderSide(
+                                                          color: Colors
+                                                              .transparent)),
+                                            ),
+                                            child: const Icon(
+                                              Icons.more_vert_outlined,
+                                              color: Colors.black45,
+                                            )),
+                                      ],
+                                    )
+                                  ],
                                 ),
-                              );
-                            }),
+                              ),
+                            ),
                           );
                         }),
                       ))
+                    // }),
+                    // ))
                     : (const FolderList()),
               ],
             ),
@@ -84,6 +266,7 @@ class _PublicFolderState extends State<PublicFolder> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Future<dynamic> ShowModalSearchName(BuildContext context) {
     return showModalBottomSheet(
         isScrollControlled: true,
