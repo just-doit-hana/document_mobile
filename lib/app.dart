@@ -5,6 +5,7 @@ import 'package:document_appmobile/src/screen/recylebin/recyclebin_screen.dart';
 import 'package:document_appmobile/src/screen/shared/shared_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'app/widget/widget.dart';
 import 'src/screen/home/home_folder.dart';
 
 class App extends StatefulWidget {
@@ -20,6 +21,8 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int selectedItem = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   void onSelectedItem(int value) {
     setState(() {
       selectedItem = value;
@@ -36,12 +39,17 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Container(
+        margin: const EdgeInsets.only(top: 0),
+        child: const DrawerAppbar(),
+      ),
+      key: _scaffoldKey,
       body: _screen.elementAt(selectedItem),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 18,
           selectedItemColor: HexColor.fromHex(AppColor.primaryDarkBtnColor),
-          currentIndex: selectedItem,
+          currentIndex: 0,
           onTap: onSelectedItem,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(

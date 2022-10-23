@@ -11,8 +11,8 @@ class _MyfileScreenState extends State<MyfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My files')),
-      body: Center(
+      appBar: AppBar(title: const Text('My files')),
+      body: const Center(
         child: Text('my file test'),
       ),
     );

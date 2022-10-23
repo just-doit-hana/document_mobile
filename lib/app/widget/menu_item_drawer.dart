@@ -60,7 +60,6 @@ class DrawerAppbar extends StatelessWidget {
                   .push(CustomRoutesPage(widget: const LoginScreen()));
             }),
           ),
-
           MenuItemDrawer(
             title: 'Storage',
             iconData: Icons.cloud_outlined,
@@ -69,17 +68,13 @@ class DrawerAppbar extends StatelessWidget {
                   .push(CustomRoutesPage(widget: const LoginScreen()));
             },
           ),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 15),
           Column(
             children: [
               Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: LinearProgressIndicator(
-                    // backgroundColor: Colors.tealAccent,
                     minHeight: 5,
                     value: 3,
-                    // valueColor: AlwaysStoppedAnimation(Colors.redAccent),
                     color: HexColor.fromHex(AppColor.primaryBtnColor),
                   )),
               const SizedBox(
@@ -110,7 +105,6 @@ class MenuItemDrawer extends StatelessWidget {
     Color hoverColor = HexColor.fromHex(AppColor.primaryBtnColor);
     return ListTile(
       title: Text(title),
-      // contentPadding: EdgeInsets.zero,
       minVerticalPadding: 10,
       horizontalTitleGap: 8,
       minLeadingWidth: 4,

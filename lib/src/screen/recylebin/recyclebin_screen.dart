@@ -11,10 +11,11 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Recycle Bin')),
-      body: Center(
-        child: Text('Recycle Bin test'),
-      ),
-    );
+        appBar: AppBar(title: Text('Recycle Bin')),
+        body: GridView(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3),
+          children: [Text('123'), Text('123'), Text('12')],
+        ));
   }
 }
