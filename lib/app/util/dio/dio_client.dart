@@ -6,6 +6,7 @@ import 'package:document_appmobile/app/helper/shared_preference.dart';
 import 'package:document_appmobile/app/util/dio/dio_exception.dart';
 import 'package:document_appmobile/src/data/model/login/login_user.dart';
 import 'package:document_appmobile/src/data/model/login/user_infor.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../util.dart';
@@ -43,7 +44,9 @@ class DioClient {
       final res = await _dio.post("https://docgatewayapi.hisoft.vn/auth/login",
           data: loginUser.toJson());
       UserInfor userInfor = UserInfor.fromJson(res.data);
-      print('UserTest ${userInfor.dmsToken}');
+      if (kDebugMode) {
+        print('UserTest ${userInfor.dmsToken}');
+      }
       // if (res.statusCode == 200) {
       //   shaedpref.setString("dmsToken", '${userInfor.dmsToken}');
       // }
@@ -52,7 +55,9 @@ class DioClient {
       final errorMessage = DiorException.fromDioError(e).toString();
       throw errorMessage;
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       // throw e.toString();
     }
     return null;

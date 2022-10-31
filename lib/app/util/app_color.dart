@@ -22,7 +22,7 @@ class AppColor {
   static const lightBackgroundColor = '#ffffff';
   static const grayBackgroundColor = '#f2f2f2';
   static const darkBackgroundColor = '#5e5e5e';
-
+  static const backgroundIcon = '#e09c42';
   static const headline =
       TextStyle(color: Colors.white, fontSize: 34, fontWeight: FontWeight.bold);
 

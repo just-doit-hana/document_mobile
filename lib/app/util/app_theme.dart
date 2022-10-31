@@ -14,7 +14,7 @@ class AppThemes {
         appBarTheme: AppBarTheme(
             backgroundColor: LightThemeColor.primaryDark,
             elevation: 0,
-            iconTheme: IconThemeData(color: Colors.black45),
+            iconTheme: const IconThemeData(color: Colors.black45),
             centerTitle: true,
             titleTextStyle: h2Style),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -59,12 +59,12 @@ class AppThemes {
                 backgroundColor:
                     MaterialStateProperty.all<Color>(LightThemeColor.accent))),
         // hintColor: Colors.white60,
-        inputDecorationTheme: InputDecorationTheme(
+        inputDecorationTheme: const InputDecorationTheme(
           // border: const OutlineInputBorder(borderSide: BorderSide.none),
           // enabledBorder: textFieldStyle,
           // focusedBorder: textFieldStyle,
           filled: true,
-          contentPadding: const EdgeInsets.all(20),
+          contentPadding: EdgeInsets.all(20),
           // fillColor: DarkThemColor.primaryLight
         ),
         // bottomAppBarColor: DarkThemColor.primaryLight,

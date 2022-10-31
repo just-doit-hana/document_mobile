@@ -14,21 +14,29 @@ class PublicFolder extends StatefulWidget {
 
 class _PublicFolderState extends State<PublicFolder> {
   bool isType = false;
+  int? count;
+
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).orientation == Orientation.landscape) {
+      count = 4;
+    } else {
+      count = 2;
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Flexible(
+        Expanded(
           flex: 1,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: <Widget>[
                 Container(
+                    color: Colors.transparent,
                     padding: const EdgeInsets.only(top: 10),
-                    width: double.infinity,
+                    // width: double.infinity,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,163 +65,44 @@ class _PublicFolderState extends State<PublicFolder> {
                     ? (GridView.count(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: 2,
+                        crossAxisCount: count!,
                         primary: false,
-                        children: List.generate(100, (index) {
+                        crossAxisSpacing: 2,
+                        mainAxisSpacing: 3,
+                        childAspectRatio: 1.2,
+                        children: List.generate(20, (index) {
                           return Card(
+                            // elevation: 20,
+                            color: Colors.transparent,
                             shadowColor: Colors.transparent,
-                            // color: Colors.blueGrey,
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.3,
-                              child: Padding(
-                                padding: const EdgeInsets.all(0.0),
-                                child: Column(
-                                  children: [
-                                    Icon(
-                                      Icons.folder_open_sharp,
-                                      size: 100,
-                                      color: HexColor.fromHex(
-                                          AppColor.primaryDarkBtnColor),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: SizedBox(
-                                        height: 80,
-                                        child: ListView(
-                                          scrollDirection: Axis.horizontal,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 4),
-                                              child: Chip(
-                                                // labelPadding:
-                                                //     EdgeInsets.fromLTRB(
-                                                //         6, -2, 0, -1),
-                                                padding:
-                                                    EdgeInsets.only(right: 4),
-                                                backgroundColor:
-                                                    HexColor.fromHex(AppColor
-                                                        .primaryBtnColor),
-                                                shape: const RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    2),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    2),
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    2),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    2))),
-                                                label: Text(
-                                                  'Loan',
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontFamily: AppConstant
-                                                          .poppinsFont,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: HexColor.fromHex(
-                                                          AppColor
-                                                              .lightBackgroundColor)),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 4),
-                                              child: Chip(
-                                                backgroundColor:
-                                                    HexColor.fromHex(AppColor
-                                                        .primaryBtnColor),
-                                                shape: const RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    2),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    2),
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    2),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    2))),
-                                                label: Text(
-                                                  'Document',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontFamily: AppConstant
-                                                          .poppinsFont,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: HexColor.fromHex(
-                                                          AppColor
-                                                              .lightBackgroundColor)),
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 4),
-                                              child: Chip(
-                                                backgroundColor:
-                                                    HexColor.fromHex(AppColor
-                                                        .primaryBtnColor),
-                                                shape: const RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    2),
-                                                            bottomRight:
-                                                                Radius.circular(
-                                                                    2),
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    2),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                    2))),
-                                                label: Text(
-                                                  'Aaron Burr',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontFamily: AppConstant
-                                                          .poppinsFont,
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: HexColor.fromHex(
-                                                          AppColor
-                                                              .lightBackgroundColor)),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Row(
+                            child: Container(
+                              // width: MediaQuery.of(context).size.width,
+                              // height: MediaQuery.of(context).size.width,
+                              // child: Flexible(
+                              //   flex: 2,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Image.asset(
+                                    '${AppImage.path}/${AppImage.iconWord}',
+                                    fit: BoxFit.cover,
+                                    height: 70,
+                                    width: 70,
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    // color: Colors.red,
+                                    child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceAround,
                                       children: [
                                         Expanded(
+                                          flex: 2,
                                           child: Text(
-                                            'Document management Document management Document management ',
-                                            maxLines: 1,
+                                            'It Department Vietjet',
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             softWrap: false,
                                             style: TextStyle(
@@ -247,11 +136,12 @@ class _PublicFolderState extends State<PublicFolder> {
                                               color: Colors.black45,
                                             )),
                                       ],
-                                    )
-                                  ],
-                                ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
+                            // ),
                           );
                         }),
                       ))
