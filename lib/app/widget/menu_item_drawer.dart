@@ -1,9 +1,6 @@
 import 'package:document_appmobile/app/util/util.dart';
 import 'package:flutter/material.dart';
 
-import '../../src/screen/login/login_screen.dart';
-import '../animation/routes_animation.dart';
-
 class DrawerAppbar extends StatelessWidget {
   const DrawerAppbar({
     Key? key,
@@ -48,26 +45,15 @@ class DrawerAppbar extends StatelessWidget {
           MenuItemDrawer(
               title: 'Archive File',
               iconData: Icons.archive_outlined,
-              onPressed: () {
-                Navigator.of(context)
-                    .push(CustomRoutesPage(widget: const LoginScreen()));
-              }),
+              onPressed: () {}),
           MenuItemDrawer(
-            title: 'Recycle Bin',
-            iconData: Icons.delete_outline,
-            onPressed: (() {
-              Navigator.of(context)
-                  .push(CustomRoutesPage(widget: const LoginScreen()));
-            }),
-          ),
+              title: 'Recycle Bin',
+              iconData: Icons.delete_outline,
+              onPressed: (() {})),
           MenuItemDrawer(
-            title: 'Storage',
-            iconData: Icons.cloud_outlined,
-            onPressed: () {
-              Navigator.of(context)
-                  .push(CustomRoutesPage(widget: const LoginScreen()));
-            },
-          ),
+              title: 'Storage',
+              iconData: Icons.cloud_outlined,
+              onPressed: (() {})),
           Column(
             children: [
               Padding(

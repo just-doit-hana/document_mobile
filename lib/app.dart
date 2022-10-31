@@ -39,17 +39,12 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Container(
-        margin: const EdgeInsets.only(top: 0),
-        child: const DrawerAppbar(),
-      ),
-      key: _scaffoldKey,
       body: _screen.elementAt(selectedItem),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 18,
           selectedItemColor: HexColor.fromHex(AppColor.primaryDarkBtnColor),
-          currentIndex: 0,
+          currentIndex: selectedItem,
           onTap: onSelectedItem,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(

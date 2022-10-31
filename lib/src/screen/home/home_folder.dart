@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../app/util/util.dart';
+import '../../../app/widget/widget.dart';
 import '../folder/private_folder_screen.dart';
 import '../folder/public_folder_screen.dart';
 import 'appbar_sliver.dart';
@@ -24,39 +25,44 @@ class _HomeFolderState extends State<HomeFolder> {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-            body: CustomScrollView(
-          slivers: <Widget>[
-            AppSliverAppBar(scaffoldKey: _scaffoldKey),
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Scaffold(
-                  appBar: TabBar(
-                    indicatorColor:
-                        HexColor.fromHex(AppColor.primaryDarkBtnColor),
-                    unselectedLabelStyle: TextStyle(
-                        color: HexColor.fromHex(AppColor.grayTextColor)),
-                    tabs: <Widget>[
-                      Tab(
-                        child: Text(
-                          'Public Folder',
-                          style: tabStyle,
+          key: _scaffoldKey,
+          body: CustomScrollView(
+            slivers: <Widget>[
+              AppSliverAppBar(scaffoldKey: _scaffoldKey),
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Scaffold(
+                    appBar: TabBar(
+                      indicatorColor:
+                          HexColor.fromHex(AppColor.primaryDarkBtnColor),
+                      unselectedLabelStyle: TextStyle(
+                          color: HexColor.fromHex(AppColor.grayTextColor)),
+                      tabs: <Widget>[
+                        Tab(
+                          child: Text(
+                            'Public Folder',
+                            style: tabStyle,
+                          ),
                         ),
-                      ),
-                      Tab(
-                        child: Text(
-                          'Private Folder',
-                          style: tabStyle,
+                        Tab(
+                          child: Text(
+                            'Private Folder',
+                            style: tabStyle,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  body: const TabBarView(children: [
-                    PublicFolder(),
-                    PrivateFolder(),
-                    // PrivateFolder()
-                  ])),
-            ),
-          ],
-        )));
+                      ],
+                    ),
+                    body: const TabBarView(children: [
+                      PublicFolder(),
+                      PrivateFolder(),
+                    ])),
+              ),
+            ],
+          ),
+          drawer: Container(
+            margin: const EdgeInsets.only(top: 0),
+            child: const DrawerAppbar(),
+          ),
+        ));
   }
 }
