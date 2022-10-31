@@ -3,26 +3,28 @@ import 'package:document_appmobile/src/data/model/folder/folder.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-@immutable
-abstract class FolderState extends Equatable {}
+import '../../data/repository/folder/folder_model.dart';
 
-class FolderLoadingState extends FolderState {
+@immutable
+abstract class UserState extends Equatable {}
+
+class UserLoadingState extends UserState {
   @override
   List<Object?> get props => [];
 }
 
-class FolderLoadedState extends FolderState {
-  final List<Result> folder;
-  FolderLoadedState(
+class UserLoadedState extends UserState {
+  final List<FolderResponse> folder;
+  UserLoadedState(
     this.folder,
   );
   @override
   List<Object?> get props => [folder];
 }
 
-class FolderErrorState extends FolderState {
+class UserErrorState extends UserState {
   final String error;
-  FolderErrorState(
+  UserErrorState(
     this.error,
   );
   @override

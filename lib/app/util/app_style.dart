@@ -7,7 +7,7 @@ final h1Style = TextStyle(
     fontSize: 25,
     fontFamily: AppConstant.poppinsFont,
     fontWeight: FontWeight.w700,
-    color: HexColor.fromHex(AppColor.blackTextColor));
+    color: HexColor.fromHex(AppColor.primaryBtnColor));
 
 final h2Style = TextStyle(
     fontWeight: FontWeight.w700,

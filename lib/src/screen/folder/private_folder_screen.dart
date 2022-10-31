@@ -1,8 +1,6 @@
 import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/app/widget/folder_list.dart';
 import 'package:flutter/material.dart';
 
-import '../../../app/widget/folder_grid.dart';
 import '../../../app/widget/widget.dart';
 
 class PrivateFolder extends StatefulWidget {
@@ -57,7 +55,7 @@ class _PrivateFolderState extends State<PrivateFolder> {
                                 : const Icon(Icons.list_outlined)),
                       ],
                     )),
-                isType ? (const FolderGrid()) : (const FolderList()),
+                // isType ? (const FolderGrid()) : (const FolderList()),
               ],
             ),
           ),

@@ -8,7 +8,7 @@ class AppThemes {
   const AppThemes._();
   static final appThemeData = {
     AppTheme.lightTheme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.yellowAccent,
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: LightThemeColor.accent),
         appBarTheme: AppBarTheme(
@@ -28,11 +28,11 @@ class AppThemes {
             focusedBorder: textFieldStyle,
             filled: true,
             contentPadding: const EdgeInsets.all(20),
-            fillColor: Colors.white),
-        bottomAppBarColor: Colors.white,
+            fillColor: Colors.redAccent),
+        bottomAppBarColor: Colors.yellowAccent,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.redAccent,
             selectedItemColor: LightThemeColor.accent),
         textTheme: TextTheme(
             headline1: h1Style,
@@ -44,43 +44,44 @@ class AppThemes {
             subtitle1: subtitleLight),
         iconTheme: const IconThemeData(color: Colors.black45)),
     AppTheme.darkTheme: ThemeData(
-        // scaffoldBackgroundColor: Colors.white,
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: LightThemeColor.accent),
-        appBarTheme: AppBarTheme(
-            backgroundColor: DarkThemColor.primaryDark,
-            elevation: 0,
-            toolbarTextStyle: const TextStyle(color: Colors.white),
-            iconTheme: const IconThemeData(color: Colors.black45),
-            centerTitle: true,
-            titleTextStyle: h2Style),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(LightThemeColor.accent))),
-        // hintColor: Colors.white60,
-        inputDecorationTheme: const InputDecorationTheme(
-          // border: const OutlineInputBorder(borderSide: BorderSide.none),
-          // enabledBorder: textFieldStyle,
-          // focusedBorder: textFieldStyle,
-          filled: true,
-          contentPadding: EdgeInsets.all(20),
-          // fillColor: DarkThemColor.primaryLight
-        ),
-        // bottomAppBarColor: DarkThemColor.primaryLight,
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
-            // unselectedItemColor: Colors.grey,
-            selectedItemColor: LightThemeColor.accent),
-        textTheme: TextTheme(
-            headline1: h1Style.copyWith(color: Colors.white),
-            headline2: h2Style.copyWith(color: Colors.white),
-            headline3: h3Style.copyWith(color: Colors.white),
-            headline4: h3Style.copyWith(color: Colors.white),
-            headline5: h5StyleLight.copyWith(color: Colors.white),
-            bodyText1: bodyTextLight.copyWith(color: Colors.white),
-            subtitle1: subtitleLight.copyWith(color: Colors.white60)),
-        iconTheme: const IconThemeData(color: Colors.white))
+      // scaffoldBackgroundColor: Colors.white,
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: LightThemeColor.accent),
+      appBarTheme: AppBarTheme(
+          backgroundColor: DarkThemColor.primaryDark,
+          elevation: 0,
+          toolbarTextStyle: const TextStyle(color: Colors.white),
+          iconTheme: const IconThemeData(color: Colors.black45),
+          centerTitle: true,
+          titleTextStyle: h2Style),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(LightThemeColor.accent))),
+      // hintColor: Colors.white60,
+      inputDecorationTheme: const InputDecorationTheme(
+        // border: const OutlineInputBorder(borderSide: BorderSide.none),
+        // enabledBorder: textFieldStyle,
+        // focusedBorder: textFieldStyle,
+        filled: true,
+        contentPadding: EdgeInsets.all(20),
+        // fillColor: DarkThemColor.primaryLight
+      ),
+      // bottomAppBarColor: DarkThemColor.primaryLight,
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.white,
+          // unselectedItemColor: Colors.grey,
+          selectedItemColor: LightThemeColor.accent),
+      // textTheme: TextTheme(
+      //     headline1: h1Style.copyWith(color: Colors.white),
+      //     headline2: h2Style.copyWith(color: Colors.white),
+      //     headline3: h3Style.copyWith(color: Colors.white),
+      //     headline4: h3Style.copyWith(color: Colors.white),
+      //     headline5: h5StyleLight.copyWith(color: Colors.white),
+      //     bodyText1: bodyTextLight.copyWith(color: Colors.white),
+      //     subtitle1: subtitleLight.copyWith(color: Colors.white60)),
+      // iconTheme: const IconThemeData(color: Colors.white))
+    )
   };
 }

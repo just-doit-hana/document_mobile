@@ -1,3 +1,4 @@
+import 'package:document_appmobile/app/util/dio/dio_client.dart';
 import 'package:document_appmobile/app/util/util.dart';
 import 'package:document_appmobile/app/widget/folder_list.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class PublicFolder extends StatefulWidget {
 class _PublicFolderState extends State<PublicFolder> {
   bool isType = false;
   int? count;
+  final DioClient dioClient = DioClient();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class _PublicFolderState extends State<PublicFolder> {
                     ? (FolderGrid())
                     // }),
                     // ))
-                    : (const FolderList()),
+                    : (FolderList(test: dioClient)),
               ],
             ),
           ),

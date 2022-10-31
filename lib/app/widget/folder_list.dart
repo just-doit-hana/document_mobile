@@ -1,11 +1,13 @@
 import 'package:document_appmobile/app/util/util.dart';
+import 'package:document_appmobile/src/data/model/folder/folder.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/widget/widget.dart';
+import '../util/dio/dio_client.dart';
 
 class FolderList extends StatefulWidget {
-  const FolderList({Key? key}) : super(key: key);
-
+  FolderList({Key? key, required this.test}) : super(key: key);
+  DioClient test;
   @override
   // ignore: library_private_types_in_public_api
   _FolderListState createState() => _FolderListState();
@@ -25,6 +27,42 @@ class _FolderListState extends State<FolderList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        FutureBuilder<FolderResponse?>(
+          // future: widget.test.listPublicFolder(),
+          builder: (context, snapshot) {
+            return Card(
+                child: ListTile(
+                    title: const Text("DSC Management"),
+                    subtitle: const Text("Oct 21 11:30"),
+                    leading: imgIcon(AppImage.iconImg),
+                    trailing: ElevatedButton(
+                        onPressed: () {
+                          ShowModalSearchName(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          elevation: 0.0,
+                          backgroundColor: Colors.red.withOpacity(0),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(2),
+                              ),
+                              side: BorderSide(color: Colors.white)),
+                        ),
+                        child: const Icon(
+                          Icons.more_vert_outlined,
+                          color: Colors.black54,
+                        ))));
+            // if (snapshot.connectionState == ConnectionState.waiting) {
+            //   return const OutputPanel(showLoading: true);
+            // } else if (snapshot.hasError) {
+            //   return OutputError(errorMessage: snapshot.error.toString());
+            // } else if (snapshot.hasData) {
+            //   return OutputPanel(user: snapshot.data);
+            // } else {
+            //   return const OutputPanel();
+            // }
+          },
+        ),
         Card(
             child: ListTile(
                 title: const Text("DSC Management"),

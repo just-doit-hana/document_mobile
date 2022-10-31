@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-abstract class FolderEvent extends Equatable {
-  const FolderEvent();
+abstract class UserEvent extends Equatable {
+  const UserEvent();
 }
 
-class LoadFolderPublicEvent extends FolderEvent {
+class LoadUserEvent extends UserEvent {
   @override
   List<Object?> get props => [];
 }
