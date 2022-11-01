@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:document_appmobile/src/data/repository/core/endpoint.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../app/util/dio/dio_client.dart';
@@ -12,10 +13,10 @@ class FolderRepository {
 
   final Dio _dioClient;
 
-  Future<List<FolderResponse>?> listPublicFolder() async {
+  Future<List<FolderResponse>> listPublicFolder() async {
     try {
-      final res = await _dioClient
-          .get('https://docgatewayapi.hisoft.vn/metadata/folders/tree/public');
+      final res =
+          await _dioClient.get('${Endpoints.ENDPOINTDOC}/folders/tree/public');
 
       // if (res.statusCode == 200) {
       final List result = res.data['result'];
@@ -29,11 +30,12 @@ class FolderRepository {
       if (kDebugMode) {
         print(e);
       }
-      // throw e.toString();
+      throw e.toString();
     }
     // return [];
   }
 }
+
 // Future<List<FolderModel>> getUser() async {
 //   String endpoint = 'https://reqres.in/api/users?page=2';
 

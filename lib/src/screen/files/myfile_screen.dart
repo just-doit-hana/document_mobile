@@ -1,7 +1,5 @@
-import 'package:document_appmobile/src/bussiness/test/app_bloc.dart';
-import 'package:document_appmobile/src/bussiness/test/app_event.dart';
-import 'package:document_appmobile/src/bussiness/test/app_states.dart';
-import 'package:document_appmobile/src/data/repository/folder/folder_model.dart';
+import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
+
 import 'package:document_appmobile/src/data/repository/folder/folder_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,18 +18,18 @@ class _MyfileScreenState extends State<MyfileScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          UserBloc(RepositoryProvider.of<FolderRepository>(context))
-            ..add(LoadUserEvent()),
+          FolderBloc((RepositoryProvider.of<FolderRepository>(context)))
+            ..add(LoadFolderPublicEvent()),
       child: Scaffold(
           appBar: AppBar(title: const Text('My files')),
-          body: BlocBuilder<UserBloc, UserState>(
+          body: BlocBuilder<FolderBloc, FolderState>(
             builder: (context, state) {
-              if (state is UserLoadingState) {
+              if (state is FolderLoadingState) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
-              if (state is UserLoadedState) {
+              if (state is FolderLoadedState) {
                 List<FolderResponse> userList = state.folder;
                 // print('User list ${userList}');
                 return ListView.builder(
@@ -45,7 +43,7 @@ class _MyfileScreenState extends State<MyfileScreen> {
                       );
                     });
               }
-              if (state is UserErrorState) {
+              if (state is FolderErrorState) {
                 return const Center(
                   child: Text('Error'),
                 );
