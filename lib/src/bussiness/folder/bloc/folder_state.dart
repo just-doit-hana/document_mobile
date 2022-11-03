@@ -13,7 +13,7 @@ class FolderLoadingState extends FolderState {
 }
 
 class FolderLoadedState extends FolderState {
-  final List<FolderResponse> folder;
+  final Result folder;
   FolderLoadedState(
     this.folder,
   );

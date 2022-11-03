@@ -30,17 +30,14 @@ class _MyfileScreenState extends State<MyfileScreen> {
                 );
               }
               if (state is FolderLoadedState) {
-                List<FolderResponse> userList = state.folder;
-                // print('User list ${userList}');
+                Result folderList = state.folder;
                 return ListView.builder(
-                    itemCount: userList.length,
+                    itemCount: folderList.subFolders.length,
                     itemBuilder: (_, index) {
                       return Card(
-                        color: Colors.blue,
-                        child: ListTile(
-                          title: Text(userList[index].result!.name),
-                        ),
-                      );
+                          color: Colors.blue,
+                          child: ListTile(
+                              title: Text(folderList.subFolders[index].name)));
                     });
               }
               if (state is FolderErrorState) {

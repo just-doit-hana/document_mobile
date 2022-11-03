@@ -13,16 +13,14 @@ class FolderRepository {
 
   final Dio _dioClient;
 
-  Future<List<FolderResponse>> listPublicFolder() async {
+  Future<dynamic> listPublicFolder() async {
     try {
-      final res =
-          await _dioClient.get('${Endpoints.ENDPOINTDOC}/folders/tree/public');
-
-      // if (res.statusCode == 200) {
-      final List result = res.data['result'];
-      // print('test ${res.data['result']}');
-      return result.map((e) => FolderResponse.fromJson(e)).toList();
-      // }
+      final res = await _dioClient
+          .get('${Endpoints.ENDPOINTDOC}metadata/folders/tree/public');
+      var folder = res.data['result'];
+      final value = Result.fromJson(folder);
+      print('Result ${value.subFolders[0].name}');
+      return value;
     } on DioError catch (e) {
       final errorMessage = DiorException.fromDioError(e).toString();
       throw errorMessage;
