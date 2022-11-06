@@ -5,10 +5,8 @@ class ShowModalSearchname extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text('Text 132'),
-      ),
+    return const Center(
+      child: Text('Text 132'),
     );
   }
 }

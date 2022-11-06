@@ -15,4 +15,5 @@ class AppImage {
   static const String iconVideo = 'icon_video.jpeg';
   static const String iconZip = 'icon_zip.png';
   static const String iconImg = 'icon_img.jpeg';
+  static const String fdfViewerExmaple = '/assets/fdf/file-sample_150kB.pdf';
 }

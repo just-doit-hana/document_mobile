@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../util/util.dart';
 
 class FolderGrid extends StatefulWidget {
-  FolderGrid({
+  const FolderGrid({
     Key? key,
   }) : super(key: key);
 

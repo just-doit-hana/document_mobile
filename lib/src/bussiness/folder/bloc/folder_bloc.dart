@@ -1,9 +1,3 @@
-// import 'package:bloc/bloc.dart';
-// import 'package:document_appmobile/src/data/repository/folder/folder_repo.dart';
-
-// import 'folder_event.dart';
-// import 'folder_state.dart';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +19,9 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
       } catch (e) {
         emit(FolderErrorState(e.toString()));
       }
+    });
+    on<LoadFolderPrivateEvent>((event, emit) {
+      // emit()
     });
   }
 }

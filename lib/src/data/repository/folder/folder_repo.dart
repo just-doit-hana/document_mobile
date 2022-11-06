@@ -19,7 +19,6 @@ class FolderRepository {
           .get('${Endpoints.ENDPOINTDOC}metadata/folders/tree/public');
       var folder = res.data['result'];
       final value = Result.fromJson(folder);
-      print('Result ${value.subFolders[0].name}');
       return value;
     } on DioError catch (e) {
       final errorMessage = DiorException.fromDioError(e).toString();
@@ -30,7 +29,6 @@ class FolderRepository {
       }
       throw e.toString();
     }
-    // return [];
   }
 }
 

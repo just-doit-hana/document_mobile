@@ -32,7 +32,10 @@ class AppSliverAppBar extends StatelessWidget {
       ),
       title: const Text(
         'Document Management',
-        style: TextStyle(fontFamily: AppConstant.poppinsFont, fontSize: 17),
+        style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontFamily: AppConstant.poppinsFont,
+            fontSize: 17),
       ),
       actions: [
         IconButton(

@@ -8,7 +8,7 @@ class AppThemes {
   const AppThemes._();
   static final appThemeData = {
     AppTheme.lightTheme: ThemeData(
-        scaffoldBackgroundColor: Colors.yellowAccent,
+        // scaffoldBackgroundColor: LightThemeColor.primaryDark,
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: LightThemeColor.accent),
         appBarTheme: AppBarTheme(
@@ -29,10 +29,10 @@ class AppThemes {
             filled: true,
             contentPadding: const EdgeInsets.all(20),
             fillColor: Colors.redAccent),
-        bottomAppBarColor: Colors.yellowAccent,
+        bottomAppBarColor: Colors.transparent,
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.redAccent,
+            backgroundColor: Colors.transparent,
             selectedItemColor: LightThemeColor.accent),
         textTheme: TextTheme(
             headline1: h1Style,
@@ -44,7 +44,7 @@ class AppThemes {
             subtitle1: subtitleLight),
         iconTheme: const IconThemeData(color: Colors.black45)),
     AppTheme.darkTheme: ThemeData(
-      // scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: Colors.white,
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: LightThemeColor.accent),
       appBarTheme: AppBarTheme(
@@ -58,9 +58,9 @@ class AppThemes {
           style: ButtonStyle(
               backgroundColor:
                   MaterialStateProperty.all<Color>(LightThemeColor.accent))),
-      // hintColor: Colors.white60,
+      hintColor: Colors.white60,
       inputDecorationTheme: const InputDecorationTheme(
-        // border: const OutlineInputBorder(borderSide: BorderSide.none),
+        border: OutlineInputBorder(borderSide: BorderSide.none),
         // enabledBorder: textFieldStyle,
         // focusedBorder: textFieldStyle,
         filled: true,

@@ -12,13 +12,7 @@ class LoginRepository implements BaseRepository {
 
   final DioClient dioClient;
 
-  @override
   Future<UserInfor?> loginUser(LoginUser loginUser) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<FolderResponse> listFolderPublic() {
     throw UnimplementedError();
   }
 

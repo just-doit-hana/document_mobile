@@ -1,8 +1,8 @@
-import 'package:document_appmobile/app/util/dio/dio_client.dart';
 import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/src/screen/files/myfile_screen.dart';
+import 'package:document_appmobile/src/screen/files/sysnfusion.dart';
 import 'package:document_appmobile/src/screen/recylebin/recyclebin_screen.dart';
 import 'package:document_appmobile/src/screen/shared/shared_screen.dart';
+import 'package:document_appmobile/src/screen/test.dart';
 import 'package:flutter/material.dart';
 
 import 'src/screen/home/home_folder.dart';
@@ -10,9 +10,7 @@ import 'src/screen/home/home_folder.dart';
 class App extends StatefulWidget {
   const App({
     Key? key,
-    required this.dioClient,
   }) : super(key: key);
-  final DioClient dioClient;
 
   @override
   State<App> createState() => _AppState();
@@ -29,8 +27,8 @@ class _AppState extends State<App> {
 
   static const List<Widget> _screen = <Widget>[
     HomeFolder(),
-    MyfileScreen(),
-    SharedScreen(),
+    Sysnfusion(),
+    ExpansionTileExample(),
     RecyclebinScreen(),
   ];
 

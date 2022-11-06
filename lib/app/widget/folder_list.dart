@@ -1,13 +1,20 @@
+import 'package:document_appmobile/app/animation/routes_animation.dart';
+import 'package:document_appmobile/app/helper/format_date_time.dart';
 import 'package:document_appmobile/app/util/util.dart';
+import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
 import 'package:document_appmobile/src/data/model/folder/folder.dart';
+import 'package:document_appmobile/src/screen/folder/folder_detail.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/widget/widget.dart';
-import '../util/dio/dio_client.dart';
+import '../../src/data/repository/folder/folder_repo.dart';
 
+// ignore: must_be_immutable
 class FolderList extends StatefulWidget {
-  FolderList({Key? key, required this.test}) : super(key: key);
-  DioClient test;
+  FolderList({
+    Key? key,
+  }) : super(key: key);
   @override
   // ignore: library_private_types_in_public_api
   _FolderListState createState() => _FolderListState();
@@ -25,266 +32,73 @@ class _FolderListState extends State<FolderList> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FutureBuilder<FolderResponse?>(
-          // future: widget.test.listPublicFolder(),
-          builder: (context, snapshot) {
-            return Card(
-                child: ListTile(
-                    title: const Text("DSC Management"),
-                    subtitle: const Text("Oct 21 11:30"),
-                    leading: imgIcon(AppImage.iconImg),
-                    trailing: ElevatedButton(
-                        onPressed: () {
-                          ShowModalSearchName(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0.0,
-                          backgroundColor: Colors.red.withOpacity(0),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(2),
-                              ),
-                              side: BorderSide(color: Colors.white)),
+    return BlocProvider(
+        create: (context) =>
+            FolderBloc((RepositoryProvider.of<FolderRepository>(context)))
+              ..add(LoadFolderPublicEvent()),
+        child: BlocBuilder<FolderBloc, FolderState>(
+          builder: (context, state) {
+            if (state is FolderLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is FolderLoadedState) {
+              Result folderList = state.folder;
+              return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: folderList.subFolders.length,
+                  itemBuilder: ((context, index) {
+                    return Column(
+                      children: [
+                        GestureDetector(
+                          onDoubleTap: () {
+                            Navigator.of(context).push(CustomRoutesPage(
+                                widget: FolderDetail(
+                              id: index,
+                              subFolders: folderList.subFolders,
+                            )));
+                          },
+                          child: Card(
+                              child: ListTile(
+                                  title:
+                                      Text(folderList.subFolders[index].name),
+                                  subtitle: Text(formatDateTime(
+                                      '2022-10-27T09:17:46.453697',
+                                      hastime: false)),
+                                  leading: imgIcon(AppImage.iconFolder),
+                                  trailing: ElevatedButton(
+                                      onPressed: () {
+                                        ShowModalSearchName(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 0.0,
+                                        backgroundColor:
+                                            Colors.red.withOpacity(0),
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(2),
+                                            ),
+                                            side: BorderSide(
+                                                color: Colors.white)),
+                                      ),
+                                      child: const Icon(
+                                        Icons.more_vert_outlined,
+                                        color: Colors.black54,
+                                      )))),
                         ),
-                        child: const Icon(
-                          Icons.more_vert_outlined,
-                          color: Colors.black54,
-                        ))));
-            // if (snapshot.connectionState == ConnectionState.waiting) {
-            //   return const OutputPanel(showLoading: true);
-            // } else if (snapshot.hasError) {
-            //   return OutputError(errorMessage: snapshot.error.toString());
-            // } else if (snapshot.hasData) {
-            //   return OutputPanel(user: snapshot.data);
-            // } else {
-            //   return const OutputPanel();
-            // }
+                      ],
+                    );
+                  }));
+            }
+            if (state is FolderErrorState) {
+              return const Center(
+                child: Text('Error'),
+              );
+            }
+            return Container();
           },
-        ),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconFolder),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    )))),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management jshdj bsjd bjsd jsd"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconExcell),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    )))),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconPpt),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    )))),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconTxt),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    )))),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconImg),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    )))),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconZip),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    )))),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconVideo),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    )))),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconUnknow),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    )))),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconPdf),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    )))),
-        Card(
-            child: ListTile(
-                title: const Text("DSC Management"),
-                subtitle: const Text("Oct 21 11:30"),
-                leading: imgIcon(AppImage.iconWord),
-                trailing: ElevatedButton(
-                    onPressed: () {
-                      ShowModalSearchName(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0.0,
-                      backgroundColor: Colors.red.withOpacity(0),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(2),
-                          ),
-                          side: BorderSide(color: Colors.white)),
-                    ),
-                    child: const Icon(
-                      Icons.more_vert_outlined,
-                      color: Colors.black54,
-                    ))))
-      ],
-    );
+        ));
   }
 
   // ignore: non_constant_identifier_names

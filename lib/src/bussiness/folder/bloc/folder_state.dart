@@ -1,7 +1,3 @@
-// import 'package:document_appmobile/src/data/model/folder/folder.dart';
-// import 'package:equatable/equatable.dart';
-// import 'package:flutter/material.dart';
-
 part of './folder_bloc.dart';
 
 @immutable
@@ -24,6 +20,28 @@ class FolderLoadedState extends FolderState {
 class FolderErrorState extends FolderState {
   final String error;
   FolderErrorState(
+    this.error,
+  );
+  @override
+  List<Object?> get props => [error];
+}
+
+class FolderPrivateLoadingState extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class FolderPrivateLoadedState extends FolderState {
+  final Result privateFolder;
+  FolderPrivateLoadedState({required this.privateFolder});
+
+  @override
+  List<Object?> get props => [privateFolder];
+}
+
+class FolderPrivateErrorState extends FolderState {
+  final String error;
+  FolderPrivateErrorState(
     this.error,
   );
   @override

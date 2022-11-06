@@ -104,13 +104,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     formgroup.markAllAsTouched();
                     return;
                   }
-                  final value = formgroup.value;
-                  print('value $value');
+                  // print('value $value');
                   // _authBloc.add(AuthLogin(loginUser: LoginUser.fromMap(value)));
-                  Navigator.of(context).push(CustomRoutesPage(
-                      widget: App(
-                    dioClient: dioClient,
-                  )));
+                  Navigator.of(context)
+                      .push(CustomRoutesPage(widget: const App()));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll<Color>(

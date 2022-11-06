@@ -59,11 +59,7 @@ class _PublicFolderState extends State<PublicFolder> {
                                 : const Icon(Icons.list_outlined)),
                       ],
                     )),
-                isType
-                    ? (FolderGrid())
-                    // }),
-                    // ))
-                    : (FolderList(test: dioClient)),
+                isType ? (const FolderGrid()) : (FolderList()),
               ],
             ),
           ),
