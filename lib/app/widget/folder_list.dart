@@ -1,26 +1,19 @@
 import 'package:document_appmobile/app/animation/routes_animation.dart';
-import 'package:document_appmobile/app/helper/format_date_time.dart';
 import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
 import 'package:document_appmobile/src/data/model/folder/folder.dart';
 import 'package:document_appmobile/src/screen/folder/folder_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 import '../../../app/widget/widget.dart';
-import '../../src/data/repository/folder/folder_repo.dart';
+
 
 // ignore: must_be_immutable
-class FolderList extends StatefulWidget {
-  FolderList({
-    Key? key,
+class FolderList extends StatelessWidget {
+ const FolderList({
+    Key? key, required this.folderList,
   }) : super(key: key);
-  @override
-  // ignore: library_private_types_in_public_api
-  _FolderListState createState() => _FolderListState();
-}
-
-class _FolderListState extends State<FolderList> {
+  final Result folderList;
   Widget imgIcon(String iconImage, {double height = 28.0, width = 28.0}) {
     return Image.asset(
       '${AppImage.path}/$iconImage',
@@ -32,20 +25,9 @@ class _FolderListState extends State<FolderList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) =>
-            FolderBloc((RepositoryProvider.of<FolderRepository>(context)))
-              ..add(LoadFolderPublicEvent()),
-        child: BlocBuilder<FolderBloc, FolderState>(
-          builder: (context, state) {
-            if (state is FolderLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is FolderLoadedState) {
-              Result folderList = state.folder;
-              return ListView.builder(
+    return
+           ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: folderList.subFolders.length,
                   itemBuilder: ((context, index) {
@@ -56,16 +38,16 @@ class _FolderListState extends State<FolderList> {
                             Navigator.of(context).push(CustomRoutesPage(
                                 widget: FolderDetail(
                               id: index,
-                              subFolders: folderList.subFolders,
+                              subFolders: folderList,
                             )));
                           },
                           child: Card(
                               child: ListTile(
                                   title:
                                       Text(folderList.subFolders[index].name),
-                                  subtitle: Text(formatDateTime(
-                                      '2022-10-27T09:17:46.453697',
-                                      hastime: false)),
+                                  // subtitle: Text(formatDateTime(
+                                  //     '2022-10-27T09:17:46.453697',
+                                  //     hastime: false)),
                                   leading: imgIcon(AppImage.iconFolder),
                                   trailing: ElevatedButton(
                                       onPressed: () {
@@ -90,18 +72,11 @@ class _FolderListState extends State<FolderList> {
                       ],
                     );
                   }));
-            }
-            if (state is FolderErrorState) {
-              return const Center(
-                child: Text('Error'),
-              );
-            }
-            return Container();
-          },
-        ));
-  }
+           
+          }
+}
 
-  // ignore: non_constant_identifier_names
+// ignore: non_constant_identifier_names
   Future<dynamic> ShowModalSearchName(BuildContext context) {
     return showModalBottomSheet(
         isScrollControlled: true,
@@ -152,4 +127,4 @@ class _FolderListState extends State<FolderList> {
               ));
         });
   }
-}
+

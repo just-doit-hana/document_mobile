@@ -1,12 +1,43 @@
-import 'dart:convert';
-
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 class FolderItemResponse {
   Pagination? pagination;
-  List<ResultItem>? result;
+  List<ResultItemFolder>? result;
   int? statusCode;
   bool? isError;
   String? message;
+  FolderItemResponse({
+    this.pagination,
+    this.result,
+    this.statusCode,
+    this.isError,
+    this.message,
+  });
+  
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'pagination': pagination?.toMap(),
+      'result': result?.map((x) => x.toMap()).toList(),
+      'statusCode': statusCode,
+      'isError': isError,
+      'message': message,
+    };
+  }
+
+  factory FolderItemResponse.fromMap(Map<String, dynamic> map) {
+    return FolderItemResponse(
+      pagination: map['pagination'] != null ? Pagination.fromMap(map['pagination'] as Map<String,dynamic>) : null,
+      result: map['result'] != null ? List<ResultItemFolder>.from((map['result'] as List<int>).map<ResultItemFolder?>((x) => ResultItemFolder.fromMap(x as Map<String,dynamic>),),) : null,
+      statusCode: map['statusCode'] != null ? map['statusCode'] as int : null,
+      isError: map['isError'] != null ? map['isError'] as bool : null,
+      message: map['message'] != null ? map['message'] as String : null,
+    );
+  }
+
+  // String toJson() => json.encode(toMap());
+
+  // factory FolderItemResponse.fromJson(String source) => FolderItemResponse.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class Pagination {
@@ -141,7 +172,7 @@ class SharedWith {
     };
   }
 
-  factory SharedWith.fromMapp(Map<String, dynamic> map) {
+  factory SharedWith.fromMap(Map<String, dynamic> map) {
     return SharedWith(
       id: map['id'] != null ? map['id'] as int : null,
       type: map['type'] != null ? map['type'] as String : null,
@@ -160,7 +191,7 @@ class SharedWith {
   //     SharedWith.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
-class ResultItem {
+class ResultItemFolder {
   String? id;
   String? name;
   String? nameWithExtension;
@@ -177,4 +208,81 @@ class ResultItem {
   bool? isArchived;
   bool? isBackup;
   List<SharedWith>? shareWith;
+  ResultItemFolder(
+      {this.id,
+      this.name,
+      this.nameWithExtension,
+      this.type,
+      this.size,
+      this.isLocked,
+      this.isShortcut,
+      this.isUploading,
+      this.owerID,
+      this.accessScope,
+      this.targetAccessScope,
+      this.lastModified,
+      this.tags,
+      this.isArchived,
+      this.isBackup,
+      this.shareWith});
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'nameWithExtension': nameWithExtension,
+      'type': type,
+      'size': size,
+      'isLocked': isLocked,
+      'isShortcut': isShortcut,
+      'isUploading': isUploading,
+      'ownerID': owerID,
+      'accessScope': accessScope,
+      'targetAccessScope': targetAccessScope,
+      'lastModified': lastModified,
+      'tags': tags?.map((e) => e.toMap()).toList(),
+      'isArchived': isArchived,
+      'isBackup': isBackup,
+      'shareWith': shareWith?.map((e) => e.toMap()).toList(),
+    };
+  }
+
+  factory ResultItemFolder.fromMap(Map<String, dynamic> map) {
+    return ResultItemFolder(
+        id: map['id'] != null ? map['id'] as String : null,
+        name: map['name'] != null ? map['name'] as String : null,
+        nameWithExtension: map['nameWithExtension'] != null
+            ? map['nameWithExtension'] as String
+            : null,
+        type: map['type'] != null ? map['type'] as String : null,
+        size: map['size'] != null ? map['size'] as int : null,
+        isLocked: map['isLocked'] != null ? map['isLocked'] as bool : null,
+        isShortcut:
+            map['isShortcut'] != null ? map['isShortcut'] as bool : null,
+        isUploading:
+            map['isUploading'] != null ? map['isUploading'] as bool : null,
+        owerID: map['owerID'] != null ? map['isUploading'] as String : null,
+        accessScope:
+            map['accessScope'] != null ? map['accessScope'] as String : null,
+        targetAccessScope: map['targetAccessScope'] != null
+            ? map['targetAccessScope'] as String
+            : null,
+        lastModified:
+            map['lastModified'] != null ? map['lastModified'] as String : null,
+        tags: map['tags'] != null
+            ? List<Tags>.from((map['tags'] as List<int>)
+                .map<Tags>((e) => Tags.fromMap(e as Map<String, dynamic>)))
+            : null,
+        isArchived:
+            map['isArchived'] != null ? map['isArchived'] as bool : null,
+        isBackup: map['isBackup'] != null ? map['isBackup'] as bool? : null,
+        shareWith: map['shareWith'] != null
+            ? List<SharedWith>.from((map['shareWith'] as List<int>)
+                .map<SharedWith>(
+                    (e) => SharedWith.fromMap(e as Map<String, dynamic>)))
+            : null);
+  }
+  // String toJson() => json.encode(toMap());
+
+  // factory ResultItemFolder.fromJson(String source) => ResultItemFolder.fromMap(json.decode(source) as Map<String, dynamic>);
 }
