@@ -4,9 +4,6 @@ import 'package:document_appmobile/app/util/util.dart';
 import 'package:document_appmobile/app/widget/app_text_field.dart';
 import 'package:document_appmobile/app/widget/text_title.dart';
 import 'package:flutter/material.dart';
-import 'package:reactive_forms/reactive_forms.dart';
-
-import '../../../app/util/dio/dio_client.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,17 +16,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isPasswordVisible = true;
   // late AuthBloc _authBloc;
-  final DioClient dioClient = DioClient();
-  FormGroup get formgroup => fb.group({
-        'username': [
-          'huytq',
-          Validators.required,
-        ],
-        'password': [
-          '123456',
-          Validators.required,
-        ],
-      });
+
   @override
   Widget build(BuildContext context) {
     AppDimemsions().init(context);
@@ -60,37 +47,31 @@ class _LoginScreenState extends State<LoginScreen> {
               height: AppDimemsions.screenHeight / 43.4,
             ),
             Container(
-              padding: EdgeInsets.all(AppDimemsions.screenHeight / 43.4),
-              child: ReactiveForm(
-                  formGroup: formgroup,
-                  child: Column(
-                    children: [
-                      AppTextField(
-                        controlName: 'username',
-                        label: "UserName",
-                        isRequired: true,
-                        isPasswordVisible: false,
-                        formGroup: formgroup,
-                        nextFocusControlName: "password",
-                      ),
-                      SizedBox(
-                        height: AppDimemsions.screenHeight / 43.4,
-                      ),
-                      AppTextField(
-                        formGroup: formgroup,
-                        controlName: 'password',
-                        label: "Password",
-                        onTap: () {
-                          setState(() {
-                            isPasswordVisible = !isPasswordVisible;
-                          });
-                        },
-                        isPasswordVisible: isPasswordVisible,
-                        isRequired: true,
-                      ),
-                    ],
-                  )),
-            ),
+                padding: EdgeInsets.all(AppDimemsions.screenHeight / 43.4),
+                child: Column(
+                  children: [
+                    const AppTextField(
+                      controlName: 'username',
+                      label: "UserName",
+                      isRequired: true,
+                      isPasswordVisible: false,
+                    ),
+                    SizedBox(
+                      height: AppDimemsions.screenHeight / 43.4,
+                    ),
+                    AppTextField(
+                      controlName: 'password',
+                      label: "Password",
+                      onTap: () {
+                        setState(() {
+                          isPasswordVisible = !isPasswordVisible;
+                        });
+                      },
+                      isPasswordVisible: isPasswordVisible,
+                      isRequired: true,
+                    ),
+                  ],
+                )),
             SizedBox(height: AppDimemsions.screenHeight / 43.4),
             Container(
               // color: Colors.red,
@@ -100,10 +81,6 @@ class _LoginScreenState extends State<LoginScreen> {
               // width: ,
               child: ElevatedButton(
                 onPressed: () {
-                  if (formgroup.invalid) {
-                    formgroup.markAllAsTouched();
-                    return;
-                  }
                   // print('value $value');
                   // _authBloc.add(AuthLogin(loginUser: LoginUser.fromMap(value)));
                   Navigator.of(context)

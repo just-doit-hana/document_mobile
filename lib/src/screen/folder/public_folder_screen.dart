@@ -1,10 +1,13 @@
-import 'package:document_appmobile/app/util/dio/dio_client.dart';
 import 'package:document_appmobile/app/util/util.dart';
 import 'package:document_appmobile/app/widget/folder_list.dart';
+import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
+import 'package:document_appmobile/src/data/model/folder/folder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/widget/folder_grid.dart';
 import '../../../app/widget/widget.dart';
+import '../../data/repository/folder/folder_repo.dart';
 
 class PublicFolder extends StatefulWidget {
   const PublicFolder({Key? key}) : super(key: key);
@@ -16,60 +19,96 @@ class PublicFolder extends StatefulWidget {
 
 class _PublicFolderState extends State<PublicFolder> {
   bool isType = false;
-  int? count;
-  final DioClient dioClient = DioClient();
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              children: <Widget>[
-                Container(
-                    color: Colors.transparent,
-                    padding: const EdgeInsets.only(top: 10),
-                    // width: double.infinity,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextSeachButton(
-                            onPressed: (() {
-                              ShowModalSearchName(context);
-                            }),
-                            title: 'Name',
-                            iconData: Icons.arrow_upward_outlined),
-                        const TextSeachButton(
-                            title: 'Label',
-                            iconData: Icons.arrow_upward_outlined),
-                        IconButton(
-                            onPressed: () {
-                              setState(() {
-                                isType = !isType;
-                              });
-                            },
-                            icon: isType
-                                ? const Icon(Icons.grid_view_outlined)
-                                : const Icon(Icons.list_outlined)),
-                      ],
-                    )),
-                isType ? (const FolderGrid()) : (FolderList()),
-              ],
-            ),
-          ),
+    return BlocProvider(
+      create: (context) =>
+          FolderBloc((RepositoryProvider.of<FolderRepository>(context)))
+            ..add(LoadFolderPublicEvent()),
+      child: BlocListener<FolderBloc, FolderState>(
+        listener: (context, state) {
+          if (state is FolderErrorState) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.error)));
+          }
+        },
+        child: BlocBuilder<FolderBloc, FolderState>(
+          builder: (context, state) {
+            if (state is FolderLoadingState) {
+              return _buildLoading();
+            }
+            return RefreshIndicator(
+              onRefresh: (() async =>
+                  context.read<FolderBloc>().add(LoadFolderPublicEvent())),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                              color: Colors.transparent,
+                              padding: const EdgeInsets.only(top: 10),
+                              width: double.infinity,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextSeachButton(
+                                      onPressed: (() {
+                                        _showModalSearchName(context);
+                                      }),
+                                      title: 'Name',
+                                      iconData: Icons.arrow_upward_outlined),
+                                  const TextSeachButton(
+                                      title: 'Label',
+                                      iconData: Icons.arrow_upward_outlined),
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isType = !isType;
+                                        });
+                                      },
+                                      icon: isType
+                                          ? const Icon(Icons.grid_view_outlined)
+                                          : const Icon(Icons.list_outlined)),
+                                ],
+                              )),
+                          isType
+                              ? (const FolderGrid())
+                              : (BlocBuilder<FolderBloc, FolderState>(
+                                  builder: (context, state) {
+                                    if (state is FolderLoadedState) {
+                                      Result folderList = state.folder;
+                                      return FolderList(
+                                        folder: folderList,
+                                      );
+                                    }
+                                    return Container();
+                                  },
+                                )),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
-      ],
+      ),
     );
   }
 
+  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
+
   // ignore: non_constant_identifier_names
-  Future<dynamic> ShowModalSearchName(BuildContext context) {
+  _showModalSearchName(BuildContext context) {
     return showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: Colors.transparent,

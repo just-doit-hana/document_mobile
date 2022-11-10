@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reactive_forms/reactive_forms.dart';
 
 class AppTextField extends StatelessWidget {
   const AppTextField({
@@ -9,9 +8,7 @@ class AppTextField extends StatelessWidget {
     this.isRequired = false,
     this.maxLines = 1,
     this.hintText,
-    this.onSubmitted,
-    this.nextFocusControlName,
-    this.formGroup,
+    // this.formGroup,
     this.autofocus = false,
     this.isPasswordVisible = false,
     this.onTap,
@@ -22,34 +19,17 @@ class AppTextField extends StatelessWidget {
   final bool isRequired;
   final int maxLines;
   final String? hintText;
-  final void Function(FormControl<Object?>)? onSubmitted;
-  final String? nextFocusControlName;
-  final FormGroup? formGroup;
   final bool autofocus;
   final bool isPasswordVisible;
-  // final bool isPasswordVisible;
-  final Function()? onTap;
-  _onSubmit(FormControl<Object?> control) {
-    if (onSubmitted != null) {
-      onSubmitted!(control);
-    }
-
-    if (nextFocusControlName != null && formGroup != null) {
-      formGroup!.focus(nextFocusControlName!);
-    }
-  }
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return ReactiveTextField(
+    return TextField(
       obscureText: controlName == 'password' ? isPasswordVisible : false,
       autofocus: autofocus,
       maxLines: maxLines,
       keyboardType: maxLines > 1 ? TextInputType.multiline : TextInputType.text,
-      formControlName: controlName,
-      validationMessages: isRequired
-          ? {'required': (error) => '$label can not be empty'}
-          : null,
       decoration: InputDecoration(
         suffixIcon: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -73,7 +53,7 @@ class AppTextField extends StatelessWidget {
         ),
         labelText: maxLines > 1 ? null : "$label${isRequired ? "*" : ""}",
       ),
-      onSubmitted: _onSubmit,
+      // onSubmitted: _onSubmit,
     );
   }
 }

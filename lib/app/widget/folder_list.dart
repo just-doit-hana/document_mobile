@@ -1,26 +1,15 @@
 import 'package:document_appmobile/app/animation/routes_animation.dart';
-import 'package:document_appmobile/app/helper/format_date_time.dart';
 import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
 import 'package:document_appmobile/src/data/model/folder/folder.dart';
 import 'package:document_appmobile/src/screen/folder/folder_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/widget/widget.dart';
-import '../../src/data/repository/folder/folder_repo.dart';
 
 // ignore: must_be_immutable
-class FolderList extends StatefulWidget {
-  FolderList({
-    Key? key,
-  }) : super(key: key);
-  @override
-  // ignore: library_private_types_in_public_api
-  _FolderListState createState() => _FolderListState();
-}
-
-class _FolderListState extends State<FolderList> {
+class FolderList extends StatelessWidget {
+  const FolderList({Key? key, required this.folder}) : super(key: key);
+  final Result folder;
   Widget imgIcon(String iconImage, {double height = 28.0, width = 28.0}) {
     return Image.asset(
       '${AppImage.path}/$iconImage',
@@ -32,73 +21,49 @@ class _FolderListState extends State<FolderList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) =>
-            FolderBloc((RepositoryProvider.of<FolderRepository>(context)))
-              ..add(LoadFolderPublicEvent()),
-        child: BlocBuilder<FolderBloc, FolderState>(
-          builder: (context, state) {
-            if (state is FolderLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state is FolderLoadedState) {
-              Result folderList = state.folder;
-              return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: folderList.subFolders.length,
-                  itemBuilder: ((context, index) {
-                    return Column(
-                      children: [
-                        GestureDetector(
-                          onDoubleTap: () {
-                            Navigator.of(context).push(CustomRoutesPage(
-                                widget: FolderDetail(
-                              id: index,
-                              subFolders: folderList.subFolders,
-                            )));
-                          },
-                          child: Card(
-                              child: ListTile(
-                                  title:
-                                      Text(folderList.subFolders[index].name),
-                                  subtitle: Text(formatDateTime(
-                                      '2022-10-27T09:17:46.453697',
-                                      hastime: false)),
-                                  leading: imgIcon(AppImage.iconFolder),
-                                  trailing: ElevatedButton(
-                                      onPressed: () {
-                                        ShowModalSearchName(context);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        elevation: 0.0,
-                                        backgroundColor:
-                                            Colors.red.withOpacity(0),
-                                        shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(2),
-                                            ),
-                                            side: BorderSide(
-                                                color: Colors.white)),
-                                      ),
-                                      child: const Icon(
-                                        Icons.more_vert_outlined,
-                                        color: Colors.black54,
-                                      )))),
-                        ),
-                      ],
-                    );
-                  }));
-            }
-            if (state is FolderErrorState) {
-              return const Center(
-                child: Text('Error'),
-              );
-            }
-            return Container();
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
+      itemCount: folder.subFolders.length,
+      itemBuilder: ((context, index) {
+        return GestureDetector(
+          onDoubleTap: () {
+            Navigator.of(context).push(CustomRoutesPage(
+                widget: FolderDetail(
+              id: index,
+              subFolders: folder.subFolders,
+            )));
           },
-        ));
+          child: Card(
+              child: ListTile(
+                  title: Text(folder.subFolders[index].name),
+                  // subtitle: Text(formatDateTime(
+                  //     '2022-10-27T09:17:46.453697',
+                  //     hastime: false)),
+                  leading: imgIcon(AppImage.iconFolder),
+                  trailing: ElevatedButton(
+                      onPressed: () {
+                        // ShowModalSearchName(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0.0,
+                        backgroundColor: Colors.red.withOpacity(0),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(2),
+                            ),
+                            side: BorderSide(color: Colors.white)),
+                      ),
+                      child: const Icon(
+                        Icons.more_vert_outlined,
+                        color: Colors.black54,
+                      )))),
+        );
+      }),
+    );
+    // }
+
+    // );
   }
 
   // ignore: non_constant_identifier_names

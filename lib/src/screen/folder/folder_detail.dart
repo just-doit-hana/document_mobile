@@ -1,4 +1,3 @@
-import 'package:document_appmobile/app/widget/folder_list.dart';
 import 'package:document_appmobile/src/data/model/folder/folder.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +10,6 @@ class FolderDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(subFolders[id].name)),
-      body: FolderList(),
     );
   }
 }
