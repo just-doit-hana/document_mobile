@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../util.dart';
 
@@ -28,19 +29,19 @@ class DioClient {
           HttpHeaders.authorizationHeader:
               'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiJkMjEzMjQ3Zi0wMDU1LTQ5YzctOGNmMi05ZTI4N2ZhYTM1MDkiLCJFbWFpbCI6InRhc2ttYW5hZ21lbnRAaGlzb2Z0LnZuIiwiRmlyc3ROYW1lIjoiVGFzayIsIkxhc3ROYW1lIjoiTWFuYWdlbWVudCIsIlVzZXJOYW1lIjoidGFza21hbmFnZW1lbnQiLCJEZXBhcnRtZW50SWQiOiIzNjYiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsIk1vZHVsZXMiOlsiVEVTVCBLIERPTkcgQk8iLCJBU1NFVCIsIkxJQlJBUlkiLCJMTVMiLCJET0NVTUVOVCIsIlRBU0sgTUFOQUdFUiIsIklUIEFTU0VUIl0sIlBob25lTnVtYmVyIjoiMDEyMzQ1Njc4OSIsImV4cCI6MTY2NzU0NDQ5NSwiaXNzIjoiVmlldEpldF9BcGlHYXRld2F5IiwiYXVkIjoiVmlldEpldF9BcGlHYXRld2F5In0.6ThKmCgOpt9_vycxqJHz7UUGhMdvZFbC32BkOGF4YLg'
         }));
-    // dio.interceptors.addAll([
-    //   //  LoggerInterceptor(),
-    //   //         AuthorizationInterceptor(),
-    //   if (AppConstant.DIO_CLIENT_DEBUG_LOG)
-    //     PrettyDioLogger(
-    //         requestHeader: true,
-    //         requestBody: true,
-    //         responseBody: true,
-    //         responseHeader: true,
-    //         error: true,
-    //         compact: true,
-    //         maxWidth: 90)
-    // ]);
+    dio.interceptors.addAll([
+      //  LoggerInterceptor(),
+      //         AuthorizationInterceptor(),
+      if (AppConstant.DIO_CLIENT_DEBUG_LOG)
+        PrettyDioLogger(
+            requestHeader: true,
+            requestBody: true,
+            responseBody: true,
+            responseHeader: true,
+            error: true,
+            compact: true,
+            maxWidth: 90)
+    ]);
 
     // DioClient()
     //     : _dio = Dio(BaseOptions(

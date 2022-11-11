@@ -13,7 +13,6 @@ class FolderItemResponse {
     this.isError,
     this.message,
   });
-  
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -27,8 +26,16 @@ class FolderItemResponse {
 
   factory FolderItemResponse.fromMap(Map<String, dynamic> map) {
     return FolderItemResponse(
-      pagination: map['pagination'] != null ? Pagination.fromMap(map['pagination'] as Map<String,dynamic>) : null,
-      result: map['result'] != null ? List<ResultItemFolder>.from((map['result'] as List<int>).map<ResultItemFolder?>((x) => ResultItemFolder.fromMap(x as Map<String,dynamic>),),) : null,
+      pagination: map['pagination'] != null
+          ? Pagination.fromMap(map['pagination'] as Map<String, dynamic>)
+          : null,
+      result: map['result'] != null
+          ? List<ResultItemFolder>.from(
+              (map['result'] as List<int>).map<ResultItemFolder?>(
+                (x) => ResultItemFolder.fromJson(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
       statusCode: map['statusCode'] != null ? map['statusCode'] as int : null,
       isError: map['isError'] != null ? map['isError'] as bool : null,
       message: map['message'] != null ? map['message'] as String : null,
@@ -247,7 +254,7 @@ class ResultItemFolder {
     };
   }
 
-  factory ResultItemFolder.fromMap(Map<String, dynamic> map) {
+  factory ResultItemFolder.fromJson(Map<String, dynamic> map) {
     return ResultItemFolder(
         id: map['id'] != null ? map['id'] as String : null,
         name: map['name'] != null ? map['name'] as String : null,

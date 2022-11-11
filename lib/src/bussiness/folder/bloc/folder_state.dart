@@ -47,3 +47,27 @@ class FolderPrivateErrorState extends FolderState {
   @override
   List<Object?> get props => [error];
 }
+
+class FolderItemLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class FolderItemLoaded extends FolderState {
+  final String id;
+  final FolderItemResponse resultItemFolder;
+
+  FolderItemLoaded({required this.id, required this.resultItemFolder});
+
+  @override
+  List<Object?> get props => [id, resultItemFolder];
+}
+
+class FolderItemErrorState extends FolderState {
+  final String error;
+  FolderItemErrorState(
+    this.error,
+  );
+  @override
+  List<Object?> get props => [error];
+}

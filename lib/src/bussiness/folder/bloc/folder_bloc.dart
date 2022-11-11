@@ -1,3 +1,4 @@
+import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,8 +21,20 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
         emit(FolderErrorState(e.toString()));
       }
     });
+
     on<LoadFolderPrivateEvent>((event, emit) {
       // emit()
+    });
+
+    on<LoadFolderItemEvent>((event, emit) async {
+      emit(FolderItemLoading());
+      try {
+        final resultItemFolder = _folderRepository.listItemPublic(event.id!);
+        emit(FolderItemLoaded(
+            id: event.id!, resultItemFolder: resultItemFolder as dynamic));
+      } catch (e) {
+        emit(FolderItemErrorState(e.toString()));
+      }
     });
   }
 }

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../src/data/model/folder/folder.dart';
 import '../util/util.dart';
 
-class FolderGrid extends StatefulWidget {
-  const FolderGrid({
+// ignore: must_be_immutable
+class FolderGrid extends StatelessWidget {
+  FolderGrid({
     Key? key,
+    required this.folderGrid,
   }) : super(key: key);
-
-  @override
-  State<FolderGrid> createState() => _FolderGridState();
-}
-
-class _FolderGridState extends State<FolderGrid> {
+  final Result folderGrid;
   int? count;
 
   @override
@@ -29,7 +27,7 @@ class _FolderGridState extends State<FolderGrid> {
       crossAxisSpacing: 2,
       mainAxisSpacing: 3,
       childAspectRatio: 1.2,
-      children: List.generate(20, (index) {
+      children: List.generate(folderGrid.subFolders.length, (index) {
         return Card(
           // elevation: 20,
           color: Colors.transparent,
@@ -43,7 +41,7 @@ class _FolderGridState extends State<FolderGrid> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image.asset(
-                  '${AppImage.path}/${AppImage.iconWord}',
+                  '${AppImage.path}/${AppImage.iconFolder}',
                   fit: BoxFit.cover,
                   height: 70,
                   width: 70,
@@ -56,16 +54,19 @@ class _FolderGridState extends State<FolderGrid> {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: Text(
-                          'It Department Vietjet',
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: HexColor.fromHex(AppColor.blackTextColor),
-                            fontWeight: FontWeight.w400,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 0),
+                          child: Text(
+                            folderGrid.subFolders[index].name,
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: HexColor.fromHex(AppColor.blackTextColor),
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ),
