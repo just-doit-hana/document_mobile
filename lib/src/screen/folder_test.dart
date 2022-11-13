@@ -63,7 +63,7 @@ class _FolderListState extends State<FolderList> {
                                 Navigator.of(context).push(CustomRoutesPage(
                                     widget: FolderDetail(
                                   id: index,
-                                  subFolders: folderList.subFolders,
+                                  subFolders: folderList,
                                 )));
                               },
                               child: Card(
