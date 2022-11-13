@@ -18,9 +18,9 @@ class LoadFolderPrivateEvent extends FolderEvent {
 
 class LoadFolderItemEvent extends FolderEvent {
   final String? id;
-  LoadFolderItemEvent({
-    this.id,
-  });
+  final FolderItemResponse? resultItemFolder;
+
+  const LoadFolderItemEvent({this.id, this.resultItemFolder});
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, resultItemFolder];
 }

@@ -34,12 +34,12 @@ class DioClient {
       //         AuthorizationInterceptor(),
       if (AppConstant.DIO_CLIENT_DEBUG_LOG)
         PrettyDioLogger(
-            requestHeader: true,
-            requestBody: true,
+            requestHeader: false,
+            requestBody: false,
             responseBody: true,
-            responseHeader: true,
+            responseHeader: false,
             error: true,
-            compact: true,
+            compact: false,
             maxWidth: 90)
     ]);
 

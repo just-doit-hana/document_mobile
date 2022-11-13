@@ -1,3 +1,6 @@
+// ignore_for_file: unused_field
+
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:document_appmobile/app/enum/data_status.dart';
 import 'package:document_appmobile/src/data/model/login/login_user.dart';

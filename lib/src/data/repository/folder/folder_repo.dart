@@ -32,27 +32,40 @@ class FolderRepository {
     }
   }
 
-  Future<dynamic> listItemPublic(String id) async {
+  Future<FolderItemResponse?> listItemPublic(String id) async {
     try {
       final res = await _dioClient
           .get('${Endpoints.ENDPOINTDOC}metadata/folders/items?id=$id');
-      var folderItem = res.data['result'];
-      print(folderItem);
-      final value = FolderItemResponse.fromMap(folderItem);
+      var folder = res.data;
+      final value = FolderItemResponse.fromJson(folder);
       return value;
     } on DioError catch (e) {
       final errorMessage = DiorException.fromDioError(e).toString();
       throw errorMessage;
     } catch (e) {
       if (kDebugMode) {
-        print(e);
+        print('Test $e');
       }
-      throw e.toString();
+      // throw e.toString();
     }
+    return null;
   }
-}
 
-
+  // Future<List<TestNoMap>> getTest() async {
+  //   try {
+  //     final res = await _dioClient
+  //         .get('https://taskapi.hisoft.vn/api/Domain?PageSize=50');
+  //     return [];
+  //   } on DioError catch (e) {
+  //     final errorMessage = DiorException.fromDioError(e).toString();
+  //     throw errorMessage;
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print(e);
+  //     }
+  //     throw e.toString();
+  //   }
+  // }
 
 // Future<List<FolderModel>> getUser() async {
 //   String endpoint = 'https://reqres.in/api/users?page=2';
@@ -63,3 +76,4 @@ class FolderRepository {
 //     return result.map((e) => FolderModel.fromJson(e)).toList();
 //   } else {
 //     throw Exception(response.reasonPhrase);
+}

@@ -1,50 +1,29 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 class FolderItemResponse {
-  Pagination? pagination;
-  List<ResultItemFolder>? result;
-  int? statusCode;
-  bool? isError;
-  String? message;
+  late Pagination pagination;
+  late List<ResultItemFolder> result;
+  late int statusCode;
+  late bool isError;
+  late String message;
   FolderItemResponse({
-    this.pagination,
-    this.result,
-    this.statusCode,
-    this.isError,
-    this.message,
+    required this.pagination,
+    required this.result,
+    required this.statusCode,
+    required this.isError,
+    required this.message,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'pagination': pagination?.toMap(),
-      'result': result?.map((x) => x.toMap()).toList(),
-      'statusCode': statusCode,
-      'isError': isError,
-      'message': message,
-    };
+  FolderItemResponse.fromJson(Map<String, dynamic> json) {
+    pagination = Pagination.fromMap(json['pagination']);
+    statusCode = json['statusCode'];
+    isError = json['isError'] ?? '';
+    message = json['message'];
+    // if (json['result'] != null) {
+    json['result'].forEach((v) {
+      result = <ResultItemFolder>[];
+      result.add(ResultItemFolder.fromJson(v));
+    });
   }
-
-  factory FolderItemResponse.fromMap(Map<String, dynamic> map) {
-    return FolderItemResponse(
-      pagination: map['pagination'] != null
-          ? Pagination.fromMap(map['pagination'] as Map<String, dynamic>)
-          : null,
-      result: map['result'] != null
-          ? List<ResultItemFolder>.from(
-              (map['result'] as List<int>).map<ResultItemFolder?>(
-                (x) => ResultItemFolder.fromJson(x as Map<String, dynamic>),
-              ),
-            )
-          : null,
-      statusCode: map['statusCode'] != null ? map['statusCode'] as int : null,
-      isError: map['isError'] != null ? map['isError'] as bool : null,
-      message: map['message'] != null ? map['message'] as String : null,
-    );
-  }
-
-  // String toJson() => json.encode(toMap());
-
-  // factory FolderItemResponse.fromJson(String source) => FolderItemResponse.fromMap(json.decode(source) as Map<String, dynamic>);
+  // }
 }
 
 class Pagination {
@@ -52,8 +31,8 @@ class Pagination {
   int? maxPageSize;
   int? currentPage;
   int? totalPages;
-  bool hasNext;
-  bool hasPrevious;
+  bool? hasNext;
+  bool? hasPrevious;
   Pagination({
     this.totalCount,
     this.maxPageSize,
@@ -63,33 +42,14 @@ class Pagination {
     this.hasPrevious = false,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'totalCount': totalCount,
-      'maxPageSize': maxPageSize,
-      'currentPage': currentPage,
-      'totalPages': totalPages,
-      'hasNext': hasNext,
-      'hasPrevious': hasPrevious
-    };
+  Pagination.fromMap(Map<String, dynamic> map) {
+    totalCount = map['totalCount'];
+    maxPageSize = map['maxPageSize'];
+    currentPage = map['currentPage'];
+    totalPages = map['totalPages'];
+    hasNext = map['hasNext'];
+    hasPrevious = map['hasPrevious'];
   }
-
-  factory Pagination.fromMap(Map<String, dynamic> map) {
-    return Pagination(
-      totalCount: map['totalCount'] != null ? map['toltalCount'] as int : null,
-      maxPageSize:
-          map['maxPageSize'] != null ? map['maxPageSize'] as int : null,
-      currentPage:
-          map['currentPage'] != null ? map['currentPage'] as int : null,
-      totalPages: map['totalPages'] != null ? map['totalPages'] as int : null,
-      hasNext: map['hasNext'] as bool,
-      hasPrevious: map['hasPrevious'] as bool,
-    );
-  }
-  // String toJson() => json.encode(toMap());
-
-  // factory Pagination.fromJson(String source) =>
-  //     Pagination.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class Tags {
@@ -148,11 +108,6 @@ class ValueShareWith {
           map['departmentID'] != null ? map['departmentID'] as int : null,
     );
   }
-
-  // String toJson() => json.encode(toMap());
-
-  // factory ValueShareWith.fromJson(String source) =>
-  //     ValueShareWith.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class SharedWith {
@@ -191,11 +146,6 @@ class SharedWith {
           map['expiration'] != null ? map['expiration'] as String : null,
     );
   }
-
-  // String toJson() => json.encode(toMap());
-
-  // factory SharedWith.fromJson(String source) =>
-  //     SharedWith.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class ResultItemFolder {
@@ -277,19 +227,16 @@ class ResultItemFolder {
         lastModified:
             map['lastModified'] != null ? map['lastModified'] as String : null,
         tags: map['tags'] != null
-            ? List<Tags>.from((map['tags'] as List<int>)
+            ? List<Tags>.from((map['tags'] as List<dynamic>)
                 .map<Tags>((e) => Tags.fromMap(e as Map<String, dynamic>)))
             : null,
         isArchived:
             map['isArchived'] != null ? map['isArchived'] as bool : null,
         isBackup: map['isBackup'] != null ? map['isBackup'] as bool? : null,
         shareWith: map['shareWith'] != null
-            ? List<SharedWith>.from((map['shareWith'] as List<int>)
+            ? List<SharedWith>.from((map['shareWith'] as List<dynamic>)
                 .map<SharedWith>(
                     (e) => SharedWith.fromMap(e as Map<String, dynamic>)))
             : null);
   }
-  // String toJson() => json.encode(toMap());
-
-  // factory ResultItemFolder.fromJson(String source) => ResultItemFolder.fromMap(json.decode(source) as Map<String, dynamic>);
 }

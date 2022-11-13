@@ -8,6 +8,7 @@ part 'file_state.dart';
 class FileBloc extends Bloc<FileEvent, FileState> {
   FileBloc() : super(FileInitial()) {
     on<FileEvent>((event, emit) {
+      // ignore: todo
       // TODO: implement event handler
     });
   }

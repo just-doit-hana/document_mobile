@@ -54,10 +54,10 @@ class FolderItemLoading extends FolderState {
 }
 
 class FolderItemLoaded extends FolderState {
-  final String id;
-  final FolderItemResponse resultItemFolder;
+  final String? id;
+  final FolderItemResponse? resultItemFolder;
 
-  FolderItemLoaded({required this.id, required this.resultItemFolder});
+  FolderItemLoaded(this.id, this.resultItemFolder);
 
   @override
   List<Object?> get props => [id, resultItemFolder];

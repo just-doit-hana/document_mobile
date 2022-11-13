@@ -1,4 +1,5 @@
 class Endpoints {
+  // ignore: constant_identifier_names
   static const ENDPOINTDOC = 'https://docgatewayapi.hisoft.vn/';
   // static const _apiVersion = "/api";
 

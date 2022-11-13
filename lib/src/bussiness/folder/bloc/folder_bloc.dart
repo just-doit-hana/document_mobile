@@ -29,9 +29,8 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     on<LoadFolderItemEvent>((event, emit) async {
       emit(FolderItemLoading());
       try {
-        final resultItemFolder = _folderRepository.listItemPublic(event.id!);
-        emit(FolderItemLoaded(
-            id: event.id!, resultItemFolder: resultItemFolder as dynamic));
+        final res = await _folderRepository.listItemPublic(event.id!);
+        emit(FolderItemLoaded(event.id!, res));
       } catch (e) {
         emit(FolderItemErrorState(e.toString()));
       }
