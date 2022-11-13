@@ -1,10 +1,11 @@
-import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
-import 'package:document_appmobile/src/data/model/folder/folder.dart';
-import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
+// ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// ignore: must_be_immutable
+import '../../bussiness/folder/bloc/folder_bloc.dart';
+import '../../data/model/folder/folder.dart';
+import '../../data/model/folder/folder_item.dart';
+
 class FolderDetail extends StatelessWidget {
   FolderDetail({Key? key, required this.subFolders, required this.id})
       : super(key: key);

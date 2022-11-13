@@ -48,6 +48,7 @@ class EntryItem extends StatelessWidget {
   const EntryItem(this.entry, {super.key});
 
   final Entry entry;
+
   Widget _buildTiles(Entry root, {int level = 0}) {
     if (root.children.isEmpty) return ListTile(title: Text(root.title));
     return ExpansionTile(

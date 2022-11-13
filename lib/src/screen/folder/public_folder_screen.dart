@@ -1,13 +1,12 @@
-import 'package:document_appmobile/app/util/dio/dio_client.dart';
 import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/app/widget/folder_list.dart';
 import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
-import 'package:document_appmobile/src/data/model/folder/folder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/widget/folder_grid.dart';
+import '../../../app/widget/folder_list.dart';
 import '../../../app/widget/widget.dart';
+import '../../data/model/folder/folder.dart';
 
 class PublicFolder extends StatefulWidget {
   const PublicFolder({Key? key}) : super(key: key);
@@ -19,9 +18,6 @@ class PublicFolder extends StatefulWidget {
 
 class _PublicFolderState extends State<PublicFolder> {
   bool isType = false;
-  int? count;
-  final DioClient dioClient = DioClient();
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -97,8 +93,10 @@ class _PublicFolderState extends State<PublicFolder> {
     );
   }
 
+  Widget _buildLoading() => const Center(child: CircularProgressIndicator());
+
   // ignore: non_constant_identifier_names
-  Future<dynamic> ShowModalSearchName(BuildContext context) {
+  _showModalSearchName(BuildContext context) {
     return showModalBottomSheet(
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
