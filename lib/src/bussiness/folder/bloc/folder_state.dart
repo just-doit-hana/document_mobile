@@ -71,3 +71,26 @@ class FolderItemErrorState extends FolderState {
   @override
   List<Object?> get props => [error];
 }
+
+class DomainLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class DomainLoaded extends FolderState {
+  final List<TestNoMap>? domain;
+
+  DomainLoaded(this.domain);
+
+  @override
+  List<Object?> get props => [domain];
+}
+
+class DomainErrorState extends FolderState {
+  final String error;
+  DomainErrorState(
+    this.error,
+  );
+  @override
+  List<Object?> get props => [error];
+}

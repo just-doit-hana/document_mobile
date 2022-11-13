@@ -24,3 +24,8 @@ class LoadFolderItemEvent extends FolderEvent {
   @override
   List<Object?> get props => [id, resultItemFolder];
 }
+
+class DomainEvent extends FolderEvent {
+  @override
+  List<Object?> get props => [];
+}

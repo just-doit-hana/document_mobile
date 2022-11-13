@@ -1,4 +1,5 @@
 import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
+import 'package:document_appmobile/src/data/model/folder/folder_test_no.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,15 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
         emit(FolderItemLoaded(event.id!, res));
       } catch (e) {
         emit(FolderItemErrorState(e.toString()));
+      }
+    });
+    on<DomainEvent>((event, emit) async {
+      emit(DomainLoading());
+      try {
+        final domain = await _folderRepository.getTest();
+        emit(DomainLoaded(domain));
+      } catch (e) {
+        emit(DomainErrorState(e.toString()));
       }
     });
   }

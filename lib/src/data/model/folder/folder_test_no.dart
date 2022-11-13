@@ -7,24 +7,22 @@ class TestNoMap {
     this.id,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'name': name,
       'id': id,
     };
   }
 
-  factory TestNoMap.fromMap(Map<String, dynamic> map) {
-    return TestNoMap(
-      name: map['name'] != null ? map['name'] as String : null,
-      id: map['id'] != null ? map['id'] as String : null,
-    );
+  TestNoMap.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    id = json['id'];
   }
 }
 
 //  [
 //   {
-//     "name": "System Management",
+//     "name"= "System Management",
 //     "id": "7f3eced9-5505-498b-9c95-85c33919d5ff"
 //   },
 //   {

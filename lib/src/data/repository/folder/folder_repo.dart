@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import '../../../../app/util/dio/dio_client.dart';
 import '../../../../app/util/dio/dio_exception.dart';
 import '../../model/folder/folder.dart';
+import '../../model/folder/folder_test_no.dart';
 
 class FolderRepository {
   FolderRepository({
@@ -44,36 +45,27 @@ class FolderRepository {
       throw errorMessage;
     } catch (e) {
       if (kDebugMode) {
-        print('Test $e');
+        print('Error $e');
       }
-      // throw e.toString();
+      throw e.toString();
     }
-    return null;
   }
 
-  // Future<List<TestNoMap>> getTest() async {
-  //   try {
-  //     final res = await _dioClient
-  //         .get('https://taskapi.hisoft.vn/api/Domain?PageSize=50');
-  //     return [];
-  //   } on DioError catch (e) {
-  //     final errorMessage = DiorException.fromDioError(e).toString();
-  //     throw errorMessage;
-  //   } catch (e) {
-  //     if (kDebugMode) {
-  //       print(e);
-  //     }
-  //     throw e.toString();
-  //   }
-  // }
-
-// Future<List<FolderModel>> getUser() async {
-//   String endpoint = 'https://reqres.in/api/users?page=2';
-
-//   final response = await http.get(Uri.parse(endpoint));
-//   if (response.statusCode == 200) {
-//     final List result = jsonDecode(response.body)['data'];
-//     return result.map((e) => FolderModel.fromJson(e)).toList();
-//   } else {
-//     throw Exception(response.reasonPhrase);
+  Future<List<TestNoMap>> getTest() async {
+    try {
+      final res = await _dioClient
+          .get('https://taskapi.hisoft.vn/api/Domain?PageSize=50');
+      final domain =
+          (res.data as List).map((json) => TestNoMap.fromJson(json)).toList();
+      return domain;
+    } on DioError catch (e) {
+      final errorMessage = DiorException.fromDioError(e).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      throw e.toString();
+    }
+  }
 }
