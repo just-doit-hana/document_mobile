@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of './folder_bloc.dart';
 
 @immutable
@@ -10,9 +11,7 @@ class FolderLoadingState extends FolderState {
 
 class FolderLoadedState extends FolderState {
   final Result folder;
-  FolderLoadedState(
-    this.folder,
-  );
+  FolderLoadedState({required this.folder});
   @override
   List<Object?> get props => [folder];
 }
@@ -66,6 +65,28 @@ class FolderItemLoaded extends FolderState {
 class FolderItemErrorState extends FolderState {
   final String error;
   FolderItemErrorState(
+    this.error,
+  );
+  @override
+  List<Object?> get props => [error];
+}
+
+class FolderRecycleLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class FolderRecycleLoaded extends FolderState {
+  final FolderItemResponse recycleBin;
+
+  FolderRecycleLoaded(this.recycleBin);
+  @override
+  List<Object?> get props => [recycleBin];
+}
+
+class FolderRecyleError extends FolderState {
+  final String error;
+  FolderRecyleError(
     this.error,
   );
   @override

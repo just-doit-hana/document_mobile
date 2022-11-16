@@ -1,13 +1,20 @@
+import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExpansionTileExample extends StatelessWidget {
   const ExpansionTileExample({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (BuildContext context, int index) => EntryItem(data[index]),
-      itemCount: data.length,
+    return BlocProvider(
+      create: (context) => FolderBloc(RepositoryProvider.of(context))
+        ..add(LoadFolderPublicEvent()),
+      child: ListView.builder(
+        itemBuilder: (BuildContext context, int index) =>
+            EntryItem(data[index]),
+        itemCount: data.length,
+      ),
     );
   }
 }

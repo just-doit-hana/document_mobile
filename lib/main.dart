@@ -2,9 +2,7 @@ import 'dart:io';
 
 import 'package:document_appmobile/app.dart';
 import 'package:document_appmobile/app/helper/shared_preference.dart';
-import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
 import 'package:document_appmobile/src/bussiness/theme/bloc/theme_bloc.dart';
-import 'package:document_appmobile/src/screen/folder/public_folder_screen.dart';
 import 'package:document_appmobile/src/screen/splash/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

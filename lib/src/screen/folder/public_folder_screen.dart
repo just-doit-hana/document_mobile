@@ -52,7 +52,7 @@ class _PublicFolderState extends State<PublicFolder> {
                             children: [
                               TextSeachButton(
                                   onPressed: (() {
-                                    ShowModalSearchName(context);
+                                    // ShowModalSearchName(context);
                                   }),
                                   title: 'Name',
                                   iconData: Icons.arrow_upward_outlined),
@@ -82,10 +82,6 @@ class _PublicFolderState extends State<PublicFolder> {
                 ),
               );
             }
-            // else if(state is FolderErrorState ){
-            //     return Text('Error');
-            // }
-
             return Container();
           },
         ),

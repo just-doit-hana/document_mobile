@@ -1,4 +1,5 @@
 import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
+import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
 import 'package:document_appmobile/src/data/model/folder/folder_test_no.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,29 +16,30 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          FolderBloc(RepositoryProvider.of(context))..add(DomainEvent()),
+      create: (context) => FolderBloc(RepositoryProvider.of(context))
+        ..add(LoadFolderRecycleBinEvent()),
       child: BlocListener<FolderBloc, FolderState>(
         listener: (context, state) {
-          if (state is DomainErrorState) {
+          if (state is FolderRecyleError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
         child: BlocBuilder<FolderBloc, FolderState>(
           builder: (context, state) {
-            if (state is DomainLoaded) {
-              List<TestNoMap> domain = state.domain!;
+            if (state is FolderRecycleLoaded) {
+              // List<TestNoMap> domain = state.domain!;
+              FolderItemResponse recycleBin = state.recycleBin;
               return Scaffold(
                   appBar: AppBar(title: const Text('Recycle Bin')),
                   body: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: domain.length,
+                      itemCount: recycleBin.result.length,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
-                            Text(domain[index].name!),
-                            Text(domain[index].id!)
+                            Text(recycleBin.result[index].nameWithExtension!),
+                            Text(recycleBin.result[index].id!)
                           ],
                         );
                       }));

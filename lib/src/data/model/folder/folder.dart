@@ -42,7 +42,7 @@ class Result {
   Result({
     required this.id,
     required this.name,
-    required this.subFolders,
+    this.subFolders = const <Result>[],
     required this.hasFiles,
   });
 

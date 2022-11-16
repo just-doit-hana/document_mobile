@@ -55,7 +55,7 @@ class FolderGrid extends StatelessWidget {
                       Expanded(
                         flex: 2,
                         child: Padding(
-                          padding: EdgeInsets.only(left: 0),
+                          padding: const EdgeInsets.only(left: 0),
                           child: Text(
                             folderGrid.subFolders[index].name,
                             textAlign: TextAlign.center,
