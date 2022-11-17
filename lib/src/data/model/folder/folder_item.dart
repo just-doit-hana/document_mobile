@@ -1,3 +1,6 @@
+import '../pagination/pagination.dart';
+import '../tags/tags.dart';
+
 class FolderItemResponse {
   Pagination? pagination;
   late List<ResultItemFolder> result;
@@ -23,48 +26,6 @@ class FolderItemResponse {
       result.add(ResultItemFolder.fromJson(v));
     });
     // }
-  }
-}
-
-class Pagination {
-  int? totalCount;
-  int? maxPageSize;
-  int? currentPage;
-  int? totalPages;
-  bool? hasNext;
-  bool? hasPrevious;
-  Pagination({
-    this.totalCount,
-    this.maxPageSize,
-    this.currentPage,
-    this.totalPages,
-    this.hasNext = false,
-    this.hasPrevious = false,
-  });
-
-  Pagination.fromMap(Map<String, dynamic> map) {
-    totalCount = map['totalCount'];
-    maxPageSize = map['maxPageSize'];
-    currentPage = map['currentPage'];
-    totalPages = map['totalPages'];
-    hasNext = map['hasNext'];
-    hasPrevious = map['hasPrevious'];
-  }
-}
-
-class Tags {
-  int? id;
-  String? name;
-  String? hexColor;
-  Tags({this.id, this.name, this.hexColor});
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{'id': id, 'name': name, 'hexColor': hexColor};
-  }
-
-  Tags.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? '';
-    name = json['name'] ?? '';
-    hexColor = json['hexColor'] ?? '';
   }
 }
 
@@ -208,12 +169,11 @@ class ResultItemFolder {
     accessScope = map['accessScope'];
     targetAccessScope = map['targetAccessScope'];
     lastModified = map['lastModified'];
-    if (map['tags'] != null) {
-      map['tags'].forEach((tags) {
-        tags = <Tags>[];
-        tags.add(Tags.fromJson(tags));
-      });
-    }
+    map['tags'].forEach((tag) {
+      tags = <Tags>[];
+      tags!.add(Tags.fromJson(tag));
+    });
+
     isArchived = map['isArchived'];
     isBackup = map['isBackup'];
     if (map['shareWith'] != null) {

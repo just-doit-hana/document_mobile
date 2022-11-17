@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
+import 'package:document_appmobile/src/data/model/restore/folder_restore.dart';
 import 'package:document_appmobile/src/data/repository/core/endpoint.dart';
 import 'package:flutter/foundation.dart';
 
@@ -103,6 +104,24 @@ class FolderRepository {
     } catch (e) {
       if (kDebugMode) {
         print('Delete recycle bin $e');
+      }
+      throw e.toString();
+    }
+  }
+
+  Future<FolderRestoreResponse?> restoreRecycleBin(String id) async {
+    try {
+      final res = await _dioClient
+          .post('${Endpoints.ENDPOINTDOC}metadata/files/$id/restoration');
+      var restore = res.data;
+      final value = FolderRestoreResponse.fromJson(restore);
+      return value;
+    } on DioError catch (e) {
+      final errorMessage = DiorException.fromDioError(e).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Restore recycle bin $e');
       }
       throw e.toString();
     }

@@ -13,6 +13,7 @@ class FolderList extends StatelessWidget {
     required this.folderList,
   }) : super(key: key);
   final Result folderList;
+
   Widget imgIcon(String iconImage, {double height = 28.0, width = 28.0}) {
     return Image.asset(
       '${AppImage.path}/$iconImage',
