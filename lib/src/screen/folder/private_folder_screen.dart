@@ -2,11 +2,11 @@ import 'package:document_appmobile/app/util/util.dart';
 import 'package:document_appmobile/app/widget/folder_grid.dart';
 import 'package:document_appmobile/app/widget/folder_list.dart';
 import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
+import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/widget/widget.dart';
-import '../../data/model/folder/folder.dart';
 
 class PrivateFolder extends StatefulWidget {
   const PrivateFolder({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class _PrivateFolderState extends State<PrivateFolder> {
         child: BlocBuilder<FolderBloc, FolderState>(
           builder: (context, state) {
             if (state is FolderPrivateLoadedState) {
-              Result privateFolder = state.privateFolder;
+              FolderItemResponse privateFolder = state.privateFolder;
               return RefreshIndicator(
                 onRefresh: ((() async =>
                     context.read<FolderBloc>()..add(LoadFolderPrivateEvent()))),

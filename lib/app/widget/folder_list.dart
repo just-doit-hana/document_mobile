@@ -1,7 +1,7 @@
 import 'package:document_appmobile/app/animation/routes_animation.dart';
 import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/src/data/model/folder/folder.dart';
-import 'package:document_appmobile/src/screen/folder/folder_detail.dart';
+import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
+import 'package:document_appmobile/src/screen/folder/folder_detail_srcreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/widget/widget.dart';
@@ -12,7 +12,7 @@ class FolderList extends StatelessWidget {
     Key? key,
     required this.folderList,
   }) : super(key: key);
-  final Result folderList;
+  final FolderItemResponse folderList;
 
   Widget imgIcon(String iconImage, {double height = 28.0, width = 28.0}) {
     return Image.asset(
@@ -28,7 +28,7 @@ class FolderList extends StatelessWidget {
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: folderList.subFolders.length,
+        itemCount: folderList.result!.length,
         itemBuilder: ((context, index) {
           return Column(
             children: [
@@ -37,16 +37,17 @@ class FolderList extends StatelessWidget {
                   Navigator.of(context).push(CustomRoutesPage(
                       widget: FolderDetail(
                     id: index,
-                    subFolders: folderList,
+                    // subFolders: folderList.result,
                   )));
                 },
                 child: Card(
                     child: ListTile(
-                        title: Text(folderList.subFolders[index].name),
+                        title: Text(folderList.result![index].name.toString()),
                         // subtitle: Text(formatDateTime(
                         //     '2022-10-27T09:17:46.453697',
                         //     hastime: false)),
-                        leading: imgIcon(AppImage.iconFolder),
+                        leading:
+                            iconType(folderList.result![index].type.toString()),
                         trailing: ElevatedButton(
                             onPressed: () {
                               ShowModalSearchName(context);

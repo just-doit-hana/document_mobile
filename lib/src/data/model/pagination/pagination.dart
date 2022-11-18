@@ -22,4 +22,15 @@ class Pagination {
     hasNext = map['hasNext'];
     hasPrevious = map['hasPrevious'];
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'totalCount': totalCount,
+      'maxPageSize': maxPageSize,
+      'currentPage': currentPage,
+      'totalPages': totalPages,
+      'hasNext': hasNext,
+      'hasPrevious': hasPrevious,
+    };
+  }
 }

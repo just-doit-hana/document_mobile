@@ -4,9 +4,9 @@ class Tags {
   String? hexColor;
   Tags({this.id, this.name, this.hexColor});
 
-  // Map<String, dynamic> toMap() {
-  //   return <String, dynamic>{'id': id, 'name': name, 'hexColor': hexColor};
-  // }
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{'id': id, 'name': name, 'hexColor': hexColor};
+  }
 
   Tags.fromJson(Map<String, dynamic> json) {
     id = json['id'];

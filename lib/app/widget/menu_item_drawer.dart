@@ -1,4 +1,7 @@
+import 'package:document_appmobile/app/animation/routes_animation.dart';
 import 'package:document_appmobile/app/util/util.dart';
+import 'package:document_appmobile/src/screen/archive/archived_screen.dart';
+import 'package:document_appmobile/src/screen/recylebin/recyclebin_screen.dart';
 import 'package:flutter/material.dart';
 
 class DrawerAppbar extends StatelessWidget {
@@ -42,19 +45,27 @@ class DrawerAppbar extends StatelessWidget {
                 //   print('Print Err ${err.toString()}');
                 // }
               })),
+          // only backup file
           MenuItemDrawer(
               title: 'Archive File',
               iconData: Icons.archive_outlined,
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.of(context)
+                    .push(CustomRoutesPage(widget: const AchiveFileScreen()));
+              }),
           MenuItemDrawer(
               title: 'Recycle Bin',
               iconData: Icons.delete_outline,
-              onPressed: (() {})),
+              onPressed: (() {
+                Navigator.of(context)
+                    .push(CustomRoutesPage(widget: const RecyclebinScreen()));
+              })),
           MenuItemDrawer(
               title: 'Storage',
               iconData: Icons.cloud_outlined,
               onPressed: (() {})),
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -63,13 +74,13 @@ class DrawerAppbar extends StatelessWidget {
                     value: 3,
                     color: HexColor.fromHex(AppColor.primaryBtnColor),
                   )),
-              const SizedBox(
-                height: 6,
-              ),
-              // Text(
-              //   '2 GB of 5GB',
-              //   textAlign: TextAlign.left,
-              // )
+              const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  '2 GB of 5GB',
+                  // textAlign: TextAlign.left,
+                ),
+              )
             ],
             // ),
           )

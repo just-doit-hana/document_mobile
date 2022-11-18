@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
+import 'package:document_appmobile/src/data/model/folder/folder_recycle.dart';
 import 'package:document_appmobile/src/data/model/restore/folder_restore.dart';
 import 'package:document_appmobile/src/data/repository/core/endpoint.dart';
 import 'package:flutter/foundation.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import '../../../../app/util/dio/dio_client.dart';
 import '../../../../app/util/dio/dio_exception.dart';
 import '../../model/folder/folder.dart';
-import '../../model/folder/folder_test_no.dart';
 
 class FolderRepository {
   FolderRepository({
@@ -34,14 +34,12 @@ class FolderRepository {
     }
   }
 
-  Future<dynamic> listPrivateFolder() async {
+  Future<FolderItemResponse?> listPrivateFolder() async {
     try {
-      final res =
-          await _dioClient.get('${Endpoints.ENDPOINTDOC}metadata/folders/tree');
-      var folderPrivate = res.data['result'];
-      print('Folder Private ${folderPrivate}');
-      final value = Result.fromJson(folderPrivate);
-
+      final res = await _dioClient.get(
+          '${Endpoints.ENDPOINTDOC}metadata/folders/items?PageNumber=1&MaxPageSize=10');
+      var folderPrivate = res.data;
+      final value = FolderItemResponse.fromMap(folderPrivate);
       return value;
     } on DioError catch (e) {
       final errorMessage = DiorException.fromDioError(e).toString();
@@ -59,7 +57,7 @@ class FolderRepository {
       final res = await _dioClient
           .get('${Endpoints.ENDPOINTDOC}metadata/folders/items?id=$id');
       var folder = res.data;
-      final value = FolderItemResponse.fromJson(folder);
+      final value = FolderItemResponse.fromMap(folder);
       return value;
     } on DioError catch (e) {
       final errorMessage = DiorException.fromDioError(e).toString();
@@ -71,18 +69,22 @@ class FolderRepository {
       throw e.toString();
     }
   }
+//  https://docgatewayapi.hisoft.vn/metadata/folders/items?PageNumber=1&MaxPageSize=10
 
-  Future<FolderItemResponse?> listRecycleBin() async {
+  Future<FolderRecycleReponse?> listRecycleBin({
+    required int page,
+    int pageSize = 15,
+  }) async {
     try {
       final res = await _dioClient.get(
           '${Endpoints.ENDPOINTDOC}metadata/folders/items/archived',
           queryParameters: {
-            'PageNumber': 1,
-            'MaxPageSize': 10,
+            'PageNumber': page,
+            'MaxPageSize': pageSize,
           });
 
       var recycleBin = res.data;
-      final value = FolderItemResponse.fromJson(recycleBin);
+      final value = FolderRecycleReponse.fromMap(recycleBin);
       return value;
     } on DioError catch (e) {
       final errorMessage = DiorException.fromDioError(e).toString();
@@ -127,21 +129,40 @@ class FolderRepository {
     }
   }
 
-  Future<List<TestNoMap>> getTest() async {
+  Future<FolderRecycleReponse?> backupFolder() async {
     try {
-      final res = await _dioClient
-          .get('https://taskapi.hisoft.vn/api/Domain?PageSize=50');
-      final domain =
-          (res.data as List).map((json) => TestNoMap.fromJson(json)).toList();
-      return domain;
+      final res = await _dioClient.get(
+          '${Endpoints.ENDPOINTDOC}metadata/folders/items/backup',
+          queryParameters: {'PageNumber': 1, 'MaxPageSize': 10});
+      var backUp = res.data;
+      final value = FolderRecycleReponse.fromMap(backUp);
+      return value;
     } on DioError catch (e) {
       final errorMessage = DiorException.fromDioError(e).toString();
       throw errorMessage;
     } catch (e) {
       if (kDebugMode) {
-        print(e);
+        print('Backup folder $e');
       }
       throw e.toString();
     }
   }
+
+  // Future<List<TestNoMap>> getTest() async {
+  //   try {
+  //     final res = await _dioClient
+  //         .get('https://taskapi.hisoft.vn/api/Domain?PageSize=50');
+  //     final domain =
+  //         (res.data as List).map((json) => TestNoMap.fromJson(json)).toList();
+  //     return domain;
+  //   } on DioError catch (e) {
+  //     final errorMessage = DiorException.fromDioError(e).toString();
+  //     throw errorMessage;
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print(e);
+  //     }
+  //     throw e.toString();
+  //   }
+  // }
 }

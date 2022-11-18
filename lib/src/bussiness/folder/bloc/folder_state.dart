@@ -31,7 +31,7 @@ class FolderPrivateLoadingState extends FolderState {
 }
 
 class FolderPrivateLoadedState extends FolderState {
-  final Result privateFolder;
+  final FolderItemResponse privateFolder;
   FolderPrivateLoadedState({required this.privateFolder});
 
   @override
@@ -77,11 +77,15 @@ class FolderRecycleLoading extends FolderState {
 }
 
 class FolderRecycleLoaded extends FolderState {
-  final FolderItemResponse recycleBin;
-
-  FolderRecycleLoaded(this.recycleBin);
+  final FolderRecycleReponse recycleBin;
+  int? page;
+  bool? isLastPage;
+  FolderRecycleLoaded(
+      {required this.recycleBin, this.page = 1, this.isLastPage = false});
   @override
   List<Object?> get props => [recycleBin];
+
+  bool get hasRecycle => recycleBin.result!.isNotEmpty;
 }
 
 class FolderRecyleError extends FolderState {
@@ -93,25 +97,44 @@ class FolderRecyleError extends FolderState {
   List<Object?> get props => [error];
 }
 
-class DomainLoading extends FolderState {
+class FolderBackupLoading extends FolderState {
   @override
   List<Object?> get props => [];
 }
 
-class DomainLoaded extends FolderState {
-  final List<TestNoMap>? domain;
-
-  DomainLoaded(this.domain);
-
+class FolderBackupLoaded extends FolderState {
+  final FolderRecycleReponse folderBackup;
+  FolderBackupLoaded(this.folderBackup);
   @override
-  List<Object?> get props => [domain];
+  List<Object?> get props => [folderBackup];
 }
 
-class DomainErrorState extends FolderState {
+class FolderBackupError extends FolderState {
   final String error;
-  DomainErrorState(
-    this.error,
-  );
+  FolderBackupError(this.error);
+
   @override
   List<Object?> get props => [error];
 }
+// class DomainLoading extends FolderState {
+//   @override
+//   List<Object?> get props => [];
+// }
+
+// class DomainLoaded extends FolderState {
+//   final List<TestNoMap>? domain;
+
+//   DomainLoaded(this.domain);
+
+//   @override
+//   List<Object?> get props => [domain];
+// }
+
+// class DomainErrorState extends FolderState {
+//   final String error;
+//   DomainErrorState(
+//     this.error,
+//   );
+//   @override
+//   List<Object?> get props => [error];
+// }
