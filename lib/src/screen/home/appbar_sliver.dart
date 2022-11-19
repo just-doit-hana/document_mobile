@@ -1,3 +1,4 @@
+import 'package:document_appmobile/src/screen/search/full_screen_search.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/util/util.dart';
@@ -41,7 +42,9 @@ class AppSliverAppBar extends StatelessWidget {
         IconButton(
           // style: ButtonStyle(),
           icon: const Icon(Icons.search_rounded),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(FullScreenSearchFolder());
+          },
         ),
       ],
       floating: true,

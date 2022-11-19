@@ -21,14 +21,14 @@ class DioClient {
 
   static Dio createDioClient() {
     final dio = Dio(BaseOptions(
-        connectTimeout: AppConstant.connectionTimeout,
+        // connectTimeout: AppConstant.connectionTimeout,
         receiveTimeout: AppConstant.receiveTimeout,
         responseType: ResponseType.json,
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
           HttpHeaders.authorizationHeader:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIxN2EwMGQ1ZC1hMWVlLTQzNjAtYWJlNy1kYTM5NTYxMTQyNGUiLCJFbWFpbCI6ImJhb25ndXllbmNvbmcxMzk5QGdtYWlsLmNvbSIsIkZpcnN0TmFtZSI6Ik5ndXnhu4VuIEPDtG5nIiwiTGFzdE5hbWUiOiJC4bqjbyIsIlVzZXJOYW1lIjoiYmFvIiwiRGVwYXJ0bWVudElkIjoiMzY2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIlRyYWluZWUiLCJJbnN0cnVjdHVyZSIsIlRBVCIsIklUIl0sIk1vZHVsZXMiOlsiVEVTVCBLIERPTkcgQk8iLCJMSUJSQVJZIiwiTE1TIiwiVEFTSyBNQU5BR0VSIiwiRE9DVU1FTlQiLCJBU1NFVCIsIkhBSEFIQUhBSEEiLCJJVCBBU1NFVCJdLCJQaG9uZU51bWJlciI6IjA5MTk3Mjc3NzUiLCJleHAiOjE2Njg0MTcwNDAsImlzcyI6IlZpZXRKZXRfQXBpR2F0ZXdheSIsImF1ZCI6IlZpZXRKZXRfQXBpR2F0ZXdheSJ9.hYBIBIKn3gX0WTLv2-eTMn8ZdcleN37nVeCqma83ltw'
-          // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiJkMjEzMjQ3Zi0wMDU1LTQ5YzctOGNmMi05ZTI4N2ZhYTM1MDkiLCJFbWFpbCI6InRhc2ttYW5hZ21lbnRAaGlzb2Z0LnZuIiwiRmlyc3ROYW1lIjoiVGFzayIsIkxhc3ROYW1lIjoiTWFuYWdlbWVudCIsIlVzZXJOYW1lIjoidGFza21hbmFnZW1lbnQiLCJEZXBhcnRtZW50SWQiOiIzNjYiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsIk1vZHVsZXMiOlsiVEVTVCBLIERPTkcgQk8iLCJBU1NFVCIsIkxJQlJBUlkiLCJMTVMiLCJET0NVTUVOVCIsIlRBU0sgTUFOQUdFUiIsIklUIEFTU0VUIl0sIlBob25lTnVtYmVyIjoiMDEyMzQ1Njc4OSIsImV4cCI6MTY2NzU0NDQ5NSwiaXNzIjoiVmlldEpldF9BcGlHYXRld2F5IiwiYXVkIjoiVmlldEpldF9BcGlHYXRld2F5In0.6ThKmCgOpt9_vycxqJHz7UUGhMdvZFbC32BkOGF4YLg'
+              // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIwMGMxODUyZi1lZjAwLTRkNmYtYTA3Yi1jNzNkMmRlMTVhNzgiLCJFbWFpbCI6Im5naGlhcGhhbXRyb25nQHZpZXRqZXRhaXIuY29tIiwiRmlyc3ROYW1lIjoiUGjhuqFtIiwiTGFzdE5hbWUiOiJUcuG7jW5nIE5naMSpYSIsIlVzZXJOYW1lIjoiYWQiLCJEZXBhcnRtZW50SWQiOiI0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIkFkbWluIiwiVHJhaW5lZSIsIklUIl0sIk1vZHVsZXMiOlsiTElCUkFSWSIsIkxNUyIsIkRPQ1VNRU5UIiwiVEFTSyBNQU5BR0VSIiwiQVNTRVQiLCJJVCBBU1NFVCJdLCJQaG9uZU51bWJlciI6IjA5NDE0MTIwOTgiLCJleHAiOjE2Njg3NjI1ODAsImlzcyI6IlZpZXRKZXRfQXBpR2F0ZXdheSIsImF1ZCI6IlZpZXRKZXRfQXBpR2F0ZXdheSJ9.6sCQfnrauOdMEgirTHhkysYuJupojXpSEHcyVfkUDIQ'
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIwMGMxODUyZi1lZjAwLTRkNmYtYTA3Yi1jNzNkMmRlMTVhNzgiLCJFbWFpbCI6Im5naGlhcHRAaGlzb2Z0LnZuIiwiRmlyc3ROYW1lIjoiTmdoxKlhIiwiTGFzdE5hbWUiOiJQaOG6oW0gVHLhu41uZyIsIlVzZXJOYW1lIjoiYWQiLCJEZXBhcnRtZW50SWQiOiI1OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiTW9kdWxlcyI6WyJURVNUIEsgRE9ORyBCTyIsIkRPQ1VNRU5UIiwiSVQgQVNTRVQiLCJBU1NFVCIsIkxJQlJBUlkiLCJMTVMiLCJUQVNLIE1BTkFHRVIiXSwiUGhvbmVOdW1iZXIiOiIwMTIzNDU2Nzg5IiwiZXhwIjoxNjY4ODIwMjc0LCJpc3MiOiJWaWV0SmV0X0FwaUdhdGV3YXkiLCJhdWQiOiJWaWV0SmV0X0FwaUdhdGV3YXkifQ.E9JXO_9lnKz2gS2JQ_IkDnXhCcGzXyXxIHbMr_NXbJA'
         }));
     dio.interceptors.addAll([
       //  LoggerInterceptor(),
@@ -43,30 +43,6 @@ class DioClient {
             compact: false,
             maxWidth: 90)
     ]);
-
-    // DioClient()
-    //     : _dio = Dio(BaseOptions(
-    //           connectTimeout: AppConstant.connectionTimeout,
-    //           receiveTimeout: AppConstant.receiveTimeout,
-    //           responseType: ResponseType.json,
-    //           headers: {
-    //             HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
-    //             HttpHeaders.authorizationHeader:
-    //                 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIwMGMxODUyZi1lZjAwLTRkNmYtYTA3Yi1jNzNkMmRlMTVhNzgiLCJFbWFpbCI6Im5naGlhcHRAaGlzb2Z0LnZuIiwiRmlyc3ROYW1lIjoiTmdoxKlhIiwiTGFzdE5hbWUiOiJQaOG6oW0gVHLhu41uZyIsIlVzZXJOYW1lIjoiYWQiLCJEZXBhcnRtZW50SWQiOiIzNjYiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsIk1vZHVsZXMiOlsiUlJSUjEiLCJBU1NFVCIsIkxJQlJBUlkiLCJMTVMiLCJET0NVTUVOVCIsIlRBU0sgTUFOQUdFUiIsIklUIEFTU0VUIl0sInBlcm1pc3Npb25zIjpbIkhvbWVfTGlzdCIsIkhvbWVfQ3JlYXRlVGFzayIsIkhvbWVfQm9hcmQiLCJIb21lX0NhbGVuZGFyIiwiTXlUYXNrX092ZXJ2aWV3IiwiTXlUYXNrX1Rhc2tTZW5kIiwiTXlUYXNrX0NyZWF0ZVRhc2siLCJNeVRhc2tfQXNzaWduZWRUYXNrIiwiTXlUYXNrX0NhbGVuZGFyIiwiUmVxdWVzdF9PdmVydmlldyIsIlJlcXVlc3RfUmVxdWVzdFNlbmQiLCJSZXF1ZXN0X0NyZWF0ZVJlcXVlc3QiLCJSZXF1ZXN0X1JlcXVlc3RSZWNlaXZlZCJdLCJQaG9uZU51bWJlciI6IjAxMjM0NTY3ODkiLCJleHAiOjE2NjcyOTExNTYsImlzcyI6IlZpZXRKZXRfQXBpR2F0ZXdheSIsImF1ZCI6IlZpZXRKZXRfQXBpR2F0ZXdheSJ9.5bnRP9bC3kDM0z4RZpV1T0Mzi9JF05ThvGiThYn4lpU'
-    //           }))
-    //         ..interceptors.addAll([
-    //           // LoggerInterceptor(),
-    //           // AuthorizationInterceptor(),
-    //           if (AppConstant.DIO_CLIENT_DEBUG_LOG)
-    //             PrettyDioLogger(
-    //                 requestHeader: true,
-    //                 requestBody: true,
-    //                 responseBody: true,
-    //                 responseHeader: true,
-    //                 error: true,
-    //                 compact: true,
-    //                 maxWidth: 90)
-    //         ]);
 
     // Future<UserInfor?> login(LoginUser loginUser) async {
     //   try {

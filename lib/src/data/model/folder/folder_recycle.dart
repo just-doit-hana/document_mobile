@@ -2,13 +2,13 @@ import '../pagination/pagination.dart';
 import '../sharewith/share_with.dart';
 import '../tags/tags.dart';
 
-class FolderItemResponse {
+class FolderRecycleReponse {
   Pagination? pagination;
   List<ResultItemFolder>? result;
   int? statusCode;
   bool? isError;
   String? message;
-  FolderItemResponse({
+  FolderRecycleReponse({
     this.pagination,
     this.result = const <ResultItemFolder>[],
     this.statusCode,
@@ -26,8 +26,8 @@ class FolderItemResponse {
     };
   }
 
-  factory FolderItemResponse.fromMap(Map<String, dynamic> map) {
-    return FolderItemResponse(
+  factory FolderRecycleReponse.fromMap(Map<String, dynamic> map) {
+    return FolderRecycleReponse(
       pagination: map['pagination'] != null
           ? Pagination.fromMap(map['pagination'])
           : null,

@@ -18,11 +18,21 @@ class LoadFolderPrivateEvent extends FolderEvent {
 
 class LoadFolderItemEvent extends FolderEvent {
   final String? id;
-  final FolderItemResponse? resultItemFolder;
+  final FolderRecycleReponse? resultItemFolder;
 
   const LoadFolderItemEvent({this.id, this.resultItemFolder});
   @override
   List<Object?> get props => [id, resultItemFolder];
+}
+
+class LoadFolderRecycleBinEvent extends FolderEvent {
+  @override
+  List<Object?> get props => [];
+}
+
+class LoadFolderBackupEvent extends FolderEvent {
+  @override
+  List<Object?> get props => [];
 }
 
 class DomainEvent extends FolderEvent {

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of './folder_bloc.dart';
 
 @immutable
@@ -10,9 +11,7 @@ class FolderLoadingState extends FolderState {
 
 class FolderLoadedState extends FolderState {
   final Result folder;
-  FolderLoadedState(
-    this.folder,
-  );
+  FolderLoadedState({required this.folder});
   @override
   List<Object?> get props => [folder];
 }
@@ -32,7 +31,7 @@ class FolderPrivateLoadingState extends FolderState {
 }
 
 class FolderPrivateLoadedState extends FolderState {
-  final Result privateFolder;
+  final FolderItemResponse privateFolder;
   FolderPrivateLoadedState({required this.privateFolder});
 
   @override
@@ -72,25 +71,70 @@ class FolderItemErrorState extends FolderState {
   List<Object?> get props => [error];
 }
 
-class DomainLoading extends FolderState {
+class FolderRecycleLoading extends FolderState {
   @override
   List<Object?> get props => [];
 }
 
-class DomainLoaded extends FolderState {
-  final List<TestNoMap>? domain;
-
-  DomainLoaded(this.domain);
-
+class FolderRecycleLoaded extends FolderState {
+  final FolderRecycleReponse recycleBin;
+  int? page;
+  bool? isLastPage;
+  FolderRecycleLoaded(
+      {required this.recycleBin, this.page = 1, this.isLastPage = false});
   @override
-  List<Object?> get props => [domain];
+  List<Object?> get props => [recycleBin];
+
+  bool get hasRecycle => recycleBin.result!.isNotEmpty;
 }
 
-class DomainErrorState extends FolderState {
+class FolderRecyleError extends FolderState {
   final String error;
-  DomainErrorState(
+  FolderRecyleError(
     this.error,
   );
   @override
   List<Object?> get props => [error];
 }
+
+class FolderBackupLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class FolderBackupLoaded extends FolderState {
+  final FolderRecycleReponse folderBackup;
+  FolderBackupLoaded(this.folderBackup);
+  @override
+  List<Object?> get props => [folderBackup];
+}
+
+class FolderBackupError extends FolderState {
+  final String error;
+  FolderBackupError(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}
+// class DomainLoading extends FolderState {
+//   @override
+//   List<Object?> get props => [];
+// }
+
+// class DomainLoaded extends FolderState {
+//   final List<TestNoMap>? domain;
+
+//   DomainLoaded(this.domain);
+
+//   @override
+//   List<Object?> get props => [domain];
+// }
+
+// class DomainErrorState extends FolderState {
+//   final String error;
+//   DomainErrorState(
+//     this.error,
+//   );
+//   @override
+//   List<Object?> get props => [error];
+// }

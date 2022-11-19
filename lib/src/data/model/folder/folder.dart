@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class FolderResponse {
   Result? result;
   int? statusCode;
@@ -31,18 +29,13 @@ class FolderResponse {
       message: map['message'] != null ? map['message'] as String : null,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory FolderResponse.fromJson(String source) =>
-      FolderResponse.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class Result {
   Result({
     required this.id,
     required this.name,
-    required this.subFolders,
+    this.subFolders = const <Result>[],
     required this.hasFiles,
   });
 

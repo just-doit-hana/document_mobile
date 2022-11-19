@@ -17,38 +17,33 @@ class MyfileScreen extends StatefulWidget {
 class _MyfileScreenState extends State<MyfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          FolderBloc((RepositoryProvider.of<FolderRepository>(context)))
-            ..add(LoadFolderPublicEvent()),
-      child: Scaffold(
-          appBar: AppBar(title: const Text('My files')),
-          body: BlocBuilder<FolderBloc, FolderState>(
-            builder: (context, state) {
-              if (state is FolderLoadingState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (state is FolderLoadedState) {
-                Result folderList = state.folder;
-                return ListView.builder(
-                    itemCount: folderList.subFolders.length,
-                    itemBuilder: (_, index) {
-                      return Card(
-                          color: Colors.blue,
-                          child: ListTile(
-                              title: Text(folderList.subFolders[index].name)));
-                    });
-              }
-              if (state is FolderErrorState) {
-                return const Center(
-                  child: Text('Error'),
-                );
-              }
-              return Container();
-            },
-          )),
-    );
+    return Scaffold(
+        appBar: AppBar(title: const Text('My files')),
+        body: BlocBuilder<FolderBloc, FolderState>(
+          builder: (context, state) {
+            if (state is FolderLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is FolderLoadedState) {
+              Result folderList = state.folder;
+              return ListView.builder(
+                  itemCount: folderList.subFolders.length,
+                  itemBuilder: (_, index) {
+                    return Card(
+                        color: Colors.blue,
+                        child: ListTile(
+                            title: Text(folderList.subFolders[index].name)));
+                  });
+            }
+            if (state is FolderErrorState) {
+              return const Center(
+                child: Text('Error'),
+              );
+            }
+            return Container();
+          },
+        ));
   }
 }

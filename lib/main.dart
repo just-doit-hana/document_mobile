@@ -4,7 +4,9 @@ import 'package:document_appmobile/app.dart';
 import 'package:document_appmobile/app/helper/shared_preference.dart';
 import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
 import 'package:document_appmobile/src/bussiness/theme/bloc/theme_bloc.dart';
-import 'package:document_appmobile/src/screen/folder/public_folder_screen.dart';
+import 'package:document_appmobile/src/screen/archive/archived_screen.dart';
+import 'package:document_appmobile/src/screen/home/home_folder.dart';
+import 'package:document_appmobile/src/screen/recylebin/recyclebin_screen.dart';
 import 'package:document_appmobile/src/screen/splash/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,23 +47,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => ThemeBloc(),
-        ),
-        // BlocProvider(
-        //   create: ((context) =>
-        //       FolderBloc(RepositoryProvider.of<FolderRepository>(context))
-        //         ..add(LoadFolderPublicEvent())),
-        //   child: const PublicFolder(),
-        // )
-      ],
-      child: MultiRepositoryProvider(
+    return MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider(
+            create: (_) => FolderRepository(),
+          )
+        ],
+        child: MultiBlocProvider(
           providers: [
-            RepositoryProvider(
-              create: (context) => FolderRepository(),
-            )
+            BlocProvider(create: ((context) => ThemeBloc())),
+            BlocProvider(
+                create: ((context) =>
+                    FolderBloc(context.read<FolderRepository>())
+                      ..add(LoadFolderRecycleBinEvent())),
+                child: const RecyclebinScreen()),
+            BlocProvider(
+                child: const AchiveFileScreen(),
+                create: (context) =>
+                    FolderBloc(context.read<FolderRepository>())
+                      ..add(LoadFolderBackupEvent())),
+            BlocProvider(
+                child: HomeFolder(),
+                create: (context) =>
+                    FolderBloc(context.read<FolderRepository>())
+                      ..add(LoadFolderPrivateEvent())),
+            BlocProvider(
+                child: HomeFolder(),
+                create: (context) =>
+                    FolderBloc(context.read<FolderRepository>())
+                      ..add(LoadFolderPublicEvent())),
           ],
           child: BlocBuilder<ThemeBloc, ThemeState>(
             builder: (context, state) {
@@ -81,11 +95,14 @@ class MyApp extends StatelessWidget {
                     initScreen == 0 || initScreen == null ? 'onboard' : 'home',
                 routes: {
                   "home": (context) => const App(),
-                  "onboard": (context) => const OnboardingPage()
+                  "onboard": (context) => const OnboardingPage(),
+                  // "homeFolder": (context) => const HomeFolder(),
+                  // 'recycleBin': ((context) => const RecyclebinScreen())
                 },
               );
             },
-          )),
-    );
+          ),
+        ));
+    // );
   }
 }

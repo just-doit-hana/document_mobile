@@ -1,5 +1,6 @@
 import 'package:document_appmobile/app/util/util.dart';
 import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
+import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,60 +33,75 @@ class _PublicFolderState extends State<PublicFolder> {
         },
         child: BlocBuilder<FolderBloc, FolderState>(
           builder: (context, state) {
-            // ignore: unnecessary_type_check
             if (state is FolderLoadedState) {
               Result folderList = state.folder;
               return RefreshIndicator(
-                onRefresh: (() async =>
-                    context.read<FolderBloc>()..add(LoadFolderPublicEvent())),
+                onRefresh: (() async => context.read<FolderBloc>()
+                  ..add(LoadFolderItemEvent(id: folderList.id))),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                          color: Colors.transparent,
-                          padding: const EdgeInsets.only(top: 10),
-                          // width: double.infinity,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextSeachButton(
-                                  onPressed: (() {
-                                    ShowModalSearchName(context);
-                                  }),
-                                  title: 'Name',
-                                  iconData: Icons.arrow_upward_outlined),
-                              const TextSeachButton(
-                                  title: 'Label',
-                                  iconData: Icons.arrow_upward_outlined),
-                              IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      isType = !isType;
-                                    });
-                                  },
-                                  icon: isType
-                                      ? const Icon(Icons.grid_view_outlined)
-                                      : const Icon(Icons.list_outlined)),
+                  child: BlocProvider(
+                    create: (context) =>
+                        FolderBloc(RepositoryProvider.of(context))
+                          ..add(LoadFolderItemEvent(id: folderList.id)),
+                    child: BlocBuilder<FolderBloc, FolderState>(
+                      builder: (context, state) {
+                        if (state is FolderItemLoaded) {
+                          FolderItemResponse? folderItemResponse =
+                              state.resultItemFolder;
+                          return Column(
+                            children: <Widget>[
+                              Container(
+                                  color: Colors.transparent,
+                                  padding: const EdgeInsets.only(top: 10),
+                                  // width: double.infinity,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextSeachButton(
+                                          onPressed: (() {
+                                            // ShowModalSearchName(context);
+                                          }),
+                                          title: 'Name',
+                                          iconData:
+                                              Icons.arrow_upward_outlined),
+                                      const TextSeachButton(
+                                          title: 'Label',
+                                          iconData:
+                                              Icons.arrow_upward_outlined),
+                                      IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              isType = !isType;
+                                            });
+                                          },
+                                          icon: isType
+                                              ? const Icon(
+                                                  Icons.grid_view_outlined)
+                                              : const Icon(
+                                                  Icons.list_outlined)),
+                                    ],
+                                  )),
+                              isType
+                                  ? (FolderGrid(
+                                      folderGrid: folderItemResponse!,
+                                    ))
+                                  : (FolderList(
+                                      folderList: folderItemResponse!,
+                                    )),
                             ],
-                          )),
-                      isType
-                          ? (FolderGrid(
-                              folderGrid: folderList,
-                            ))
-                          : (FolderList(
-                              folderList: folderList,
-                            )),
-                    ],
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
                   ),
                 ),
               );
             }
-            // else if(state is FolderErrorState ){
-            //     return Text('Error');
-            // }
-
             return Container();
           },
         ),

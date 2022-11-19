@@ -40,13 +40,13 @@ class _HomeFolderState extends State<HomeFolder> {
                       tabs: <Widget>[
                         Tab(
                           child: Text(
-                            'Public Folder',
+                            'Public',
                             style: tabStyle,
                           ),
                         ),
                         Tab(
                           child: Text(
-                            'Private Folder',
+                            'Private',
                             style: tabStyle,
                           ),
                         ),
