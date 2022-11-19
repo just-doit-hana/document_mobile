@@ -76,6 +76,7 @@ class FolderRecycleLoading extends FolderState {
   List<Object?> get props => [];
 }
 
+// ignore: must_be_immutable
 class FolderRecycleLoaded extends FolderState {
   final FolderRecycleReponse recycleBin;
   int? page;

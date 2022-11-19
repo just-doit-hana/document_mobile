@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,11 +28,12 @@ class FolderDetail extends StatelessWidget {
           },
           child: BlocBuilder<FolderBloc, FolderState>(
             builder: (context, state) {
-              print('Test id ${subFolders?.subFolders[id].id}');
+              if (kDebugMode) {
+                print('Test id ${subFolders?.subFolders[id].id}');
+              }
               if (state is FolderItemLoaded) {
                 FolderItemResponse itemFolder = state.resultItemFolder!;
-                return Container(
-                    child: Column(
+                return Column(
                   children: [
                     Flexible(
                       flex: 1,
@@ -46,7 +48,7 @@ class FolderDetail extends StatelessWidget {
                           }),
                     )
                   ],
-                ));
+                );
               }
               return Container();
             },

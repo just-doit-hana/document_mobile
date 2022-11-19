@@ -47,7 +47,7 @@ class FullScreenSearchFolder extends ModalRoute {
                     child: const Text('Cancel'))
               ],
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             const Padding(
