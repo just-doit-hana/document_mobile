@@ -1,12 +1,12 @@
-import 'package:document_appmobile/app/helper/format_date_time.dart';
-import 'package:document_appmobile/app/widget/app_dialogs.dart';
-import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
-import 'package:document_appmobile/src/data/model/folder/folder_recycle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app/helper/format_date_time.dart';
 import '../../../app/util/util.dart';
+import '../../../app/widget/app_dialogs.dart';
 import '../../../app/widget/widget.dart';
+import '../../bussiness/folder/bloc/folder_bloc.dart';
+import '../../data/model/folder/folder_recycle.dart';
 
 class RecyclebinScreen extends StatefulWidget {
   const RecyclebinScreen({Key? key}) : super(key: key);

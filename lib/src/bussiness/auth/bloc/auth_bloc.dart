@@ -2,11 +2,13 @@
 
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
-import 'package:document_appmobile/app/enum/data_status.dart';
-import 'package:document_appmobile/src/data/model/login/login_user.dart';
-import 'package:document_appmobile/src/data/repository/auth/login_repository.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+
+import '../../../../app/enum/data_status.dart';
+import '../../../data/model/login/login_user.dart';
+import '../../../data/repository/auth/login_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

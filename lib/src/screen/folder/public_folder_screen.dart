@@ -1,12 +1,12 @@
-import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
-import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/widget/folder_grid.dart';
 import '../../../app/widget/folder_list.dart';
 import '../../../app/widget/widget.dart';
+import '../../bussiness/folder/bloc/folder_bloc.dart';
 import '../../data/model/folder/folder.dart';
+import '../../data/model/folder/folder_item.dart';
 
 class PublicFolder extends StatefulWidget {
   const PublicFolder({Key? key}) : super(key: key);
@@ -35,8 +35,8 @@ class _PublicFolderState extends State<PublicFolder> {
             if (state is FolderLoadedState) {
               Result folderList = state.folder;
               return RefreshIndicator(
-                onRefresh: (() async => context.read<FolderBloc>()
-                  ..add(LoadFolderItemEvent(id: folderList.id))),
+                onRefresh: (() async =>
+                    context.read<FolderBloc>()..add(LoadFolderPublicEvent())),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: BlocProvider(

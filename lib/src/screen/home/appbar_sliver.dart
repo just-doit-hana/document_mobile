@@ -1,7 +1,7 @@
-import 'package:document_appmobile/src/screen/search/full_screen_search.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/util/util.dart';
+import '../search/full_screen_search.dart';
 
 class AppSliverAppBar extends StatelessWidget {
   const AppSliverAppBar({

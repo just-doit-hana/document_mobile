@@ -1,7 +1,6 @@
-import 'package:document_appmobile/app/util/app_color.dart';
-import 'package:document_appmobile/app/util/app_constant.dart';
-import 'package:document_appmobile/app/util/app_extension.dart';
 import 'package:flutter/material.dart';
+
+import 'util.dart';
 
 final h1Style = TextStyle(
     fontSize: 25,

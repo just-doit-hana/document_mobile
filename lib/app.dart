@@ -1,10 +1,10 @@
-import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/src/screen/files/sysnfusion.dart';
-import 'package:document_appmobile/src/screen/recylebin/recyclebin_screen.dart';
-import 'package:document_appmobile/src/screen/test.dart';
 import 'package:flutter/material.dart';
 
+import 'app/util/util.dart';
+import 'src/screen/files/sysnfusion.dart';
 import 'src/screen/home/home_folder.dart';
+import 'src/screen/recylebin/recyclebin_screen.dart';
+import 'src/screen/test.dart';
 
 class App extends StatefulWidget {
   const App({

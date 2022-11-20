@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import 'package:document_appmobile/app/util/app_theme.dart';
+import '../../../../app/util/util.dart';
 
 part 'theme_event.dart';
 part 'theme_state.dart';

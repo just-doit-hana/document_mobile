@@ -1,5 +1,6 @@
-import 'package:document_appmobile/app/util/util.dart';
 import 'package:flutter/material.dart';
+
+import '../../../app/util/util.dart';
 
 class FileDetail extends StatefulWidget {
   const FileDetail({Key? key}) : super(key: key);

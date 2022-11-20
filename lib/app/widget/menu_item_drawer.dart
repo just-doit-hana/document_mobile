@@ -1,8 +1,9 @@
-import 'package:document_appmobile/app/animation/routes_animation.dart';
-import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/src/screen/archive/archived_screen.dart';
-import 'package:document_appmobile/src/screen/recylebin/recyclebin_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../src/screen/archive/archived_screen.dart';
+import '../../src/screen/recylebin/recyclebin_screen.dart';
+import '../animation/routes_animation.dart';
+import '../util/util.dart';
 
 class DrawerAppbar extends StatelessWidget {
   const DrawerAppbar({

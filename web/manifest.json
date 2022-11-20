@@ -1,6 +1,6 @@
 {
-    "name": "document_appmobile",
-    "short_name": "document_appmobile",
+    "name": "document_mobile",
+    "short_name": "document_mobile",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

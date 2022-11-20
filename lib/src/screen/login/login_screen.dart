@@ -1,9 +1,9 @@
-import 'package:document_appmobile/app.dart';
-import 'package:document_appmobile/app/animation/routes_animation.dart';
-import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/app/widget/app_text_field.dart';
-import 'package:document_appmobile/app/widget/text_title.dart';
 import 'package:flutter/material.dart';
+
+import '../../../app.dart';
+import '../../../app/animation/routes_animation.dart';
+import '../../../app/util/util.dart';
+import '../../../app/widget/widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

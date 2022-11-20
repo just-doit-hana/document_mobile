@@ -1,21 +1,21 @@
 import 'dart:io';
 
-import 'package:document_appmobile/app.dart';
-import 'package:document_appmobile/app/helper/shared_preference.dart';
-import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
-import 'package:document_appmobile/src/bussiness/theme/bloc/theme_bloc.dart';
-import 'package:document_appmobile/src/screen/archive/archived_screen.dart';
-import 'package:document_appmobile/src/screen/home/home_folder.dart';
-import 'package:document_appmobile/src/screen/recylebin/recyclebin_screen.dart';
-import 'package:document_appmobile/src/screen/splash/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'app.dart';
+import 'app/helper/shared_preference.dart';
 import 'app/util/dio/dio_client.dart';
+import 'src/bussiness/folder/bloc/folder_bloc.dart';
+import 'src/bussiness/theme/bloc/theme_bloc.dart';
 import 'src/data/repository/folder/folder_repo.dart';
+import 'src/screen/archive/archived_screen.dart';
+import 'src/screen/home/home_folder.dart';
+import 'src/screen/recylebin/recyclebin_screen.dart';
+import 'src/screen/splash/onboarding_page.dart';
 
 int? initScreen;
 Future<void> main() async {

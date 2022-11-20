@@ -1,8 +1,7 @@
-import 'package:document_appmobile/src/data/model/login/login_user.dart';
-import 'package:document_appmobile/src/data/model/login/user_infor.dart';
-import 'package:document_appmobile/src/data/repository/auth/base_repositoty.dart';
-
 import '../../../../app/util/dio/dio_client.dart';
+import '../../model/login/login_user.dart';
+import '../../model/login/user_infor.dart';
+import 'base_repositoty.dart';
 
 class LoginRepository implements BaseRepository {
   LoginRepository({

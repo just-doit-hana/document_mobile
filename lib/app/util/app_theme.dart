@@ -1,6 +1,6 @@
-import 'package:document_appmobile/app/util/app_color.dart';
-import 'package:document_appmobile/app/util/app_style.dart';
 import 'package:flutter/material.dart';
+
+import 'util.dart';
 
 enum AppTheme { lightTheme, darkTheme }
 

@@ -1,8 +1,7 @@
-import 'package:document_appmobile/src/bussiness/folder/bloc/folder_bloc.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../bussiness/folder/bloc/folder_bloc.dart';
 import '../../data/model/folder/folder.dart';
 
 class MyfileScreen extends StatefulWidget {

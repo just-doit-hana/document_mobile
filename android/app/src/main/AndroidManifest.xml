@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.document_appmobile">
+    package="com.example.document_mobile">
    <application
-        android:label="document_appmobile"
+        android:label="document_mobile"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

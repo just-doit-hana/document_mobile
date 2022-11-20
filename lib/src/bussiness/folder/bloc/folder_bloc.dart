@@ -1,10 +1,10 @@
-import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
-import 'package:document_appmobile/src/data/model/folder/folder_recycle.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/model/folder/folder.dart';
+import '../../../data/model/folder/folder_item.dart';
+import '../../../data/model/folder/folder_recycle.dart';
 import '../../../data/repository/folder/folder_repo.dart';
 
 part './folder_event.dart';

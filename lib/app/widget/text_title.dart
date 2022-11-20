@@ -1,5 +1,6 @@
-import 'package:document_appmobile/app/util/util.dart';
 import 'package:flutter/material.dart';
+
+import '../util/util.dart';
 
 class TextTitle extends StatelessWidget {
   const TextTitle({Key? key, required this.title}) : super(key: key);

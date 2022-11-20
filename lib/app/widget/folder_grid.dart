@@ -1,6 +1,6 @@
-import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
 import 'package:flutter/material.dart';
 
+import '../../src/data/model/folder/folder_item.dart';
 import '../util/util.dart';
 import 'icon_type.dart';
 

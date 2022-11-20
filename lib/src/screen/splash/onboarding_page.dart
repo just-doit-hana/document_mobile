@@ -1,13 +1,11 @@
-import 'package:document_appmobile/app/animation/routes_animation.dart';
-import 'package:document_appmobile/app/util/app_asset.dart';
-import 'package:document_appmobile/app/util/app_color.dart';
-import 'package:document_appmobile/app/util/app_constant.dart';
-import 'package:document_appmobile/app/util/app_extension.dart';
-import 'package:document_appmobile/src/screen/login/login_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:introduction_screen/introduction_screen.dart';
+
+import '../../../app/animation/routes_animation.dart';
+import '../../../app/util/util.dart';
+import '../login/login_screen.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);

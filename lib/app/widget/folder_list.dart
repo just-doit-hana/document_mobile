@@ -1,10 +1,10 @@
-import 'package:document_appmobile/app/animation/routes_animation.dart';
-import 'package:document_appmobile/app/util/util.dart';
-import 'package:document_appmobile/src/data/model/folder/folder_item.dart';
-import 'package:document_appmobile/src/screen/folder/folder_detail_srcreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/widget/widget.dart';
+import '../../src/data/model/folder/folder_item.dart';
+import '../../src/screen/folder/folder_detail_srcreen.dart';
+import '../animation/routes_animation.dart';
+import '../util/util.dart';
 
 // ignore: must_be_immutable
 class FolderList extends StatelessWidget {
