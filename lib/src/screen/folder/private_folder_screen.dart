@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/util/util.dart';
 import '../../../app/widget/folder_grid.dart';
 import '../../../app/widget/folder_list.dart';
 import '../../../app/widget/widget.dart';
@@ -60,7 +59,7 @@ class _PrivateFolderState extends State<PrivateFolder> {
                                   children: [
                                     TextSeachButton(
                                         onPressed: (() {
-                                          ShowModalSearchName(context);
+                                          // ShowModalSearchName(context);
                                         }),
                                         title: 'Name',
                                         iconData: Icons.arrow_upward_outlined),
@@ -102,54 +101,55 @@ class _PrivateFolderState extends State<PrivateFolder> {
   }
 
   // ignore: non_constant_identifier_names
-  Future<dynamic> ShowModalSearchName(BuildContext context) {
-    return showModalBottomSheet(
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (ctx) {
-          return Container(
-              height: MediaQuery.of(context).size.height * 0.32,
-              decoration: BoxDecoration(
-                  color: HexColor.fromHex(
-                      AppColor.lightBackgroundColor), // or some other color
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(25.0),
-                      topRight: Radius.circular(25.0))),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 34, top: 10, bottom: 8),
-                      child: Text(
-                        'Sort by',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                            fontFamily: AppConstant.poppinsFont,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w400,
-                            color: HexColor.fromHex(AppColor.blackTextColor)),
-                      ),
-                    ),
-                  ),
-                  Divider(
-                    height: 4,
-                    color: HexColor.fromHex(AppColor.grayTextColor),
-                  ),
-                  const AppBtnSearchModal(
-                      title: 'Name', icon: Icons.arrow_upward_outlined),
-                  const AppBtnSearchModal(
-                      title: 'Last Modified',
-                      icon: Icons.arrow_upward_outlined),
-                  const AppBtnSearchModal(
-                      title: 'Label', icon: Icons.arrow_upward_outlined),
-                  const AppBtnSearchModal(
-                      title: 'Member', icon: Icons.arrow_upward_outlined),
-                ],
-              ));
-        });
-  }
+  // Future<dynamic> ShowModalSearchName(BuildContext context) {
+  //   return showModalBottomSheet(
+  //       isScrollControlled: true,
+  //       backgroundColor: Colors.transparent,
+  //       context: context,
+  //       builder: (ctx) {
+  //         return Container(
+  //             height: MediaQuery.of(context).size.height * 0.32,
+  //             decoration: BoxDecoration(
+  //                 color: HexColor.fromHex(
+  //                     AppColor.lightBackgroundColor), // or some other color
+  //                 borderRadius: const BorderRadius.only(
+  //                     topLeft: Radius.circular(25.0),
+  //                     topRight: Radius.circular(25.0))),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 Flexible(
+  //                   flex: 1,
+  //                   child: Padding(
+  //                     padding:
+  //                         const EdgeInsets.only(left: 34, top: 10, bottom: 8),
+  //                     child: Text(
+  //                       'Sort by',
+  //                       textAlign: TextAlign.start,
+  //                       style: TextStyle(
+  //                           fontFamily: AppConstant.poppinsFont,
+  //                           fontSize: 18,
+  //                           fontWeight: FontWeight.w400,
+  //                           color: HexColor.fromHex(AppColor.blackTextColor)),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 Divider(
+  //                   height: 4,
+  //                   color: HexColor.fromHex(AppColor.grayTextColor),
+  //                 ),
+  //                 const AppBtnSearchModal(
+  //                     title: 'Name', icon: Icons.arrow_upward_outlined),
+  //                 const AppBtnSearchModal(
+  //                     title: 'Last Modified',
+  //                     icon: Icons.arrow_upward_outlined),
+  //                 const AppBtnSearchModal(
+  //                     title: 'Label', icon: Icons.arrow_upward_outlined),
+  //                 const AppBtnSearchModal(
+  //                     title: 'Member', icon: Icons.arrow_upward_outlined),
+  //               ],
+  //             ));
+  //       });
+  // }
+
 }

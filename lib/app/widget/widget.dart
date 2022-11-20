@@ -4,3 +4,5 @@ export 'menu_item_drawer.dart';
 export './text_search_btn.dart';
 export './app_btn_search_modal.dart';
 export './icon_type.dart';
+
+export './list_title.dart';

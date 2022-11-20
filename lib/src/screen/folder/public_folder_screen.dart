@@ -110,7 +110,6 @@ class _PublicFolderState extends State<PublicFolder> {
 
   // Widget _buildLoading() => const Center(child: CircularProgressIndicator());
 
-  // ignore: non_constant_identifier_names
 //   _showModalSearchName(BuildContext context) {
 //     return showModalBottomSheet(
 //         isScrollControlled: true,
