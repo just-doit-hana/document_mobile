@@ -1,3 +1,5 @@
+import 'package:document_mobile/src/screen/shared/share_file_screen.dart';
+import 'package:document_mobile/src/screen/shared/shared_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../src/screen/archive/archived_screen.dart';
@@ -36,15 +38,8 @@ class DrawerAppbar extends StatelessWidget {
               title: 'Share file',
               iconData: Icons.share_outlined,
               onPressed: (() {
-                // final login =
-                //     LoginUser(username: 'huytq', password: '123456');
-                // try {
-                //   final responseUser = widget.dioClient.login(login);
-                //   print('Resonse user home $responseUser');
-                //   // setState(() => createdUser = responseUser);
-                // } catch (err) {
-                //   print('Print Err ${err.toString()}');
-                // }
+                Navigator.of(context)
+                    .push(CustomRoutesPage(widget: const ShareFileScreen()));
               })),
           // only backup file
           MenuItemDrawer(
@@ -75,13 +70,25 @@ class DrawerAppbar extends StatelessWidget {
                     value: 3,
                     color: HexColor.fromHex(AppColor.primaryBtnColor),
                   )),
-              const Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Text(
-                  '2 GB of 5GB',
-                  // textAlign: TextAlign.left,
-                ),
-              )
+              Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        '2 GB',
+                        style: TextStyle(
+                            color: HexColor.fromHex(AppColor.primaryTextColor)),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Text(
+                        'used of 5GB',
+                        // textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ))
             ],
             // ),
           )

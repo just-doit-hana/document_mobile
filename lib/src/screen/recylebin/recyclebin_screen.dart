@@ -1,3 +1,4 @@
+import 'package:document_mobile/src/data/model/folder/folder_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,7 +7,7 @@ import '../../../app/util/util.dart';
 import '../../../app/widget/app_dialogs.dart';
 import '../../../app/widget/widget.dart';
 import '../../bussiness/folder/bloc/folder_bloc.dart';
-import '../../data/model/folder/folder_recycle.dart';
+import '../../data/model/folder/folder_result_folder.dart';
 
 class RecyclebinScreen extends StatefulWidget {
   const RecyclebinScreen({Key? key}) : super(key: key);
@@ -43,6 +44,7 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          // automaticallyImplyLeading: false,
           title: const Text(
         'Recycle Bin',
         style: TextStyle(
@@ -71,7 +73,7 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
           },
           builder: (context, state) {
             if (state is FolderRecycleLoaded) {
-              FolderRecycleReponse recycleBin = state.recycleBin;
+              FolderItemResponse recycleBin = state.recycleBin;
               return RefreshIndicator(
                 onRefresh: () async => context.read<FolderBloc>()
                   ..add(LoadFolderRecycleBinEvent()),
@@ -101,9 +103,10 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      context.read<FolderBloc>()
-                        ..isFetching = true
-                        ..add(LoadFolderRecycleBinEvent());
+                      context
+                          .read<FolderBloc>()
+                          // ..isFetching = true
+                          .add(LoadFolderRecycleBinEvent());
                     },
                     icon: const Icon(Icons.refresh),
                   ),
@@ -155,12 +158,22 @@ class CardList extends StatelessWidget {
           final result = showConfimation(
             context,
             title: "Are you sure?",
-            content: " Do you want to delete ${recycleBin.type}?",
+            content: " Do you want to delete ${recycleBin.name}?",
           );
           return result;
         },
         onDismissed: (_) {
-          // context.read<FolderBloc>().add((note.id)Delete);
+          if (recycleBin.type == 'Folder') {
+            context
+                .read<FolderBloc>()
+                .add(DeleteRecycleBinFolderEvent(id: recycleBin.id!));
+            context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
+          } else {
+            context
+                .read<FolderBloc>()
+                .add(DeleteRecycleBinFileEvent(id: recycleBin.id!));
+            context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
+          }
         },
         child: Card(
           child: ListTile(
@@ -192,7 +205,30 @@ class CardList extends StatelessWidget {
               elevation: 2,
               onSelected: (value) {
                 if (value == 1) {
-                } else if (value == 2) {}
+                  if (recycleBin.type == 'Folder') {
+                    context
+                        .read<FolderBloc>()
+                        .add(DeleteRecycleBinFolderEvent(id: recycleBin.id!));
+                    context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
+                  } else {
+                    context
+                        .read<FolderBloc>()
+                        .add(DeleteRecycleBinFileEvent(id: recycleBin.id!));
+                    context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
+                  }
+                } else if (value == 2) {
+                  if (recycleBin.type == 'Folder') {
+                    context
+                        .read<FolderBloc>()
+                        .add(RestoreRecycleBinFolderEvent(id: recycleBin.id!));
+                    context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
+                  } else {
+                    context
+                        .read<FolderBloc>()
+                        .add(RestoreRecycleBinFileEvent(id: recycleBin.id!));
+                    context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
+                  }
+                }
               },
             ),
             subtitle:

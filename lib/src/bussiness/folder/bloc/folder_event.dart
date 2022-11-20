@@ -18,7 +18,7 @@ class LoadFolderPrivateEvent extends FolderEvent {
 
 class LoadFolderItemEvent extends FolderEvent {
   final String? id;
-  final FolderRecycleReponse? resultItemFolder;
+  final FolderItemResponse? resultItemFolder;
 
   const LoadFolderItemEvent({this.id, this.resultItemFolder});
   @override
@@ -33,6 +33,46 @@ class LoadFolderRecycleBinEvent extends FolderEvent {
 class LoadFolderBackupEvent extends FolderEvent {
   @override
   List<Object?> get props => [];
+}
+
+class RestoreRecycleBinFolderEvent extends FolderEvent {
+  final String id;
+  const RestoreRecycleBinFolderEvent({
+    required this.id,
+  });
+  @override
+  List<Object?> get props => [id];
+}
+
+class RestoreRecycleBinFileEvent extends FolderEvent {
+  final String id;
+  const RestoreRecycleBinFileEvent({
+    required this.id,
+  });
+  @override
+  List<Object?> get props => [id];
+}
+
+class DeleteRecycleBinFileEvent extends FolderEvent {
+  final String id;
+  const DeleteRecycleBinFileEvent({required this.id});
+  @override
+  List<Object?> get props => [id];
+}
+
+class DeleteRecycleBinFolderEvent extends FolderEvent {
+  final String id;
+  const DeleteRecycleBinFolderEvent({required this.id});
+  @override
+  List<Object?> get props => [id];
+}
+
+class RestoreBackupEvent extends FolderEvent {
+  final String id;
+  const RestoreBackupEvent({required this.id});
+
+  @override
+  List<Object?> get props => [id];
 }
 
 class DomainEvent extends FolderEvent {

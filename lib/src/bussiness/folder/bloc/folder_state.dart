@@ -78,7 +78,7 @@ class FolderRecycleLoading extends FolderState {
 
 // ignore: must_be_immutable
 class FolderRecycleLoaded extends FolderState {
-  final FolderRecycleReponse recycleBin;
+  final FolderItemResponse recycleBin;
   int? page;
   bool? isLastPage;
   FolderRecycleLoaded(
@@ -98,13 +98,118 @@ class FolderRecyleError extends FolderState {
   List<Object?> get props => [error];
 }
 
+class DeleteRecycleBinFolderLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class DeleteRecycleBinFolderLoaded extends FolderState {
+  final String id;
+  DeleteRecycleBinFolderLoaded({required this.id});
+
+  @override
+  List<Object?> get props => [id];
+}
+
+class DeleteRecycleFolderError extends FolderState {
+  final String error;
+  DeleteRecycleFolderError({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class DeleteRecycleBinFileLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class DeleteRecycleBinFileLoaded extends FolderState {
+  final String id;
+  DeleteRecycleBinFileLoaded({required this.id});
+
+  @override
+  List<Object?> get props => [id];
+}
+
+class DeleteRecycleFileError extends FolderState {
+  final String error;
+  DeleteRecycleFileError({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class RestoreRecycleBinFolderLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class RestoreRecycleBinFolderLoaded extends FolderState {
+  final FolderRestoreResponse? folderRestoreResponse;
+  RestoreRecycleBinFolderLoaded({this.folderRestoreResponse});
+
+  @override
+  List<Object?> get props => [folderRestoreResponse];
+}
+
+class RestoreRecycleBinFolderError extends FolderState {
+  final String error;
+  RestoreRecycleBinFolderError({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class RestoreRecycleBinFileLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class RestoreRecycleBinFileLoaded extends FolderState {
+  // final String id;
+  final FolderRestoreResponse folderRestoreResponse;
+  RestoreRecycleBinFileLoaded({required this.folderRestoreResponse});
+
+  @override
+  List<Object?> get props => [folderRestoreResponse];
+}
+
+class RestoreRecycleBinFileError extends FolderState {
+  final String error;
+  RestoreRecycleBinFileError({required this.error});
+
+  @override
+  List<Object?> get props => [error];
+}
+
+class RestoreBackupLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class RestoreBackupLoaded extends FolderState {
+  final FolderRestoreResponse folderRestoreBackupResponse;
+  RestoreBackupLoaded({required this.folderRestoreBackupResponse});
+
+  @override
+  List<Object?> get props => [folderRestoreBackupResponse];
+}
+
+class RestoreBackupError extends FolderState {
+  final String error;
+  RestoreBackupError({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
+
 class FolderBackupLoading extends FolderState {
   @override
   List<Object?> get props => [];
 }
 
 class FolderBackupLoaded extends FolderState {
-  final FolderRecycleReponse folderBackup;
+  final FolderItemResponse folderBackup;
   FolderBackupLoaded(this.folderBackup);
   @override
   List<Object?> get props => [folderBackup];
@@ -117,6 +222,8 @@ class FolderBackupError extends FolderState {
   @override
   List<Object?> get props => [error];
 }
+
+
 // class DomainLoading extends FolderState {
 //   @override
 //   List<Object?> get props => [];

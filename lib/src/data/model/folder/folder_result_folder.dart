@@ -1,49 +1,5 @@
-import '../pagination/pagination.dart';
 import '../sharewith/share_with.dart';
 import '../tags/tags.dart';
-
-class FolderRecycleReponse {
-  Pagination? pagination;
-  List<ResultItemFolder>? result;
-  int? statusCode;
-  bool? isError;
-  String? message;
-  FolderRecycleReponse({
-    this.pagination,
-    this.result = const <ResultItemFolder>[],
-    this.statusCode,
-    this.isError = true,
-    this.message,
-  });
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'pagination': pagination?.toMap(),
-      'result': result?.map((x) => x.toMap()).toList(),
-      'statusCode': statusCode,
-      'isError': isError,
-      'message': message,
-    };
-  }
-
-  factory FolderRecycleReponse.fromMap(Map<String, dynamic> map) {
-    return FolderRecycleReponse(
-      pagination: map['pagination'] != null
-          ? Pagination.fromMap(map['pagination'])
-          : null,
-      result: map['result'] != null
-          ? List<ResultItemFolder>.from(
-              map['result'].map(
-                (x) => ResultItemFolder.fromMap(x),
-              ),
-            )
-          : null,
-      statusCode: map['statusCode'] != null ? map['statusCode'] as int : null,
-      isError: map['isError'] != null ? map['isError'] as bool : null,
-      message: map['message'] != null ? map['message'] as String : null,
-    );
-  }
-}
 
 class ResultItemFolder {
   String? id;

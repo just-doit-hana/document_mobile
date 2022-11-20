@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../bussiness/folder/bloc/folder_bloc.dart';
 import '../../data/model/folder/folder.dart';
 import '../../data/model/folder/folder_item.dart';
+import '../../data/model/folder/folder_result_folder.dart';
 
 // ignore: must_be_immutable
 class FolderDetail extends StatelessWidget {

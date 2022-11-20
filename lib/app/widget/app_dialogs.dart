@@ -1,3 +1,4 @@
+import 'package:document_mobile/app/util/util.dart';
 import 'package:flutter/material.dart';
 
 void showMessageSnackbar(BuildContext context, String messgae, {Color? color}) {
@@ -22,20 +23,30 @@ Future<bool> showConfimation(BuildContext context,
             content: Text(content),
             actions: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
                       onPressed: () {
                         Navigator.pop(context, 'Cancel');
                         shouldDismiss = false;
                       },
-                      child: const Text('Cancel')),
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                            color: HexColor.fromHex(AppColor.primaryBtnColor),
+                            fontFamily: AppConstant.poppinsFont),
+                      )),
                   TextButton(
                       onPressed: () {
                         Navigator.pop(context, 'Delete');
                         shouldDismiss = true;
                       },
-                      child: const Text('Delete'))
+                      child: Text(
+                        'Delete',
+                        style: TextStyle(
+                            color: HexColor.fromHex(AppColor.primaryBtnColor),
+                            fontFamily: AppConstant.poppinsFont),
+                      )),
                 ],
               )
             ],

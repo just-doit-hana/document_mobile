@@ -1,6 +1,5 @@
 import 'package:document_mobile/src/screen/files/file_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../app/widget/widget.dart';
 import '../../src/data/model/folder/folder_item.dart';
@@ -57,7 +56,7 @@ class FolderList extends StatelessWidget {
                                     return Container(
                                         height:
                                             MediaQuery.of(context).size.height *
-                                                0.72,
+                                                0.74,
                                         decoration: BoxDecoration(
                                             color: HexColor.fromHex(AppColor
                                                 .lightBackgroundColor), // or some other color
@@ -226,6 +225,11 @@ class FolderList extends StatelessWidget {
                                                       .drive_file_rename_outline,
                                                   content: 'Rename',
                                                 ),
+                                                ListTitleModal(
+                                                  onPress: () {},
+                                                  icon: Icons.move_up_outlined,
+                                                  content: 'Move To',
+                                                ),
                                                 Divider(
                                                   height: 4,
                                                   color: HexColor.fromHex(
@@ -233,8 +237,8 @@ class FolderList extends StatelessWidget {
                                                 ),
                                                 ListTitleModal(
                                                   onPress: () {},
-                                                  icon: Icons.move_up_outlined,
-                                                  content: 'Move To',
+                                                  icon: Icons.backup_outlined,
+                                                  content: 'Back up',
                                                 ),
                                                 ListTitleModal(
                                                   onPress: () {},

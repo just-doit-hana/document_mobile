@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/model/folder/folder.dart';
 import '../../../data/model/folder/folder_item.dart';
-import '../../../data/model/folder/folder_recycle.dart';
+import '../../../data/model/restore/folder_restore.dart';
 import '../../../data/repository/folder/folder_repo.dart';
 
 part './folder_event.dart';
@@ -56,12 +56,68 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
           emit(FolderRecycleLoaded(
               recycleBin: recycleBin, page: newPage, isLastPage: true));
         } else {
-          emit(FolderRecyleError('Eror'));
+          emit(FolderRecyleError('Error'));
         }
       } catch (e) {
         emit(FolderRecyleError(e.toString()));
       }
     });
+
+    on<RestoreRecycleBinFolderEvent>((event, emit) async {
+      emit(RestoreRecycleBinFolderLoading());
+      try {
+        final idRestore =
+            await _folderRepository.restoreRecycleFolderBin(event.id);
+        emit(RestoreRecycleBinFolderLoaded(
+          folderRestoreResponse: idRestore!,
+        ));
+      } catch (e) {
+        emit(RestoreRecycleBinFolderError(error: e.toString()));
+      }
+    });
+
+    on<RestoreRecycleBinFileEvent>((event, emit) async {
+      emit(RestoreRecycleBinFileLoading());
+      try {
+        final idRestore =
+            await _folderRepository.restoreRecycleFileBin(event.id);
+        emit(RestoreRecycleBinFileLoaded(folderRestoreResponse: idRestore!));
+      } catch (e) {
+        emit(RestoreRecycleBinFileError(error: e.toString()));
+      }
+    });
+
+    on<DeleteRecycleBinFolderEvent>((event, emit) async {
+      emit(DeleteRecycleBinFolderLoading());
+      try {
+        final idRestore =
+            await _folderRepository.deteleRecycleBinFolder(event.id);
+        emit(DeleteRecycleBinFolderLoaded(id: idRestore));
+      } catch (e) {
+        emit(DeleteRecycleFolderError(error: e.toString()));
+      }
+    });
+
+    on<DeleteRecycleBinFileEvent>((event, emit) async {
+      emit(DeleteRecycleBinFileLoading());
+      try {
+        final idRestore =
+            await _folderRepository.deleteRecycleBinFile(event.id);
+        emit(DeleteRecycleBinFileLoaded(id: idRestore));
+      } catch (e) {
+        emit(DeleteRecycleFileError(error: e.toString()));
+      }
+    });
+
+    on<RestoreBackupEvent>(((event, emit) async {
+      emit(RestoreBackupLoading());
+      try {
+        final idBackup = await _folderRepository.restoreRecycleBackup(event.id);
+        emit(RestoreBackupLoaded(folderRestoreBackupResponse: idBackup!));
+      } catch (e) {
+        emit(RestoreBackupError(error: e.toString()));
+      }
+    }));
 
     on<LoadFolderBackupEvent>((event, emit) async {
       emit(FolderBackupLoading());

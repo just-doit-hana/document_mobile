@@ -1,3 +1,4 @@
+import 'package:document_mobile/src/data/model/folder/folder_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,7 +7,7 @@ import '../../../app/helper/format_date_time.dart';
 import '../../../app/util/util.dart';
 import '../../../app/widget/widget.dart';
 import '../../bussiness/folder/bloc/folder_bloc.dart';
-import '../../data/model/folder/folder_recycle.dart';
+import '../../data/model/folder/folder_result_folder.dart';
 import '../files/file_detail.dart';
 
 class AchiveFileScreen extends StatefulWidget {
@@ -51,7 +52,7 @@ class _AchiveFileScreenState extends State<AchiveFileScreen> {
             },
             builder: (context, state) {
               if (state is FolderBackupLoaded) {
-                FolderRecycleReponse recycleBin = state.folderBackup;
+                FolderItemResponse recycleBin = state.folderBackup;
                 return RefreshIndicator(
                   onRefresh: () async =>
                       context.read<FolderBloc>()..add(LoadFolderBackupEvent()),
@@ -152,7 +153,7 @@ class CardList extends StatelessWidget {
                     // row with 2 children
                     child: Row(
                       children: const [
-                        Icon(Icons.details_outlined),
+                        Icon(Icons.info_outline),
                         SizedBox(
                           width: 10,
                         ),
@@ -186,7 +187,10 @@ class CardList extends StatelessWidget {
                         .push(CustomRoutesPage(widget: const FileDetail()));
                     // if value 2 show dialog
                   } else if (value == 2) {
-                    // _showDialog(context);
+                    context
+                        .read<FolderBloc>()
+                        .add(RestoreBackupEvent(id: recycleBin.id!));
+                    context.read<FolderBloc>().add(LoadFolderBackupEvent());
                   }
                 },
               )),

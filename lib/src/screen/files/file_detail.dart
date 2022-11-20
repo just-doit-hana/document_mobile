@@ -274,22 +274,24 @@ class Detail extends StatelessWidget {
                       height: 200,
                       padding: const EdgeInsets.only(top: 10),
                       // color: Colors.red,
-                      child: ListView.builder(itemBuilder: ((context, index) {
-                        return Card(
-                          shadowColor: Colors.white.withOpacity(0.7),
-                          child: const ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.red,
-                              radius: 24,
-                              child: Text('Hytq'),
-                            ),
-                            subtitle: Text('create file'),
-                            title: Text('Tran Quang huy'),
-                            trailing: Text('Oct 8, 2022'),
-                          ),
-                        );
-                      })),
+                      child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemBuilder: ((context, index) {
+                            return Card(
+                              shadowColor: Colors.white.withOpacity(0.7),
+                              child: const ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  radius: 24,
+                                  child: Text('Hytq'),
+                                ),
+                                subtitle: Text('create file'),
+                                title: Text('Tran Quang huy'),
+                                trailing: Text('Oct 8, 2022'),
+                              ),
+                            );
+                          })),
                     )
                   ],
                 ),
@@ -312,22 +314,25 @@ class Detail extends StatelessWidget {
                       height: 200,
                       padding: const EdgeInsets.only(top: 10),
                       // color: Colors.red,
-                      child: ListView.builder(itemBuilder: ((context, index) {
-                        return Card(
-                          shadowColor: Colors.white.withOpacity(0.7),
-                          child: const ListTile(
-                            contentPadding: EdgeInsets.zero,
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.red,
-                              radius: 24,
-                              child: Text('Hytq'),
-                            ),
-                            subtitle: Text('Oct 8, 2022'),
-                            title: Text('report'),
-                            trailing: Icon(Icons.download_outlined),
-                          ),
-                        );
-                      })),
+                      child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: 10,
+                          itemBuilder: ((context, index) {
+                            return Card(
+                              shadowColor: Colors.white.withOpacity(0.7),
+                              child: const ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  radius: 24,
+                                  child: Text('Hytq'),
+                                ),
+                                subtitle: Text('Oct 8, 2022'),
+                                title: Text('report'),
+                                trailing: Icon(Icons.download_outlined),
+                              ),
+                            );
+                          })),
                     )
                   ],
                 ),
