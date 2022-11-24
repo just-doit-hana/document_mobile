@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:document_mobile/src/data/repository/auth/login_repository.dart';
+import 'package:document_mobile/src/data/repository/quota/quota_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -51,7 +53,9 @@ class MyApp extends StatelessWidget {
         providers: [
           RepositoryProvider(
             create: (_) => FolderRepository(),
-          )
+          ),
+          RepositoryProvider(create: (_) => QuotaRepository()),
+          RepositoryProvider(create: (_) => LoginRepository())
         ],
         child: MultiBlocProvider(
           providers: [

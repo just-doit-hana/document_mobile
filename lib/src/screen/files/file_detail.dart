@@ -1,3 +1,5 @@
+import 'package:document_mobile/app/animation/routes_animation.dart';
+import 'package:document_mobile/src/screen/user/user_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/util/util.dart';
@@ -50,9 +52,6 @@ class _FileDetailState extends State<FileDetail> {
             body: const Detail()));
   }
 }
-// type , size, tag, owner, modified, desc,
-// member access ,
-// activity, version
 
 class Detail extends StatelessWidget {
   const Detail({Key? key}) : super(key: key);
@@ -93,21 +92,49 @@ class Detail extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Size',
-                    style: TextStyle(
-                        fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Size',
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontFamily: AppConstant.poppinsFont),
+                      ),
+                      Text(
+                        '22.82 Kb',
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontFamily: AppConstant.poppinsFont),
+                      )
+                    ],
                   ),
-                  Text(
-                    '22.82 Kb',
-                    style: TextStyle(
-                        fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
-                  )
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'Modified',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: AppConstant.poppinsFont),
+                        ),
+                        Text(
+                          'Yesterday, 20:38',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: AppConstant.poppinsFont),
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
+
               const SizedBox(
                 height: 10,
               ),
@@ -170,21 +197,7 @@ class Detail extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Modified',
-                    style: TextStyle(
-                        fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
-                  ),
-                  Text(
-                    'Yesterday, 20:38',
-                    style: TextStyle(
-                        fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
-                  )
-                ],
-              ),
+
               const SizedBox(
                 height: 10,
               ),
@@ -220,7 +233,10 @@ class Detail extends StatelessWidget {
                                 fontWeight: FontWeight.w500),
                           ),
                           IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(CustomRoutesPage(
+                                    widget: const UserAccessScreen()));
+                              },
                               icon: const Icon(Icons.navigate_next_outlined))
                         ],
                       ),

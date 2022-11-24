@@ -6,6 +6,7 @@ import '../../../../app/util/dio/dio_client.dart';
 import '../../../../app/util/dio/dio_exception.dart';
 import '../../model/folder/folder.dart';
 import '../../model/folder/folder_item.dart';
+import '../../model/quota/quota.dart';
 import '../../model/restore/folder_restore.dart';
 import '../core/endpoint.dart';
 
@@ -29,6 +30,24 @@ class FolderRepository {
     } catch (e) {
       if (kDebugMode) {
         print('List public folder $e');
+      }
+      throw e.toString();
+    }
+  }
+
+  Future<Quota?> getQuotaByAccount(String accountId) async {
+    try {
+      final res = await _dioClient
+          .get('${Endpoints.ENDPOINTDOC}content/account/$accountId/usage');
+      var quota = res.data;
+      final value = Quota.fromMap(quota);
+      return value;
+    } on DioError catch (e) {
+      final errorMessage = DiorException.fromDioError(e).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Get Quota $e');
       }
       throw e.toString();
     }
@@ -193,6 +212,25 @@ class FolderRepository {
     } catch (e) {
       if (kDebugMode) {
         print('Backup folder $e');
+      }
+      throw e.toString();
+    }
+  }
+
+  Future<FolderItemResponse?> listShareFile() async {
+    try {
+      final res = await _dioClient.get(
+          '${Endpoints.ENDPOINTDOC}metadata/folders/items/shared',
+          queryParameters: {'PageNumber': 1, 'MaxPageSize': 10});
+      var shareFile = res.data;
+      final value = FolderItemResponse.fromMap(shareFile);
+      return value;
+    } on DioError catch (e) {
+      final errorMessage = DiorException.fromDioError(e).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Share file  $e');
       }
       throw e.toString();
     }

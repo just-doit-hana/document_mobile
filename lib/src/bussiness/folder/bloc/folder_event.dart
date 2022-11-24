@@ -75,6 +75,11 @@ class RestoreBackupEvent extends FolderEvent {
   List<Object?> get props => [id];
 }
 
+class ListShareFileEvent extends FolderEvent {
+  @override
+  List<Object?> get props => [];
+}
+
 class DomainEvent extends FolderEvent {
   @override
   List<Object?> get props => [];

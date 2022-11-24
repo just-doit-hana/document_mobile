@@ -223,6 +223,27 @@ class FolderBackupError extends FolderState {
   List<Object?> get props => [error];
 }
 
+class ListShareLoadingState extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ListShareLoadedState extends FolderState {
+  final FolderItemResponse sharefile;
+  ListShareLoadedState({required this.sharefile});
+
+  @override
+  List<Object?> get props => [sharefile];
+}
+
+class ListShareErrorState extends FolderState {
+  final String error;
+  ListShareErrorState(
+    this.error,
+  );
+  @override
+  List<Object?> get props => [error];
+}
 
 // class DomainLoading extends FolderState {
 //   @override

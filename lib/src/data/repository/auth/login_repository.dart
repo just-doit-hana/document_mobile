@@ -1,17 +1,36 @@
+import 'package:dio/dio.dart';
+import 'package:document_mobile/app/helper/shared_preference.dart';
+import 'package:document_mobile/app/util/dio/dio_exception.dart';
+import 'package:document_mobile/src/data/repository/core/endpoint.dart';
+import 'package:flutter/foundation.dart';
+
 import '../../../../app/util/dio/dio_client.dart';
 import '../../model/login/login_user.dart';
 import '../../model/login/user_infor.dart';
-import 'base_repositoty.dart';
 
-class LoginRepository implements BaseRepository {
-  LoginRepository({
-    required this.dioClient,
-  });
+class LoginRepository {
+  LoginRepository({Dio? dioClient}) : _dioClient = dioClient ?? DioClient().dio;
 
-  final DioClient dioClient;
+  final Dio _dioClient;
+  final shaedpref = SharedPreferenceHelper.instance;
 
-  Future<UserInfor?> loginUser(LoginUser loginUser) {
-    throw UnimplementedError();
+  Future<dynamic> loginUser(LoginUser loginUser) async {
+    try {
+      final res = await _dioClient.post('${Endpoints.ENDPOINTDOC}auth/login',
+          data: loginUser.toJson());
+      var login = res.data;
+      final value = UserInfor.fromMap(login);
+      shaedpref.setString("token", '${value.userID}');
+      return value;
+    } on DioError catch (e) {
+      final error = DiorException.fromDioError(e).toString();
+      throw error;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Login user $e');
+      }
+      throw e.toString();
+    }
   }
 
   // @override

@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserInfor {
   final String? userID;
   final String? username;
@@ -48,7 +45,7 @@ class UserInfor {
       sysToken: map['sysToken'] != null ? map['sysToken'] as String : null,
       sysTokenExpires:
           map['sysTokenExpires'] != null ? map['sysTokenExpires'] as int : null,
-      dmsToken: map['dmsToken'],
+      dmsToken: map['dmsToken'] != null ? map['dmsToken'] as String : null,
       dmsTokenExpires:
           map['dmsTokenExpires'] != null ? map['dmsTokenExpires'] as int : null,
       refreshToken:
@@ -61,9 +58,4 @@ class UserInfor {
           : null,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory UserInfor.fromJson(String source) =>
-      UserInfor.fromMap(json.decode(source) as Map<String, dynamic>);
 }

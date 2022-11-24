@@ -11,9 +11,9 @@ abstract class AuthEvent extends Equatable {
 
 class AuthInitialEvent extends AuthEvent {}
 
-class AuthLogin extends AuthEvent {
-  final LoginUser loginUser;
-  const AuthLogin({
-    required this.loginUser,
+class AuthLoginEvent extends AuthEvent {
+  final LoginUser? loginUser;
+  const AuthLoginEvent({
+    this.loginUser,
   });
 }

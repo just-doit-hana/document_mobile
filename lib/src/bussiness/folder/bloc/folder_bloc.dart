@@ -15,119 +15,17 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
   bool isFetching = false;
 
   FolderBloc(this._folderRepository) : super(FolderLoadingState()) {
-    on<LoadFolderPublicEvent>((event, emit) async {
-      emit(FolderLoadingState());
-      try {
-        final folder = await _folderRepository.listPublicFolder();
-        emit(FolderLoadedState(folder: folder));
-      } catch (e) {
-        emit(FolderErrorState(e.toString()));
-      }
-    });
-
-    on<LoadFolderPrivateEvent>((event, emit) async {
-      emit(FolderPrivateLoadingState());
-      try {
-        final privateFolder = await _folderRepository.listPrivateFolder();
-        emit(FolderPrivateLoadedState(privateFolder: privateFolder!));
-      } catch (e) {
-        emit(FolderPrivateErrorState(e.toString()));
-      }
-    });
-
-    on<LoadFolderItemEvent>((event, emit) async {
-      emit(FolderItemLoading());
-      try {
-        final folderItem = await _folderRepository.listItemPublic(event.id!);
-        emit(FolderItemLoaded(event.id!, folderItem));
-      } catch (e) {
-        emit(FolderItemErrorState(e.toString()));
-      }
-    });
-
-    on<LoadFolderRecycleBinEvent>((event, emit) async {
-      emit(FolderRecycleLoading());
-      try {
-        const int newPage = 0;
-
-        final recycleBin =
-            await _folderRepository.listRecycleBin(page: newPage + 1);
-        if (recycleBin!.statusCode == 200) {
-          emit(FolderRecycleLoaded(
-              recycleBin: recycleBin, page: newPage, isLastPage: true));
-        } else {
-          emit(FolderRecyleError('Error'));
-        }
-      } catch (e) {
-        emit(FolderRecyleError(e.toString()));
-      }
-    });
-
-    on<RestoreRecycleBinFolderEvent>((event, emit) async {
-      emit(RestoreRecycleBinFolderLoading());
-      try {
-        final idRestore =
-            await _folderRepository.restoreRecycleFolderBin(event.id);
-        emit(RestoreRecycleBinFolderLoaded(
-          folderRestoreResponse: idRestore!,
-        ));
-      } catch (e) {
-        emit(RestoreRecycleBinFolderError(error: e.toString()));
-      }
-    });
-
-    on<RestoreRecycleBinFileEvent>((event, emit) async {
-      emit(RestoreRecycleBinFileLoading());
-      try {
-        final idRestore =
-            await _folderRepository.restoreRecycleFileBin(event.id);
-        emit(RestoreRecycleBinFileLoaded(folderRestoreResponse: idRestore!));
-      } catch (e) {
-        emit(RestoreRecycleBinFileError(error: e.toString()));
-      }
-    });
-
-    on<DeleteRecycleBinFolderEvent>((event, emit) async {
-      emit(DeleteRecycleBinFolderLoading());
-      try {
-        final idRestore =
-            await _folderRepository.deteleRecycleBinFolder(event.id);
-        emit(DeleteRecycleBinFolderLoaded(id: idRestore));
-      } catch (e) {
-        emit(DeleteRecycleFolderError(error: e.toString()));
-      }
-    });
-
-    on<DeleteRecycleBinFileEvent>((event, emit) async {
-      emit(DeleteRecycleBinFileLoading());
-      try {
-        final idRestore =
-            await _folderRepository.deleteRecycleBinFile(event.id);
-        emit(DeleteRecycleBinFileLoaded(id: idRestore));
-      } catch (e) {
-        emit(DeleteRecycleFileError(error: e.toString()));
-      }
-    });
-
-    on<RestoreBackupEvent>(((event, emit) async {
-      emit(RestoreBackupLoading());
-      try {
-        final idBackup = await _folderRepository.restoreRecycleBackup(event.id);
-        emit(RestoreBackupLoaded(folderRestoreBackupResponse: idBackup!));
-      } catch (e) {
-        emit(RestoreBackupError(error: e.toString()));
-      }
-    }));
-
-    on<LoadFolderBackupEvent>((event, emit) async {
-      emit(FolderBackupLoading());
-      try {
-        final fileBackup = await _folderRepository.backupFolder();
-        emit(FolderBackupLoaded(fileBackup!));
-      } catch (e) {
-        emit(FolderBackupError(e.toString()));
-      }
-    });
+    on<LoadFolderPublicEvent>(_loadFolderPublic);
+    on<LoadFolderPrivateEvent>(_loadFolderPrivate);
+    on<LoadFolderBackupEvent>(_folderbackup);
+    on<ListShareFileEvent>(_listshareFile);
+    on<LoadFolderItemEvent>(_loadFolderItem);
+    on<DeleteRecycleBinFileEvent>(_deleteRecycleBin);
+    on<RestoreBackupEvent>(_restoreBackup);
+    on<LoadFolderRecycleBinEvent>(_loadFolderRecyleBin);
+    on<RestoreRecycleBinFileEvent>(_restoreRecycleBinFile);
+    on<DeleteRecycleBinFolderEvent>(_deleteRecycleBinFolder);
+    on<RestoreRecycleBinFolderEvent>(_restoreRecycleBinFolder);
 
     // on<DomainEvent>((event, emit) async {
     //   emit(DomainLoading());
@@ -138,5 +36,130 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     //     emit(DomainErrorState(e.toString()));
     //   }
     // });
+  }
+  void _restoreRecycleBinFolder(
+      RestoreRecycleBinFolderEvent event, Emitter emit) async {
+    emit(RestoreRecycleBinFolderLoading());
+    try {
+      final idRestore =
+          await _folderRepository.restoreRecycleFolderBin(event.id);
+      emit(RestoreRecycleBinFolderLoaded(
+        folderRestoreResponse: idRestore!,
+      ));
+    } catch (e) {
+      emit(RestoreRecycleBinFolderError(error: e.toString()));
+    }
+  }
+
+  void _restoreRecycleBinFile(
+      RestoreRecycleBinFileEvent event, Emitter emit) async {
+    emit(RestoreRecycleBinFileLoading());
+    try {
+      final idRestore = await _folderRepository.restoreRecycleFileBin(event.id);
+      emit(RestoreRecycleBinFileLoaded(folderRestoreResponse: idRestore!));
+    } catch (e) {
+      emit(RestoreRecycleBinFileError(error: e.toString()));
+    }
+  }
+
+  void _deleteRecycleBinFolder(
+      DeleteRecycleBinFolderEvent event, Emitter emit) async {
+    emit(DeleteRecycleBinFolderLoading());
+    try {
+      final idRestore =
+          await _folderRepository.deteleRecycleBinFolder(event.id);
+      emit(DeleteRecycleBinFolderLoaded(id: idRestore));
+    } catch (e) {
+      emit(DeleteRecycleFolderError(error: e.toString()));
+    }
+  }
+
+  void _loadFolderRecyleBin(
+      LoadFolderRecycleBinEvent event, Emitter emit) async {
+    emit(FolderRecycleLoading());
+    try {
+      const int newPage = 0;
+
+      final recycleBin =
+          await _folderRepository.listRecycleBin(page: newPage + 1);
+      if (recycleBin!.statusCode == 200) {
+        emit(FolderRecycleLoaded(
+            recycleBin: recycleBin, page: newPage, isLastPage: true));
+      } else {
+        emit(FolderRecyleError('Error'));
+      }
+    } catch (e) {
+      emit(FolderRecyleError(e.toString()));
+    }
+  }
+
+  void _deleteRecycleBin(DeleteRecycleBinFileEvent event, Emitter emit) async {
+    emit(DeleteRecycleBinFileLoading());
+    try {
+      final idRestore = await _folderRepository.deleteRecycleBinFile(event.id);
+      emit(DeleteRecycleBinFileLoaded(id: idRestore));
+    } catch (e) {
+      emit(DeleteRecycleFileError(error: e.toString()));
+    }
+  }
+
+  void _restoreBackup(RestoreBackupEvent event, Emitter emit) async {
+    emit(RestoreBackupLoading());
+    try {
+      final idBackup = await _folderRepository.restoreRecycleBackup(event.id);
+      emit(RestoreBackupLoaded(folderRestoreBackupResponse: idBackup!));
+    } catch (e) {
+      emit(RestoreBackupError(error: e.toString()));
+    }
+  }
+
+  void _loadFolderItem(LoadFolderItemEvent event, Emitter emit) async {
+    emit(FolderItemLoading());
+    try {
+      final folderItem = await _folderRepository.listItemPublic(event.id!);
+      emit(FolderItemLoaded(event.id!, folderItem));
+    } catch (e) {
+      emit(FolderItemErrorState(e.toString()));
+    }
+  }
+
+  void _folderbackup(LoadFolderBackupEvent event, Emitter emit) async {
+    emit(FolderBackupLoading());
+    try {
+      final fileBackup = await _folderRepository.backupFolder();
+      emit(FolderBackupLoaded(fileBackup!));
+    } catch (e) {
+      emit(FolderBackupError(e.toString()));
+    }
+  }
+
+  void _listshareFile(ListShareFileEvent event, Emitter emit) async {
+    emit(ListShareLoadingState());
+    try {
+      final sharefile = await _folderRepository.listShareFile();
+      emit(ListShareLoadedState(sharefile: sharefile!));
+    } catch (e) {
+      emit(ListShareErrorState(e.toString()));
+    }
+  }
+
+  void _loadFolderPublic(LoadFolderPublicEvent event, Emitter emit) async {
+    emit(FolderLoadingState());
+    try {
+      final folder = await _folderRepository.listPublicFolder();
+      emit(FolderLoadedState(folder: folder));
+    } catch (e) {
+      emit(FolderErrorState(e.toString()));
+    }
+  }
+
+  void _loadFolderPrivate(LoadFolderPrivateEvent event, Emitter emit) async {
+    emit(FolderPrivateLoadingState());
+    try {
+      final privateFolder = await _folderRepository.listPrivateFolder();
+      emit(FolderPrivateLoadedState(privateFolder: privateFolder!));
+    } catch (e) {
+      emit(FolderPrivateErrorState(e.toString()));
+    }
   }
 }

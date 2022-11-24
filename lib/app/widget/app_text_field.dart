@@ -8,7 +8,7 @@ class AppTextField extends StatelessWidget {
     this.isRequired = false,
     this.maxLines = 1,
     this.hintText,
-    // this.formGroup,
+    this.controller,
     this.autofocus = false,
     this.isPasswordVisible = false,
     this.onTap,
@@ -22,10 +22,12 @@ class AppTextField extends StatelessWidget {
   final bool autofocus;
   final bool isPasswordVisible;
   final VoidCallback? onTap;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       obscureText: controlName == 'password' ? isPasswordVisible : false,
       autofocus: autofocus,
       maxLines: maxLines,

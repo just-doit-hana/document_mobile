@@ -1,11 +1,12 @@
+import 'package:document_mobile/src/screen/shared/share_file_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'app/util/util.dart';
 import 'src/screen/files/sysnfusion.dart';
 import 'src/screen/home/home_folder.dart';
 import 'src/screen/recylebin/recyclebin_screen.dart';
-import 'src/screen/test.dart';
 
+//
 class App extends StatefulWidget {
   const App({
     Key? key,
@@ -27,7 +28,7 @@ class _AppState extends State<App> {
   static const List<Widget> _screen = <Widget>[
     HomeFolder(),
     Sysnfusion(),
-    ExpansionTileExample(),
+    ShareFileScreen(),
     RecyclebinScreen(),
   ];
 
