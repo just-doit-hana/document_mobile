@@ -16,7 +16,7 @@ class AccountRepository {
       final res = await _dioClient.get('${Endpoints.ENDPOINTDOC}auth/accounts');
       var account = res.data;
       final value = AccountResponse.fromMap(account);
-      print(value);
+
       return value;
     } on DioError catch (e) {
       final error = DiorException.fromDioError(e).toString();

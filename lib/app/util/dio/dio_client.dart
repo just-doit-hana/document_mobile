@@ -2,9 +2,11 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:document_mobile/app/helper/shared_preference.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../util.dart';
+import 'dior_authorization_interceptor.dart';
 
 class DioClient {
   // late final Dio _dio;
@@ -20,21 +22,23 @@ class DioClient {
   }
 
   static Dio createDioClient() {
+    late String? token = SharedPreferenceHelper.instance.getString("token");
+    print('Toen $token');
     final dio = Dio(BaseOptions(
         // connectTimeout: AppConstant.connectionTimeout,
         receiveTimeout: AppConstant.receiveTimeout,
         responseType: ResponseType.json,
+        contentType: 'application/json; charset=utf-8',
         headers: {
           HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8',
-          HttpHeaders.authorizationHeader:
-              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiIwMGMxODUyZi1lZjAwLTRkNmYtYTA3Yi1jNzNkMmRlMTVhNzgiLCJFbWFpbCI6Im5naGlhcHRAaGlzb2Z0LnZuIiwiRmlyc3ROYW1lIjoiTmdoxKlhIiwiTGFzdE5hbWUiOiJQaOG6oW0gVHLhu41uZyIsIlVzZXJOYW1lIjoiYWQiLCJEZXBhcnRtZW50SWQiOiI1OSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiTW9kdWxlcyI6WyJURVNUIEsgRE9ORyBCTyIsIkRPQ1VNRU5UIiwiSVQgQVNTRVQiLCJBU1NFVCIsIkxJQlJBUlkiLCJMTVMiLCJUQVNLIE1BTkFHRVIiXSwiUGhvbmVOdW1iZXIiOiIwMTIzNDU2Nzg5IiwiZXhwIjoxNjY5Mjc1MjI5LCJpc3MiOiJWaWV0SmV0X0FwaUdhdGV3YXkiLCJhdWQiOiJWaWV0SmV0X0FwaUdhdGV3YXkifQ.7NluwMWwQFWzePfxAAV9Ugo4wK98vDyrW4UkmnBlr8E'
+          HttpHeaders.authorizationHeader: token
         }));
     dio.interceptors.addAll([
       //  LoggerInterceptor(),
-      //         AuthorizationInterceptor(),
+      // AuthorizationInterceptor(),
       if (AppConstant.DIO_CLIENT_DEBUG_LOG)
         PrettyDioLogger(
-            requestHeader: false,
+            requestHeader: true,
             requestBody: false,
             responseBody: true,
             responseHeader: false,

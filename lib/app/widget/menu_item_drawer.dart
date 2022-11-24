@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:document_mobile/app/helper/shared_preference.dart';
 import 'package:document_mobile/src/bussiness/quota/bloc/quota_bloc.dart';
 import 'package:document_mobile/src/screen/shared/share_file_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class DrawerAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? userId = SharedPreferenceHelper.instance.getString('userId');
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.65,
       child: ListView(
@@ -67,8 +69,7 @@ class DrawerAppbar extends StatelessWidget {
 
           BlocProvider(
             create: (context) => QuotaBloc(RepositoryProvider.of(context))
-              ..add(const GetQuataByAccountEvent(
-                  accountId: '00c1852f-ef00-4d6f-a07b-c73d2de15a78')),
+              ..add(GetQuataByAccountEvent(accountId: userId!)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

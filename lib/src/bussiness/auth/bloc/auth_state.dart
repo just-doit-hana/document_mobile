@@ -1,23 +1,13 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'auth_bloc.dart';
 
-// class AuthState extends Equatable {
-//   const AuthState(this.userInfor, this.status, this.message);
-//   final DataStatus status;
-//   final String message;
-//   final LoginUser? userInfor;
-//   bool get hasUserInfor => userInfor != null;
-//   bool get isProcessing =>
-//       status.isDeleting || status.isUpdating || status.isSubmitting;
-//   @override
-//   List<Object> get props => [
-//         status,
-//         hasUserInfor,
-//         isProcessing,
-//       ];
-// }
 abstract class AuthState extends Equatable {
   const AuthState();
+}
+
+class AuthLoadingState extends AuthState {
+  @override
+  List<Object?> get props => [];
 }
 
 class AuthInitialState extends AuthState {
@@ -26,12 +16,19 @@ class AuthInitialState extends AuthState {
 }
 
 class AuthLoginState extends AuthState {
-  final LoginUser login;
+  final UserLoginReponse userInfor;
 
-  const AuthLoginState(this.login);
+  const AuthLoginState(this.userInfor);
 
   @override
-  List<Object?> get props => [login];
+  List<Object?> get props => [];
+}
+
+class AuthUnauthoriedState extends AuthState {
+  const AuthUnauthoriedState();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class AuthErrorState extends AuthState {

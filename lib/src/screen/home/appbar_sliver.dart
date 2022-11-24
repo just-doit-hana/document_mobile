@@ -6,11 +6,11 @@ import '../search/full_screen_search.dart';
 class AppSliverAppBar extends StatelessWidget {
   const AppSliverAppBar({
     Key? key,
-    required GlobalKey<ScaffoldState> scaffoldKey,
+    GlobalKey<ScaffoldState>? scaffoldKey,
   })  : _scaffoldKey = scaffoldKey,
         super(key: key);
 
-  final GlobalKey<ScaffoldState> _scaffoldKey;
+  final GlobalKey<ScaffoldState>? _scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +25,10 @@ class AppSliverAppBar extends StatelessWidget {
         preferredSize: Size.fromHeight(30.0), // Add this code
         child: Text(''), // Add this code
       ),
-      backgroundColor: HexColor.fromHex(AppColor.primaryBtnColor),
       leading: IconButton(
         color: HexColor.fromHex(AppColor.lightBackgroundColor),
         icon: const Icon(Icons.menu_outlined),
-        onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+        onPressed: () => _scaffoldKey!.currentState!.openDrawer(),
       ),
       title: const Text(
         'Document Management',

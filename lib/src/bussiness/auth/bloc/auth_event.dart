@@ -17,3 +17,5 @@ class AuthLoginEvent extends AuthEvent {
     this.loginUser,
   });
 }
+
+class AuthLogoutEvent extends AuthEvent {}

@@ -1,6 +1,8 @@
+import 'package:document_mobile/src/bussiness/auth/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app/helper/shared_preference.dart';
 import '../../../app/widget/folder_grid.dart';
 import '../../../app/widget/folder_list.dart';
 import '../../../app/widget/widget.dart';
@@ -18,6 +20,8 @@ class PublicFolder extends StatefulWidget {
 
 class _PublicFolderState extends State<PublicFolder> {
   bool isType = false;
+  late AuthBloc _authBloc;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

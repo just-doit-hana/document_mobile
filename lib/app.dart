@@ -2,6 +2,7 @@ import 'package:document_mobile/src/screen/shared/share_file_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'app/util/util.dart';
+import 'app/widget/menu_item_drawer.dart';
 import 'src/screen/files/sysnfusion.dart';
 import 'src/screen/home/home_folder.dart';
 import 'src/screen/recylebin/recyclebin_screen.dart';
@@ -18,7 +19,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int selectedItem = 0;
-
+  GlobalKey<ScaffoldState>? _scaffoldKey;
   void onSelectedItem(int value) {
     setState(() {
       selectedItem = value;

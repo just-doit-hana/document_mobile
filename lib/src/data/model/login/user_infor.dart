@@ -53,9 +53,9 @@ class UserInfor {
       refreshTokenExpires: map['refreshTokenExpires'] != null
           ? map['refreshTokenExpires'] as int
           : null,
-      roles: map['roles'] != null
-          ? List<String>.from((map['roles'] as List<String>))
-          : null,
+      // roles: map['roles'] != null
+      //     ? List.from((map['roles']))
+      //     : null,
     );
   }
 }

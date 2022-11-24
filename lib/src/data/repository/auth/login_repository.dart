@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:document_mobile/app/helper/shared_preference.dart';
 import 'package:document_mobile/app/util/dio/dio_exception.dart';
+import 'package:document_mobile/src/data/model/login/user_response.dart';
+import 'package:document_mobile/src/data/model/userscreen/userseen_response.dart';
 import 'package:document_mobile/src/data/repository/core/endpoint.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../app/util/dio/dio_client.dart';
 import '../../model/login/login_user.dart';
-import '../../model/login/user_infor.dart';
 
 class LoginRepository {
   LoginRepository({Dio? dioClient}) : _dioClient = dioClient ?? DioClient().dio;
@@ -14,13 +15,15 @@ class LoginRepository {
   final Dio _dioClient;
   final shaedpref = SharedPreferenceHelper.instance;
 
-  Future<dynamic> loginUser(LoginUser loginUser) async {
+  Future<UserLoginReponse> loginUser(LoginUser loginUser) async {
     try {
       final res = await _dioClient.post('${Endpoints.ENDPOINTDOC}auth/login',
-          data: loginUser.toJson());
+          data: loginUser.toMap());
       var login = res.data;
-      final value = UserInfor.fromMap(login);
-      shaedpref.setString("token", '${value.userID}');
+
+      final value = UserLoginReponse.fromMap(login);
+      shaedpref.setString("token", '${value.infor.sysToken}');
+      shaedpref.setString("userId", '${value.infor.userID}');
       return value;
     } on DioError catch (e) {
       final error = DiorException.fromDioError(e).toString();
