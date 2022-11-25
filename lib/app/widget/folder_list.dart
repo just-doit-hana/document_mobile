@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../app/widget/widget.dart';
 import '../../src/data/model/folder/folder_item.dart';
 import '../../src/screen/folder/folder_detail_sceen.dart';
-import '../../src/screen/folder/folder_detail_srcreen.dart';
+import '../../src/screen/folder/foolder_sub_detail_screen.dart';
 import '../animation/routes_animation.dart';
 import '../util/util.dart';
 
@@ -36,11 +36,15 @@ class FolderList extends StatelessWidget {
             children: [
               GestureDetector(
                 onDoubleTap: () {
-                  Navigator.of(context).push(CustomRoutesPage(
-                      widget: FolderDetail(
-                    id: index,
-                    // subFolders: folderList.result,
-                  )));
+                  if (folderList.result![index].type == 'Folder') {
+                    Navigator.of(context).push(CustomRoutesPage(
+                        widget: FolderSubFolderDetail(
+                            folderList: folderList,
+                            idIndex: index,
+                            folderId: folderList.result![index].id!)));
+                  } else {
+                    return;
+                  }
                 },
                 child: Card(
                     child: ListTile(

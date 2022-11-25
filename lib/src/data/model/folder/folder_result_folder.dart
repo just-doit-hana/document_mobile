@@ -34,7 +34,7 @@ class ResultItemFolder {
     this.tags = const <Tags>[],
     this.isArchived,
     this.isBackup,
-    this.sharedWith = const <SharedWith>[],
+    this.sharedWith,
   });
 
   Map<String, dynamic> toMap() {
