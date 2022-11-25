@@ -13,10 +13,3 @@ class ViewDetailFileEvent extends FileEvent {
 
   const ViewDetailFileEvent({required this.fileId});
 }
-
-class ViewDetailFolderEvent extends FileEvent {
-  final String folderId;
-  const ViewDetailFolderEvent({
-    required this.folderId,
-  });
-}

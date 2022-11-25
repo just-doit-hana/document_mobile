@@ -1,9 +1,9 @@
 import 'package:document_mobile/src/data/event/event.dart';
 
 class FolderDetailResponse {
-  String? isError;
+  bool? isError;
   String? message;
-  String? statusCode;
+  int? statusCode;
   FolderDeTail? folderDeTail;
   FolderDetailResponse({
     this.isError,
@@ -59,20 +59,28 @@ class FolderDeTail {
       'ownerName': ownerName,
       'targetFolder': targetFolder,
       'targetFolderID': targetFolderID,
-      'event': event!.map((e) => e.toMap()).toList()
+      'activities': event!.map((e) => e.toMap()).toList()
     };
   }
 
   factory FolderDeTail.fromMap(Map<String, dynamic> json) {
     return FolderDeTail(
-        id: json['id'],
-        lastModified: json['lastModified'],
-        name: json['name'],
-        ownerID: json['ownerID'],
-        ownerName: json['ownerName'],
-        targetFolder: json['targetFolder'],
-        targetFolderID: json['targetFolderID'],
-        event: List<Event>.from(json['event'].map((e) => Event.fromMap(e)))
-            .toList());
+        id: json['id'] != null ? json['id'] as String : null,
+        lastModified: json['lastModified'] != null
+            ? json['lastModified'] as String
+            : null,
+        name: json['name'] != null ? json['name'] as String : null,
+        ownerID: json['ownerID'] != null ? json['ownerID'] as String : null,
+        ownerName:
+            json['ownerName'] != null ? json['ownerName'] as String : null,
+        targetFolder: json['targetFolder'] != null
+            ? json['targetFolder'] as String
+            : null,
+        targetFolderID: json['targetFolderID'] != null
+            ? json['targetFolderID'] as String
+            : null,
+        event: json['activities'] != null
+            ? List<Event>.from(json['activities'].map((e) => Event.fromMap(e)))
+            : []);
   }
 }

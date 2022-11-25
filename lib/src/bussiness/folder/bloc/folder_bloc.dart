@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/model/folder/folder.dart';
+import '../../../data/model/folder/folder_detail.dart';
 import '../../../data/model/folder/folder_item.dart';
 import '../../../data/model/restore/folder_restore.dart';
 import '../../../data/repository/folder/folder_repo.dart';
@@ -26,7 +27,7 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     on<RestoreRecycleBinFileEvent>(_restoreRecycleBinFile);
     on<DeleteRecycleBinFolderEvent>(_deleteRecycleBinFolder);
     on<RestoreRecycleBinFolderEvent>(_restoreRecycleBinFolder);
-
+    on<ViewDetailFolderEvent>(_viewDetailFolder);
     // on<DomainEvent>((event, emit) async {
     //   emit(DomainLoading());
     //   try {
@@ -37,6 +38,16 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     //   }
     // });
   }
+  void _viewDetailFolder(ViewDetailFolderEvent event, Emitter emit) async {
+    emit(ViewDetailLoadingState());
+    try {
+      final viewDetail = await _folderRepository.folderDetailId(event.folderId);
+      emit(ViewDetaiFolderlLoadedState(folderDetailResponse: viewDetail!));
+    } catch (e) {
+      emit(ViewDetailFolderErrorState(error: e.toString()));
+    }
+  }
+
   void _restoreRecycleBinFolder(
       RestoreRecycleBinFolderEvent event, Emitter emit) async {
     emit(RestoreRecycleBinFolderLoading());

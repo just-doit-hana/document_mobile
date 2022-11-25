@@ -80,6 +80,16 @@ class ListShareFileEvent extends FolderEvent {
   List<Object?> get props => [];
 }
 
+class ViewDetailFolderEvent extends FolderEvent {
+  final String folderId;
+  const ViewDetailFolderEvent({
+    required this.folderId,
+  });
+
+  @override
+  List<Object?> get props => [folderId];
+}
+
 class DomainEvent extends FolderEvent {
   @override
   List<Object?> get props => [];

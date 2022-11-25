@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
                 supportedLocales: const [Locale('en', ''), Locale('vi', '')],
                 title: 'Document Mobile',
                 debugShowCheckedModeBanner: false,
-                // theme: state.theme,
+                theme: state.theme,
                 home: const App(),
                 initialRoute:
                     initScreen == 0 || initScreen == null ? 'onboard' : 'home',

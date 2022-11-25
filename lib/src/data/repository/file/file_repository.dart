@@ -11,7 +11,7 @@ class FileRepository {
 
   final Dio _dioClient;
 
-  Future<FileDetailResponse?> folderDetailId(String fileId) async {
+  Future<FileDetailResponse?> fileDetailId(String fileId) async {
     try {
       final res = await _dioClient
           .get('${Endpoints.ENDPOINTDOC}metadata/files/$fileId');

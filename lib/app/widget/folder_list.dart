@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../app/widget/widget.dart';
 import '../../src/data/model/folder/folder_item.dart';
+import '../../src/screen/folder/folder_detail_sceen.dart';
 import '../../src/screen/folder/folder_detail_srcreen.dart';
 import '../animation/routes_animation.dart';
 import '../util/util.dart';
@@ -82,13 +83,28 @@ class FolderList extends StatelessWidget {
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
                                                     children: [
-                                                      const Icon(Icons.folder),
+                                                      Container(
+                                                        child: folderList
+                                                                    .result![
+                                                                        index]
+                                                                    .type ==
+                                                                'Folder'
+                                                            ? imgIcon(AppImage
+                                                                .iconFolder)
+                                                            : iconType(folderList
+                                                                .result![index]
+                                                                .type
+                                                                .toString()),
+                                                      ),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
                                                                 .only(left: 11),
                                                         child: Text(
-                                                          'Document guide',
+                                                          folderList
+                                                              .result![index]
+                                                              .name
+                                                              .toString(),
                                                           textAlign:
                                                               TextAlign.start,
                                                           style: TextStyle(
@@ -124,13 +140,28 @@ class FolderList extends StatelessWidget {
                                                 ),
                                                 ListTitleModal(
                                                   onPress: () {
-                                                    Navigator.of(context)
-                                                        .push(CustomRoutesPage(
-                                                            widget: FileDetail(
-                                                      fileId: folderList
-                                                          .result![index].id
-                                                          .toString(),
-                                                    )));
+                                                    if (folderList
+                                                            .result![index]
+                                                            .type ==
+                                                        'Folder') {
+                                                      Navigator.of(context).push(
+                                                          CustomRoutesPage(
+                                                              widget:
+                                                                  FolderViewDetail(
+                                                        folderId: folderList
+                                                            .result![index].id
+                                                            .toString(),
+                                                      )));
+                                                    } else {
+                                                      Navigator.of(context).push(
+                                                          CustomRoutesPage(
+                                                              widget:
+                                                                  FileDetail(
+                                                        fileId: folderList
+                                                            .result![index].id
+                                                            .toString(),
+                                                      )));
+                                                    }
                                                   },
                                                   icon: Icons.info_outlined,
                                                   content: 'View Details',

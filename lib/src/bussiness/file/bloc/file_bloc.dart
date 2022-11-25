@@ -16,7 +16,7 @@ class FileBloc extends Bloc<FileEvent, FileState> {
   void _fileDetails(ViewDetailFileEvent event, Emitter emit) async {
     emit(ViewDetailLoadingState());
     try {
-      final viewDetail = await _fileRepository.folderDetailId(event.fileId);
+      final viewDetail = await _fileRepository.fileDetailId(event.fileId);
       emit(ViewDetaiFilelLoadedState(fileDetailResponse: viewDetail!));
     } catch (e) {
       emit(ViewDetailFileErrorState(error: e.toString()));

@@ -245,6 +245,27 @@ class ListShareErrorState extends FolderState {
   List<Object?> get props => [error];
 }
 
+class ViewDetailLoadingState extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ViewDetaiFolderlLoadedState extends FolderState {
+  final FolderDetailResponse folderDetailResponse;
+  ViewDetaiFolderlLoadedState({required this.folderDetailResponse});
+
+  @override
+  List<Object?> get props => [folderDetailResponse];
+}
+
+class ViewDetailFolderErrorState extends FolderState {
+  final String error;
+  ViewDetailFolderErrorState({required this.error});
+
+  @override
+  List<Object?> get props => throw [error];
+}
+
 // class DomainLoading extends FolderState {
 //   @override
 //   List<Object?> get props => [];
