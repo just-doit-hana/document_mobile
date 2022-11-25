@@ -1,12 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:document_mobile/src/data/model/userscreen/userseen.dart';
 
-class UserResponse {
+class UserSeenResponse {
   int? statusCode;
   bool? isError;
   String? message;
   List<UserSeen> userseen;
-  UserResponse({
+  UserSeenResponse({
     this.statusCode,
     this.isError,
     this.message,
@@ -21,12 +21,12 @@ class UserResponse {
     };
   }
 
-  factory UserResponse.fromMap(Map<String, dynamic> json) {
-    return UserResponse(
+  factory UserSeenResponse.fromMap(Map<String, dynamic> json) {
+    return UserSeenResponse(
         statusCode: json['statusCode'],
         isError: json['isError'],
         message: json['message'],
         userseen: List<UserSeen>.from(
-            json['result'].map((e) => UserResponse.fromMap(e))).toList());
+            json['result'].map((e) => UserSeenResponse.fromMap(e))).toList());
   }
 }

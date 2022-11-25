@@ -8,19 +8,15 @@ abstract class FileEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ViewDetailFileEvent extends Equatable {
+class ViewDetailFileEvent extends FileEvent {
   final String fileId;
 
-  const ViewDetailFileEvent(this.fileId);
-  @override
-  List<Object?> get props => [];
+  const ViewDetailFileEvent({required this.fileId});
 }
 
-class ViewDetailFolderEvent extends Equatable {
+class ViewDetailFolderEvent extends FileEvent {
   final String folderId;
   const ViewDetailFolderEvent({
     required this.folderId,
   });
-  @override
-  List<Object?> get props => [];
 }

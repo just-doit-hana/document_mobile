@@ -183,8 +183,10 @@ class CardList extends StatelessWidget {
                 onSelected: (value) {
                   // if value 1 show dialog
                   if (value == 1) {
-                    Navigator.of(context)
-                        .push(CustomRoutesPage(widget: const FileDetail()));
+                    Navigator.of(context).push(CustomRoutesPage(
+                        widget: FileDetail(
+                      fileId: recycleBin.id!,
+                    )));
                     // if value 2 show dialog
                   } else if (value == 2) {
                     context

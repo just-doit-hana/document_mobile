@@ -1,61 +1,73 @@
 import 'package:document_mobile/app/animation/routes_animation.dart';
+import 'package:document_mobile/app/helper/format_date_time.dart';
+import 'package:document_mobile/app/widget/widget.dart';
+import 'package:document_mobile/src/bussiness/file/bloc/file_bloc.dart';
+import 'package:document_mobile/src/data/model/file/file_detail.dart';
 import 'package:document_mobile/src/screen/user/user_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/util/util.dart';
 
-class FileDetail extends StatefulWidget {
-  const FileDetail({Key? key}) : super(key: key);
-
-  @override
-  State<FileDetail> createState() => _FileDetailState();
-}
-
-class _FileDetailState extends State<FileDetail> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class FileDetail extends StatelessWidget {
+  const FileDetail({Key? key, required this.fileId}) : super(key: key);
+  final String fileId;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // backgroundColor: Colors.white,
-        body: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return [
-                const SliverAppBar(
-                  pinned: true,
-                  expandedHeight: 200.0,
-                  flexibleSpace: FlexibleSpaceBar(
-                    title: Text(
-                      'File test case document',
-                      style: TextStyle(
-                          fontFamily: AppConstant.poppinsFont,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    centerTitle: true,
-                    background: Icon(
-                      Icons.folder,
-                      size: 100,
-                    ),
-                  ),
-                  elevation: 10.0,
-                  automaticallyImplyLeading: true,
-                  floating: true,
-                  snap: true,
-                )
-              ];
-            },
-            body: const Detail()));
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: ((context) => FileBloc(RepositoryProvider.of(context))
+              ..add(ViewDetailFileEvent(fileId: fileId))))
+      ],
+      child: BlocConsumer<FileBloc, FileState>(listener: (context, state) {
+        if (state is ViewDetailFileErrorState) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.error)));
+        }
+      }, builder: (context, state) {
+        if (state is ViewDetaiFilelLoadedState) {
+          FileDetailResponse detail = state.fileDetailResponse;
+          return Scaffold(
+              body: NestedScrollView(
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) {
+                    return [
+                      SliverAppBar(
+                        pinned: true,
+                        expandedHeight: 200.0,
+                        flexibleSpace: FlexibleSpaceBar(
+                            title: Text(
+                              detail.fileDetail.name!,
+                              style: const TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontFamily: AppConstant.poppinsFont,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            centerTitle: true,
+                            background: iconType(detail.fileDetail.type!)),
+                        elevation: 10.0,
+                        automaticallyImplyLeading: true,
+                        floating: true,
+                        snap: true,
+                      )
+                    ];
+                  },
+                  body: Detail(
+                    fileDetail: detail.fileDetail,
+                  )));
+        }
+        return Container();
+      }),
+    );
   }
 }
 
+// ignore: must_be_immutable
 class Detail extends StatelessWidget {
-  const Detail({Key? key}) : super(key: key);
-
+  Detail({Key? key, required this.fileDetail}) : super(key: key);
+  FileDetails fileDetail;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -72,8 +84,8 @@ class Detail extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Type',
                     style: TextStyle(
                         fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
@@ -82,9 +94,10 @@ class Detail extends StatelessWidget {
                   // const SizedBox(
                   //   height: 3,
                   // ),
+
                   Text(
-                    'Doc',
-                    style: TextStyle(
+                    fileDetail.type!,
+                    style: const TextStyle(
                         fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
                   )
                 ],
@@ -97,16 +110,16 @@ class Detail extends StatelessWidget {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Size',
                         style: TextStyle(
                             fontSize: 16.0,
                             fontFamily: AppConstant.poppinsFont),
                       ),
                       Text(
-                        '22.82 Kb',
-                        style: TextStyle(
+                        '${fileDetail.size!} Kb',
+                        style: const TextStyle(
                             fontSize: 16.0,
                             fontFamily: AppConstant.poppinsFont),
                       )
@@ -116,16 +129,16 @@ class Detail extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           'Modified',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: AppConstant.poppinsFont),
                         ),
                         Text(
-                          'Yesterday, 20:38',
-                          style: TextStyle(
+                          formatDateTime(fileDetail.lastModified!),
+                          style: const TextStyle(
                               fontSize: 16.0,
                               fontFamily: AppConstant.poppinsFont),
                         )
@@ -149,24 +162,25 @@ class Detail extends StatelessWidget {
                   SizedBox(
                     height: 50,
                     child: ListView.builder(
-                        itemCount: 5,
+                        itemCount: fileDetail.tags?.length,
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         itemBuilder: ((context, index) {
-                          return const Padding(
-                            padding: EdgeInsets.only(right: 4),
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 4),
                             child: Chip(
-                              backgroundColor: Colors.amberAccent,
-                              shape: RoundedRectangleBorder(
+                              backgroundColor: HexColor.fromHex(
+                                  fileDetail.tags![index].hexColor!),
+                              shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(2),
                                       topLeft: Radius.circular(2),
                                       topRight: Radius.circular(2),
                                       bottomRight: Radius.circular(2))),
                               label: Text(
-                                'Text case',
+                                fileDetail.tags![index].name!,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16.0,
                                     fontFamily: AppConstant.poppinsFont),
                               ),
@@ -181,15 +195,15 @@ class Detail extends StatelessWidget {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Owner',
                     style: TextStyle(
                         fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
                   ),
                   Text(
-                    'Tran Quang Huy',
-                    style: TextStyle(
+                    fileDetail.ownerID!,
+                    style: const TextStyle(
                         fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
                   )
                 ],
@@ -203,15 +217,17 @@ class Detail extends StatelessWidget {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Description',
                     style: TextStyle(
                         fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
                   ),
                   Text(
-                    'There is not have description',
-                    style: TextStyle(
+                    fileDetail.description == null
+                        ? 'There is not have description'
+                        : fileDetail.description!,
+                    style: const TextStyle(
                         fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
                   )
                 ],
@@ -291,6 +307,7 @@ class Detail extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 10),
                       // color: Colors.red,
                       child: ListView.builder(
+                          itemCount: fileDetail.event!.length,
                           padding: EdgeInsets.zero,
                           itemBuilder: ((context, index) {
                             return Card(

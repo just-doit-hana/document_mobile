@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import '../../../../app/util/dio/dio_client.dart';
 import '../../../../app/util/dio/dio_exception.dart';
 import '../../model/folder/folder.dart';
+import '../../model/folder/folder_detail.dart';
 import '../../model/folder/folder_item.dart';
-import '../../model/quota/quota.dart';
 import '../../model/restore/folder_restore.dart';
 import '../core/endpoint.dart';
 
@@ -35,23 +35,23 @@ class FolderRepository {
     }
   }
 
-  Future<Quota?> getQuotaByAccount(String accountId) async {
-    try {
-      final res = await _dioClient
-          .get('${Endpoints.ENDPOINTDOC}content/account/$accountId/usage');
-      var quota = res.data;
-      final value = Quota.fromMap(quota);
-      return value;
-    } on DioError catch (e) {
-      final errorMessage = DiorException.fromDioError(e).toString();
-      throw errorMessage;
-    } catch (e) {
-      if (kDebugMode) {
-        print('Get Quota $e');
-      }
-      throw e.toString();
-    }
-  }
+  // Future<Quota?> getQuotaByAccount(String accountId) async {
+  //   try {
+  //     final res = await _dioClient
+  //         .get('${Endpoints.ENDPOINTDOC}content/account/$accountId/usage');
+  //     var quota = res.data;
+  //     final value = Quota.fromMap(quota);
+  //     return value;
+  //   } on DioError catch (e) {
+  //     final errorMessage = DiorException.fromDioError(e).toString();
+  //     throw errorMessage;
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print('Get Quota $e');
+  //     }
+  //     throw e.toString();
+  //   }
+  // }
 
   Future<FolderItemResponse?> listPrivateFolder() async {
     try {
@@ -88,7 +88,6 @@ class FolderRepository {
       throw e.toString();
     }
   }
-//  https://docgatewayapi.hisoft.vn/metadata/folders/items?PageNumber=1&MaxPageSize=10
 
   Future<FolderItemResponse?> listRecycleBin({
     required int page,
@@ -231,6 +230,24 @@ class FolderRepository {
     } catch (e) {
       if (kDebugMode) {
         print('Share file  $e');
+      }
+      throw e.toString();
+    }
+  }
+
+  Future<FolderDetailResponse?> folderDetailId(String folderId) async {
+    try {
+      final res = await _dioClient
+          .get('${Endpoints.ENDPOINTDOC}metadata/folders/$folderId');
+      var folder = res.data;
+      final value = FolderDetailResponse.fromMap(folder);
+      return value;
+    } on DioError catch (e) {
+      final errorMessage = DiorException.fromDioError(e).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Folder Detail $e');
       }
       throw e.toString();
     }

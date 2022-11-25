@@ -121,10 +121,13 @@ class FolderList extends StatelessWidget {
                                                 ),
                                                 ListTitleModal(
                                                   onPress: () {
-                                                    Navigator.of(context).push(
-                                                        CustomRoutesPage(
-                                                            widget:
-                                                                const FileDetail()));
+                                                    Navigator.of(context)
+                                                        .push(CustomRoutesPage(
+                                                            widget: FileDetail(
+                                                      fileId: folderList
+                                                          .result![index].id
+                                                          .toString(),
+                                                    )));
                                                   },
                                                   icon: Icons.info_outlined,
                                                   content: 'View Details',
