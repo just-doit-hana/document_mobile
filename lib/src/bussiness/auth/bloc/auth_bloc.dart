@@ -1,6 +1,5 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
-import 'package:document_mobile/src/data/model/login/user_infor.dart';
 import 'package:document_mobile/src/data/model/login/user_response.dart';
 
 import 'package:equatable/equatable.dart';

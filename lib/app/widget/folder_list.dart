@@ -56,7 +56,7 @@ class FolderList extends StatelessWidget {
                                     return Container(
                                         height:
                                             MediaQuery.of(context).size.height *
-                                                0.74,
+                                                0.8,
                                         decoration: BoxDecoration(
                                             color: HexColor.fromHex(AppColor
                                                 .lightBackgroundColor), // or some other color
@@ -71,13 +71,13 @@ class FolderList extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Flexible(
-                                              flex: 1,
+                                              flex: 2,
                                               child: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 18,
                                                           top: 10,
-                                                          bottom: 8),
+                                                          bottom: 10),
                                                   child: Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment.start,
@@ -92,6 +92,9 @@ class FolderList extends StatelessWidget {
                                                           textAlign:
                                                               TextAlign.start,
                                                           style: TextStyle(
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               fontFamily:
                                                                   AppConstant
                                                                       .poppinsFont,

@@ -13,7 +13,7 @@ class VersionRepository {
 
   final Dio _dioClient;
 
-  Future<VersionReponse> listVersionFile(String fileId) async {
+  Future<VersionReponse> listVersionFile({required String fileId}) async {
     try {
       final res = await _dioClient
           .get('${Endpoints.ENDPOINTDOC}content/files/$fileId/versions');

@@ -7,4 +7,9 @@ abstract class AccountEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ListAccount extends AccountEvent {}
+class ListAccountEvent extends AccountEvent {}
+
+class ListUserseenEvent extends AccountEvent {
+  final String fileId;
+  const ListUserseenEvent({required this.fileId});
+}

@@ -5,23 +5,44 @@ abstract class AccountState extends Equatable {
   const AccountState();
 }
 
-class AccountInitialState extends AccountState {
+class AccountListInitialState extends AccountState {
   @override
   List<Object?> get props => [];
 }
 
-class AccountLoadedState extends AccountState {
+class AccountListLoadedState extends AccountState {
   List<Account> accountResponse;
-  AccountLoadedState({
+  AccountListLoadedState({
     required this.accountResponse,
   });
   @override
   List<Object> get props => [accountResponse];
 }
 
-class AccountErrorState extends AccountState {
+class AccountListErrorState extends AccountState {
   final String error;
-  const AccountErrorState({required this.error});
+  const AccountListErrorState({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
+
+class UserSeenListInitialState extends AccountState {
+  @override
+  List<Object?> get props => [];
+}
+
+class UserSeenListLoadedState extends AccountState {
+  List<UserSeen> accountResponse;
+  UserSeenListLoadedState({
+    required this.accountResponse,
+  });
+  @override
+  List<Object> get props => [accountResponse];
+}
+
+class UserSeenListErrorState extends AccountState {
+  final String error;
+  const UserSeenListErrorState({required this.error});
   @override
   List<Object?> get props => [error];
 }
