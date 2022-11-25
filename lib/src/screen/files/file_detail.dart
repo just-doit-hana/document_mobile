@@ -1,6 +1,7 @@
 import 'package:document_mobile/app/animation/routes_animation.dart';
 import 'package:document_mobile/app/helper/format_date_time.dart';
 import 'package:document_mobile/app/widget/widget.dart';
+import 'package:document_mobile/src/bussiness/account/bloc/account_bloc.dart';
 import 'package:document_mobile/src/bussiness/file/bloc/file_bloc.dart';
 import 'package:document_mobile/src/data/model/file/file_detail.dart';
 import 'package:document_mobile/src/screen/user/user_screen.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/util/util.dart';
+import '../../data/model/account/account.dart';
 
 class FileDetail extends StatelessWidget {
   const FileDetail({Key? key, required this.fileId}) : super(key: key);
@@ -18,7 +20,10 @@ class FileDetail extends StatelessWidget {
       providers: [
         BlocProvider(
             create: ((context) => FileBloc(RepositoryProvider.of(context))
-              ..add(ViewDetailFileEvent(fileId: fileId))))
+              ..add(ViewDetailFileEvent(fileId: fileId)))),
+        BlocProvider(
+            create: ((context) => AccountBloc(RepositoryProvider.of(context))
+              ..add(ListAccountEvent())))
       ],
       child: BlocConsumer<FileBloc, FileState>(listener: (context, state) {
         if (state is ViewDetailFileErrorState) {
@@ -64,7 +69,6 @@ class FileDetail extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class Detail extends StatelessWidget {
   Detail({Key? key, required this.fileDetail}) : super(key: key);
   FileDetails fileDetail;
@@ -89,12 +93,7 @@ class Detail extends StatelessWidget {
                     'Type',
                     style: TextStyle(
                         fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
-                    // textAlign: TextAlign.left,
                   ),
-                  // const SizedBox(
-                  //   height: 3,
-                  // ),
-
                   Text(
                     fileDetail.type!,
                     style: const TextStyle(
@@ -118,7 +117,7 @@ class Detail extends StatelessWidget {
                             fontFamily: AppConstant.poppinsFont),
                       ),
                       Text(
-                        '${fileDetail.size!} Kb',
+                        '${(fileDetail.size! / 1024).toStringAsFixed(2)} KB',
                         style: const TextStyle(
                             fontSize: 16.0,
                             fontFamily: AppConstant.poppinsFont),
@@ -151,62 +150,73 @@ class Detail extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Tags',
-                    style: TextStyle(
-                        fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: ListView.builder(
-                        itemCount: fileDetail.tags?.length,
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemBuilder: ((context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 4),
-                            child: Chip(
-                              backgroundColor: HexColor.fromHex(
-                                  fileDetail.tags![index].hexColor!),
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(2),
-                                      topLeft: Radius.circular(2),
-                                      topRight: Radius.circular(2),
-                                      bottomRight: Radius.circular(2))),
-                              label: Text(
-                                fileDetail.tags![index].name!,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontSize: 16.0,
-                                    fontFamily: AppConstant.poppinsFont),
-                              ),
-                            ),
-                          );
-                        })),
-                  )
-                ],
-              ),
+              fileDetail.tags!.isNotEmpty
+                  ? (Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Tags',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: AppConstant.poppinsFont),
+                        ),
+                        SizedBox(
+                          height: 50,
+                          child: ListView.builder(
+                              itemCount: fileDetail.tags?.length,
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemBuilder: ((context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: Chip(
+                                    backgroundColor: HexColor.fromHex(
+                                        fileDetail.tags![index].hexColor!),
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(2),
+                                            topLeft: Radius.circular(2),
+                                            topRight: Radius.circular(2),
+                                            bottomRight: Radius.circular(2))),
+                                    label: Text(
+                                      fileDetail.tags![index].name!,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          fontSize: 16.0,
+                                          fontFamily: AppConstant.poppinsFont),
+                                    ),
+                                  ),
+                                );
+                              })),
+                        )
+                      ],
+                    ))
+                  : (Container()),
+
               const SizedBox(
                 height: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Owner',
-                    style: TextStyle(
-                        fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
-                  ),
-                  Text(
-                    fileDetail.ownerID!,
-                    style: const TextStyle(
-                        fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
-                  )
-                ],
+              BlocBuilder<AccountBloc, AccountState>(
+                builder: (context, state) {
+                  if (state is AccountListLoadedState) {
+                    List<Account> accounts = state.accountResponse;
+                    final fullName = accounts.firstWhere(
+                        (element) => element.id == fileDetail.ownerID);
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Owner',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: AppConstant.poppinsFont),
+                        ),
+                        Text(fullName.fullName.toString())
+                      ],
+                    );
+                  }
+                  return Container();
+                },
               ),
               const SizedBox(
                 height: 10,
@@ -312,16 +322,23 @@ class Detail extends StatelessWidget {
                           itemBuilder: ((context, index) {
                             return Card(
                               shadowColor: Colors.white.withOpacity(0.7),
-                              child: const ListTile(
+                              child: ListTile(
                                 contentPadding: EdgeInsets.zero,
                                 leading: CircleAvatar(
                                   backgroundColor: Colors.red,
                                   radius: 24,
-                                  child: Text('Hytq'),
+                                  child:
+                                      Text(fileDetail.event![index].username!),
                                 ),
-                                subtitle: Text('create file'),
-                                title: Text('Tran Quang huy'),
-                                trailing: Text('Oct 8, 2022'),
+                                subtitle:
+                                    Text(fileDetail.event![index].content!),
+                                title: fileDetail
+                                        .event![index].username!.isNotEmpty
+                                    ? Text(fileDetail.event![index].username!)
+                                    : const Text('No FullName'),
+                                trailing: Text(formatDateTime(
+                                    fileDetail.event![index].createdAt!,
+                                    hastime: false)),
                               ),
                             );
                           })),

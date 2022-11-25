@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:document_mobile/src/bussiness/file/bloc/file_bloc.dart';
+import 'package:document_mobile/src/data/repository/account/account_repository.dart';
 import 'package:document_mobile/src/data/repository/auth/login_repository.dart';
 import 'package:document_mobile/src/data/repository/file/file_repository.dart';
 import 'package:document_mobile/src/data/repository/quota/quota_repo.dart';
@@ -58,7 +59,8 @@ class MyApp extends StatelessWidget {
           ),
           RepositoryProvider(create: (_) => QuotaRepository()),
           RepositoryProvider(create: (_) => LoginRepository()),
-          RepositoryProvider(create: (_) => FileRepository())
+          RepositoryProvider(create: (_) => FileRepository()),
+          RepositoryProvider(create: (_) => AccountRepository())
         ],
         child: MultiBlocProvider(
           providers: [
