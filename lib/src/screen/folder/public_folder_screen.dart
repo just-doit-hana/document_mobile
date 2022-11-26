@@ -2,7 +2,6 @@ import 'package:document_mobile/src/bussiness/auth/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/helper/shared_preference.dart';
 import '../../../app/widget/folder_grid.dart';
 import '../../../app/widget/folder_list.dart';
 import '../../../app/widget/widget.dart';
@@ -52,6 +51,10 @@ class _PublicFolderState extends State<PublicFolder> {
                         if (state is FolderItemLoaded) {
                           FolderItemResponse? folderItemResponse =
                               state.resultItemFolder;
+                          // var testGet = folderItemResponse!.result!
+                          //     .where((e) => e.type == 'Folder')
+                          //     .toList();
+
                           return Column(
                             children: <Widget>[
                               Container(
@@ -90,7 +93,7 @@ class _PublicFolderState extends State<PublicFolder> {
                                   )),
                               isType
                                   ? (FolderGrid(
-                                      folderGrid: folderItemResponse!,
+                                      folderGrid: folderItemResponse!.result,
                                     ))
                                   : (FolderList(
                                       folderList: folderItemResponse!,

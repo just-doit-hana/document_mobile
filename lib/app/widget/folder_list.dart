@@ -1,10 +1,13 @@
+import 'package:document_mobile/src/screen/copyto/copyto_screen.dart';
 import 'package:document_mobile/src/screen/files/file_detail.dart';
+import 'package:document_mobile/src/screen/folder/foolder_sub_detail_list_screen.dart';
+import 'package:document_mobile/src/screen/moveto/moveto_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/widget/widget.dart';
 import '../../src/data/model/folder/folder_item.dart';
+import '../../src/screen/previewer/sysnfusion.dart';
 import '../../src/screen/folder/folder_detail_sceen.dart';
-import '../../src/screen/folder/foolder_sub_detail_screen.dart';
 import '../animation/routes_animation.dart';
 import '../util/util.dart';
 
@@ -15,7 +18,6 @@ class FolderList extends StatelessWidget {
     required this.folderList,
   }) : super(key: key);
   final FolderItemResponse folderList;
-
   Widget imgIcon(String iconImage, {double height = 28.0, width = 28.0}) {
     return Image.asset(
       '${AppImage.path}/$iconImage',
@@ -38,7 +40,7 @@ class FolderList extends StatelessWidget {
                 onDoubleTap: () {
                   if (folderList.result![index].type == 'Folder') {
                     Navigator.of(context).push(CustomRoutesPage(
-                        widget: FolderSubFolderDetail(
+                        widget: FolderSubFolderDetailList(
                             folderList: folderList,
                             idIndex: index,
                             folderId: folderList.result![index].id!)));
@@ -53,7 +55,8 @@ class FolderList extends StatelessWidget {
                             iconType(folderList.result![index].type.toString()),
                         trailing: ElevatedButton(
                             onPressed: () {
-                              showModalBottomSheet(
+                              (showModalBottomSheet(
+                                  isDismissible: true,
                                   isScrollControlled: true,
                                   backgroundColor: Colors.transparent,
                                   context: context,
@@ -138,7 +141,38 @@ class FolderList extends StatelessWidget {
                                             Wrap(
                                               children: [
                                                 ListTitleModal(
-                                                  onPress: () {},
+                                                  onPress: () {
+                                                    if (folderList
+                                                            .result![index]
+                                                            .type ==
+                                                        'Folder') {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                              SnackBar(
+                                                                  backgroundColor:
+                                                                      const Color
+                                                                              .fromARGB(
+                                                                          255,
+                                                                          226,
+                                                                          223,
+                                                                          223),
+                                                                  content: Text(
+                                                                    'Can not view fodler',
+                                                                    style: TextStyle(
+                                                                        color: HexColor.fromHex(
+                                                                            AppColor.primaryTextColor)),
+                                                                  )));
+                                                    } else {
+                                                      Navigator.of(context).push(
+                                                          CustomRoutesPage(
+                                                              widget:
+                                                                  Sysnfusion(
+                                                        fileId: folderList
+                                                            .result![index].id!,
+                                                      )));
+                                                    }
+                                                  },
                                                   icon: Icons.preview_outlined,
                                                   content: 'Preview',
                                                 ),
@@ -186,7 +220,12 @@ class FolderList extends StatelessWidget {
                                                   content: 'Download',
                                                 ),
                                                 ListTitleModal(
-                                                  onPress: () {},
+                                                  onPress: () {
+                                                    Navigator.of(context).push(
+                                                        CustomRoutesPage(
+                                                            widget:
+                                                                const CopytoScreen()));
+                                                  },
                                                   icon:
                                                       Icons.file_copy_outlined,
                                                   content: 'Copy To',
@@ -202,19 +241,8 @@ class FolderList extends StatelessWidget {
                                                                     .all(Radius
                                                                         .circular(
                                                                             10.0))),
-                                                            // contentPadding:
-                                                            //     const EdgeInsets
-                                                            //         .symmetric(
-                                                            //   vertical: 50.0,
-                                                            // ),
-                                                            // insetPadding:
-                                                            //     const EdgeInsets
-                                                            //         .symmetric(
-                                                            //   vertical: 50.0,
-                                                            // ),
                                                             title: const Text(
                                                                 'Rename folder'),
-
                                                             content: SizedBox(
                                                               width: 400.0,
                                                               // color: Colors
@@ -267,7 +295,12 @@ class FolderList extends StatelessWidget {
                                                   content: 'Rename',
                                                 ),
                                                 ListTitleModal(
-                                                  onPress: () {},
+                                                  onPress: () {
+                                                    Navigator.of(context).push(
+                                                        CustomRoutesPage(
+                                                            widget:
+                                                                const MovetoScreen()));
+                                                  },
                                                   icon: Icons.move_up_outlined,
                                                   content: 'Move To',
                                                 ),
@@ -301,7 +334,7 @@ class FolderList extends StatelessWidget {
                                             )
                                           ],
                                         ));
-                                  });
+                                  }));
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 0.0,
@@ -323,52 +356,52 @@ class FolderList extends StatelessWidget {
   }
 }
 
-Future<dynamic> showModalSearchName(BuildContext context) {
-  return showModalBottomSheet(
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (ctx) {
-        return Container(
-            height: MediaQuery.of(context).size.height * 0.32,
-            decoration: BoxDecoration(
-                color: HexColor.fromHex(
-                    AppColor.lightBackgroundColor), // or some other color
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(25.0),
-                    topRight: Radius.circular(25.0))),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 1,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 34, top: 10, bottom: 8),
-                    child: Text(
-                      'Sort by',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          fontFamily: AppConstant.poppinsFont,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          color: HexColor.fromHex(AppColor.blackTextColor)),
-                    ),
-                  ),
-                ),
-                Divider(
-                  height: 4,
-                  color: HexColor.fromHex(AppColor.grayTextColor),
-                ),
-                const AppBtnSearchModal(
-                    title: 'Name', icon: Icons.arrow_upward_outlined),
-                const AppBtnSearchModal(
-                    title: 'Last Modified', icon: Icons.arrow_upward_outlined),
-                const AppBtnSearchModal(
-                    title: 'Label', icon: Icons.arrow_upward_outlined),
-                const AppBtnSearchModal(
-                    title: 'Member', icon: Icons.arrow_upward_outlined),
-              ],
-            ));
-      });
-}
+// Future<dynamic> showModalSearchName(BuildContext context) {
+//   return showModalBottomSheet(
+//       isScrollControlled: true,
+//       backgroundColor: Colors.transparent,
+//       context: context,
+//       builder: (ctx) {
+//         return Container(
+//             height: MediaQuery.of(context).size.height * 0.32,
+//             decoration: BoxDecoration(
+//                 color: HexColor.fromHex(
+//                     AppColor.lightBackgroundColor), // or some other color
+//                 borderRadius: const BorderRadius.only(
+//                     topLeft: Radius.circular(25.0),
+//                     topRight: Radius.circular(25.0))),
+//             child: Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 Flexible(
+//                   flex: 1,
+//                   child: Padding(
+//                     padding:
+//                         const EdgeInsets.only(left: 34, top: 10, bottom: 8),
+//                     child: Text(
+//                       'Sort by',
+//                       textAlign: TextAlign.start,
+//                       style: TextStyle(
+//                           fontFamily: AppConstant.poppinsFont,
+//                           fontSize: 18,
+//                           fontWeight: FontWeight.w400,
+//                           color: HexColor.fromHex(AppColor.blackTextColor)),
+//                     ),
+//                   ),
+//                 ),
+//                 Divider(
+//                   height: 4,
+//                   color: HexColor.fromHex(AppColor.grayTextColor),
+//                 ),
+//                 const AppBtnSearchModal(
+//                     title: 'Name', icon: Icons.arrow_upward_outlined),
+//                 const AppBtnSearchModal(
+//                     title: 'Last Modified', icon: Icons.arrow_upward_outlined),
+//                 const AppBtnSearchModal(
+//                     title: 'Label', icon: Icons.arrow_upward_outlined),
+//                 const AppBtnSearchModal(
+//                     title: 'Member', icon: Icons.arrow_upward_outlined),
+//               ],
+//             ));
+//       });
+// }

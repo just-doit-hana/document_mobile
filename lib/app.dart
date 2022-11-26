@@ -1,13 +1,16 @@
+import 'package:document_mobile/src/screen/files/myfile_screen.dart';
 import 'package:document_mobile/src/screen/shared/share_file_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'app/util/util.dart';
-import 'app/widget/menu_item_drawer.dart';
-import 'src/screen/files/sysnfusion.dart';
 import 'src/screen/home/home_folder.dart';
 import 'src/screen/recylebin/recyclebin_screen.dart';
 
-//
+// owner --? co tat cat quyen
+// edit  ->  Preview , viewdetail, Dowload, copy to , rename
+// viewer public --> view detail / preview / download
+// viewer private --? preview / view detail
+
 class App extends StatefulWidget {
   const App({
     Key? key,
@@ -19,7 +22,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int selectedItem = 0;
-  GlobalKey<ScaffoldState>? _scaffoldKey;
+  // GlobalKey<ScaffoldState>? _scaffoldKey;
   void onSelectedItem(int value) {
     setState(() {
       selectedItem = value;
@@ -28,7 +31,7 @@ class _AppState extends State<App> {
 
   static const List<Widget> _screen = <Widget>[
     HomeFolder(),
-    Sysnfusion(),
+    MyfileScreen(),
     ShareFileScreen(),
     RecyclebinScreen(),
   ];

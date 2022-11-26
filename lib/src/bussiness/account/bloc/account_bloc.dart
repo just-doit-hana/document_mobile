@@ -30,7 +30,7 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     try {
       final userSeen =
           await _accountRepository.getListUserSeen(fileId: event.fileId);
-      emit(UserSeenListLoadedState(accountResponse: userSeen!.userseen));
+      emit(UserSeenListLoadedState(accountResponse: userSeen.userseen));
     } catch (e) {
       emit(UserSeenListErrorState(error: e.toString()));
     }

@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
-class Sysnfusion extends StatefulWidget {
-  const Sysnfusion({Key? key}) : super(key: key);
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _SysnfusionState createState() => _SysnfusionState();
-}
-
-class _SysnfusionState extends State<Sysnfusion> {
+class Sysnfusion extends StatelessWidget {
+  Sysnfusion({Key? key, required this.fileId}) : super(key: key);
+  final String fileId;
   final GlobalKey<SfPdfViewerState> _pfgViewer = GlobalKey();
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

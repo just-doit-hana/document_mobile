@@ -103,7 +103,7 @@ class _ListShareFileState extends State<ListShareFile> {
                                 )),
                             isType
                                 ? (FolderGrid(
-                                    folderGrid: shareFile,
+                                    folderGrid: shareFile.result,
                                   ))
                                 : (FolderList(
                                     folderList: shareFile,

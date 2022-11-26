@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:document_mobile/app/helper/shared_preference.dart';
 import 'package:document_mobile/src/bussiness/quota/bloc/quota_bloc.dart';
 import 'package:document_mobile/src/screen/shared/share_file_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +20,9 @@ class DrawerAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? userId = SharedPreferenceHelper.instance.getString('userId');
+    if (kDebugMode) {
+      print('UserId $userId');
+    }
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.65,
       child: ListView(
