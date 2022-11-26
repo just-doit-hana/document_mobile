@@ -27,6 +27,6 @@ class VersionReponse {
         isError: json['isError'],
         message: json['message'],
         version: List<VersionFile>.from(
-            json['result'].map((e) => VersionFile.fromMap(e))).toList());
+            json['result'].map((e) => VersionFile.fromMap(e))));
   }
 }

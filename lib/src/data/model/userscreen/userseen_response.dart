@@ -27,6 +27,6 @@ class UserSeenResponse {
         isError: json['isError'],
         message: json['message'],
         userseen: List<UserSeen>.from(
-            json['result'].map((e) => UserSeenResponse.fromMap(e))).toList());
+            json['result'].map((e) => UserSeenResponse.fromMap(e))));
   }
 }

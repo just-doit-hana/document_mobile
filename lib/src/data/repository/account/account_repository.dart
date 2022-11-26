@@ -30,7 +30,7 @@ class AccountRepository {
     }
   }
 
-  Future<UserSeenResponse?> getListUserSeen({required String fileId}) async {
+  Future<UserSeenResponse> getListUserSeen({required String fileId}) async {
     try {
       final res = await _dioClient
           .get('${Endpoints.ENDPOINTDOC}metadata/files/$fileId/users-seen');

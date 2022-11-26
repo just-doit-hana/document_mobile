@@ -4,7 +4,7 @@ class UserSeen {
   String content;
   String createdAt;
   String fullName;
-  String id;
+  int id;
   String type;
   String username;
   UserSeen({

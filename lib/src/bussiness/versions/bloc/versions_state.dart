@@ -10,12 +10,12 @@ class VersionsListInitialState extends VersionsState {
 }
 
 class VersionsListLoadedState extends VersionsState {
-  final List<VersionFile> userSeen;
+  final List<VersionFile> versionFile;
 
-  const VersionsListLoadedState({required this.userSeen});
+  const VersionsListLoadedState({required this.versionFile});
 
   @override
-  List<Object?> get props => [userSeen];
+  List<Object?> get props => [versionFile];
 }
 
 class VersionsListErrorState extends VersionsState {

@@ -17,7 +17,7 @@ class VersionsBloc extends Bloc<VersionsEvent, VersionsState> {
     try {
       final versionList =
           await _versionRepository.listVersionFile(fileId: event.fileId);
-      emit(VersionsListLoadedState(userSeen: versionList.version));
+      emit(VersionsListLoadedState(versionFile: versionList.version));
     } catch (e) {
       emit(VersionsListErrorState(error: e.toString()));
     }
