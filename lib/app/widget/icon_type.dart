@@ -4,61 +4,62 @@ import '../util/util.dart';
 
 Widget? iconType(String type, {double height = 44.0, width = 44.0}) {
   switch (type) {
-    case 'Folder':
+    case AppConstant.folder:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconFolder}',
         width: width,
         height: height,
+        fit: BoxFit.cover,
       );
-    case 'DOC':
+    case AppConstant.doc:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconWord}',
         width: width,
         height: height,
       );
-    case 'PDF':
+    case AppConstant.pdf:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconPdf}',
         width: width,
         height: height,
       );
-    case 'TXT':
+    case AppConstant.txt:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconTxt}',
         width: width,
         height: height,
       );
-    case 'PPT':
+    case AppConstant.ppt:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconPpt}',
         width: width,
         height: height,
       );
-    case 'XLS':
+    case AppConstant.xls:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconExcell}',
         width: width,
         height: height,
       );
-    case 'IMG':
+    case AppConstant.img:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconImg}',
         width: width,
         height: height,
       );
-    case 'VID':
+    case AppConstant.video:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconVideo}',
         width: width,
         height: height,
       );
-    case 'ZIP':
+    case AppConstant.zip:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconZip}',
         width: width,
         height: height,
       );
-    case 'Unknown':
+    case AppConstant.unknow:
       return Image.asset(
         '${AppImage.path}/${AppImage.iconUnknow}',
         width: width,

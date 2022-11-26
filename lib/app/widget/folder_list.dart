@@ -13,10 +13,7 @@ import '../util/util.dart';
 
 // ignore: must_be_immutable
 class FolderList extends StatelessWidget {
-  const FolderList({
-    Key? key,
-    required this.folderList,
-  }) : super(key: key);
+  FolderList({Key? key, required this.folderList}) : super(key: key);
   final FolderItemResponse folderList;
   Widget imgIcon(String iconImage, {double height = 28.0, width = 28.0}) {
     return Image.asset(
@@ -34,11 +31,18 @@ class FolderList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: folderList.result!.length,
         itemBuilder: ((context, index) {
+          var owner =
+              (folderList.result![index].accessScope == AppConstant.owner);
+          var viewer =
+              (folderList.result![index].accessScope == AppConstant.viewer);
+          var editor =
+              (folderList.result![index].accessScope == AppConstant.editor);
+
           return Column(
             children: [
               GestureDetector(
                 onDoubleTap: () {
-                  if (folderList.result![index].type == 'Folder') {
+                  if (folderList.result![index].type == AppConstant.folder) {
                     Navigator.of(context).push(CustomRoutesPage(
                         widget: FolderSubFolderDetailList(
                             folderList: folderList,
@@ -55,7 +59,7 @@ class FolderList extends StatelessWidget {
                             iconType(folderList.result![index].type.toString()),
                         trailing: ElevatedButton(
                             onPressed: () {
-                              (showModalBottomSheet(
+                              showModalBottomSheet(
                                   isDismissible: true,
                                   isScrollControlled: true,
                                   backgroundColor: Colors.transparent,
@@ -79,7 +83,7 @@ class FolderList extends StatelessWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Flexible(
-                                              flex: 2,
+                                              flex: 1,
                                               child: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -95,7 +99,8 @@ class FolderList extends StatelessWidget {
                                                                     .result![
                                                                         index]
                                                                     .type ==
-                                                                'Folder'
+                                                                AppConstant
+                                                                    .folder
                                                             ? imgIcon(AppImage
                                                                 .iconFolder)
                                                             : iconType(folderList
@@ -112,12 +117,10 @@ class FolderList extends StatelessWidget {
                                                               .result![index]
                                                               .name
                                                               .toString(),
-                                                          textAlign:
-                                                              TextAlign.start,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                           style: TextStyle(
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
                                                               fontFamily:
                                                                   AppConstant
                                                                       .poppinsFont,
@@ -140,201 +143,234 @@ class FolderList extends StatelessWidget {
                                             ),
                                             Wrap(
                                               children: [
-                                                ListTitleModal(
-                                                  onPress: () {
-                                                    if (folderList
-                                                            .result![index]
-                                                            .type ==
-                                                        'Folder') {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                              SnackBar(
-                                                                  backgroundColor:
-                                                                      const Color
-                                                                              .fromARGB(
-                                                                          255,
-                                                                          226,
-                                                                          223,
-                                                                          223),
-                                                                  content: Text(
-                                                                    'Can not view fodler',
-                                                                    style: TextStyle(
-                                                                        color: HexColor.fromHex(
-                                                                            AppColor.primaryTextColor)),
-                                                                  )));
-                                                    } else {
-                                                      Navigator.of(context).push(
-                                                          CustomRoutesPage(
-                                                              widget:
-                                                                  Sysnfusion(
-                                                        fileId: folderList
-                                                            .result![index].id!,
-                                                      )));
-                                                    }
-                                                  },
-                                                  icon: Icons.preview_outlined,
-                                                  content: 'Preview',
-                                                ),
-                                                ListTitleModal(
-                                                  onPress: () {
-                                                    if (folderList
-                                                            .result![index]
-                                                            .type ==
-                                                        'Folder') {
-                                                      Navigator.of(context).push(
-                                                          CustomRoutesPage(
-                                                              widget:
-                                                                  FolderViewDetail(
-                                                        folderId: folderList
-                                                            .result![index].id
-                                                            .toString(),
-                                                      )));
-                                                    } else {
-                                                      Navigator.of(context).push(
-                                                          CustomRoutesPage(
-                                                              widget:
-                                                                  FileDetail(
-                                                        fileId: folderList
-                                                            .result![index].id
-                                                            .toString(),
-                                                      )));
-                                                    }
-                                                  },
-                                                  icon: Icons.info_outlined,
-                                                  content: 'View Details',
-                                                ),
-                                                ListTitleModal(
-                                                  onPress: () {},
-                                                  icon: Icons.update_outlined,
-                                                  content: 'Update Version',
-                                                ),
+                                                owner || viewer || editor
+                                                    ? (ListTitleModal(
+                                                        onPress: () {
+                                                          if (folderList
+                                                                  .result![
+                                                                      index]
+                                                                  .type ==
+                                                              AppConstant
+                                                                  .folder) {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                                    SnackBar(
+                                                                        backgroundColor: const Color.fromARGB(
+                                                                            255,
+                                                                            226,
+                                                                            223,
+                                                                            223),
+                                                                        content:
+                                                                            Text(
+                                                                          'Can not view fodler',
+                                                                          style:
+                                                                              TextStyle(color: HexColor.fromHex(AppColor.primaryTextColor)),
+                                                                        )));
+                                                          } else {
+                                                            Navigator.of(context).push(
+                                                                CustomRoutesPage(
+                                                                    widget:
+                                                                        Sysnfusion(
+                                                              fileId: folderList
+                                                                  .result![
+                                                                      index]
+                                                                  .id!,
+                                                            )));
+                                                          }
+                                                        },
+                                                        icon: Icons
+                                                            .preview_outlined,
+                                                        content: 'Preview',
+                                                      ))
+                                                    : (Container()),
+                                                owner || viewer || editor
+                                                    ? (ListTitleModal(
+                                                        onPress: () {
+                                                          if (folderList
+                                                                  .result![
+                                                                      index]
+                                                                  .type ==
+                                                              AppConstant
+                                                                  .folder) {
+                                                            Navigator.of(context).push(
+                                                                CustomRoutesPage(
+                                                                    widget:
+                                                                        FolderViewDetail(
+                                                              folderId: folderList
+                                                                  .result![
+                                                                      index]
+                                                                  .id
+                                                                  .toString(),
+                                                            )));
+                                                          } else {
+                                                            Navigator.of(context).push(
+                                                                CustomRoutesPage(
+                                                                    widget:
+                                                                        FileDetail(
+                                                              fileId: folderList
+                                                                  .result![
+                                                                      index]
+                                                                  .id
+                                                                  .toString(),
+                                                            )));
+                                                          }
+                                                        },
+                                                        icon:
+                                                            Icons.info_outlined,
+                                                        content: 'View Details',
+                                                      ))
+                                                    : (Container()),
+                                                owner
+                                                    ? (ListTitleModal(
+                                                        onPress: () {},
+                                                        icon: Icons
+                                                            .update_outlined,
+                                                        content:
+                                                            'Update Version',
+                                                      ))
+                                                    : (Container()),
                                                 Divider(
                                                   height: 4,
                                                   color: HexColor.fromHex(
                                                       AppColor.grayTextColor),
                                                 ),
-                                                ListTitleModal(
-                                                  onPress: () {},
-                                                  icon: Icons.download_outlined,
-                                                  content: 'Download',
-                                                ),
-                                                ListTitleModal(
-                                                  onPress: () {
-                                                    Navigator.of(context).push(
-                                                        CustomRoutesPage(
-                                                            widget:
-                                                                const CopytoScreen()));
-                                                  },
-                                                  icon:
-                                                      Icons.file_copy_outlined,
-                                                  content: 'Copy To',
-                                                ),
-                                                ListTitleModal(
-                                                  onPress: () {
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: ((context) {
-                                                          return AlertDialog(
-                                                            shape: const RoundedRectangleBorder(
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10.0))),
-                                                            title: const Text(
-                                                                'Rename folder'),
-                                                            content: SizedBox(
-                                                              width: 400.0,
-                                                              // color: Colors
-                                                              //     .redAccent,
-                                                              height: 50,
-                                                              child: TextField(
-                                                                autofocus: true,
-                                                                keyboardType:
-                                                                    TextInputType
-                                                                        .text,
-                                                                decoration: InputDecoration(
-                                                                    filled: true,
-                                                                    // fillColor:
-                                                                    //     Colors
-                                                                    //         .amberAccent,
-                                                                    border: OutlineInputBorder(
-                                                                        // borderSide: const BorderSide(
-                                                                        //     color: Colors
-                                                                        //         .amberAccent,
-                                                                        //     width:
-                                                                        //         1.0),
-                                                                        borderSide: BorderSide.none,
-                                                                        borderRadius: BorderRadius.circular(8.0))),
-                                                              ),
-                                                            ),
-                                                            actions: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
-                                                                children: [
-                                                                  TextButton(
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child: const Text(
-                                                                          'Cancel')),
-                                                                  TextButton(
-                                                                      onPressed:
-                                                                          () {},
-                                                                      child: const Text(
-                                                                          'Rename'))
-                                                                ],
-                                                              )
-                                                            ],
-                                                          );
-                                                        }));
-                                                  },
-                                                  icon: Icons
-                                                      .drive_file_rename_outline,
-                                                  content: 'Rename',
-                                                ),
-                                                ListTitleModal(
-                                                  onPress: () {
-                                                    Navigator.of(context).push(
-                                                        CustomRoutesPage(
-                                                            widget:
-                                                                const MovetoScreen()));
-                                                  },
-                                                  icon: Icons.move_up_outlined,
-                                                  content: 'Move To',
-                                                ),
+                                                owner || viewer || editor
+                                                    ? (ListTitleModal(
+                                                        onPress: () {},
+                                                        icon: Icons
+                                                            .download_outlined,
+                                                        content: 'Download',
+                                                      ))
+                                                    : (Container()),
+                                                owner
+                                                    ? (ListTitleModal(
+                                                        onPress: () {
+                                                          Navigator.of(context).push(
+                                                              CustomRoutesPage(
+                                                                  widget:
+                                                                      const CopytoScreen()));
+                                                        },
+                                                        icon: Icons
+                                                            .file_copy_outlined,
+                                                        content: 'Copy To',
+                                                      ))
+                                                    : Container(),
+                                                owner || editor
+                                                    ? (ListTitleModal(
+                                                        onPress: () {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  ((context) {
+                                                                return AlertDialog(
+                                                                  shape: const RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.all(
+                                                                              Radius.circular(10.0))),
+                                                                  title: const Text(
+                                                                      'Rename folder'),
+                                                                  content:
+                                                                      SizedBox(
+                                                                    width:
+                                                                        400.0,
+                                                                    height: 50,
+                                                                    child:
+                                                                        TextField(
+                                                                      autofocus:
+                                                                          true,
+                                                                      keyboardType:
+                                                                          TextInputType
+                                                                              .text,
+                                                                      decoration: InputDecoration(
+                                                                          filled:
+                                                                              true,
+                                                                          border: OutlineInputBorder(
+                                                                              borderSide: BorderSide.none,
+                                                                              borderRadius: BorderRadius.circular(8.0))),
+                                                                    ),
+                                                                  ),
+                                                                  actions: [
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .end,
+                                                                      children: [
+                                                                        TextButton(
+                                                                            onPressed:
+                                                                                () {},
+                                                                            child:
+                                                                                const Text('Cancel')),
+                                                                        TextButton(
+                                                                            onPressed:
+                                                                                () {},
+                                                                            child:
+                                                                                const Text('Rename'))
+                                                                      ],
+                                                                    )
+                                                                  ],
+                                                                );
+                                                              }));
+                                                        },
+                                                        icon: Icons
+                                                            .drive_file_rename_outline,
+                                                        content: 'Rename',
+                                                      ))
+                                                    : (Container()),
+                                                owner
+                                                    ? (ListTitleModal(
+                                                        onPress: () {
+                                                          Navigator.of(context).push(
+                                                              CustomRoutesPage(
+                                                                  widget:
+                                                                      const MovetoScreen()));
+                                                        },
+                                                        icon: Icons
+                                                            .move_up_outlined,
+                                                        content: 'Move To',
+                                                      ))
+                                                    : Container(),
                                                 Divider(
                                                   height: 4,
                                                   color: HexColor.fromHex(
                                                       AppColor.grayTextColor),
                                                 ),
-                                                ListTitleModal(
-                                                  onPress: () {},
-                                                  icon: Icons.backup_outlined,
-                                                  content: 'Back up',
-                                                ),
-                                                ListTitleModal(
-                                                  onPress: () {},
-                                                  icon: Icons.share,
-                                                  content: 'Share',
-                                                ),
-                                                ListTitleModal(
-                                                  onPress: () {},
-                                                  icon:
-                                                      Icons.lock_open_outlined,
-                                                  content: 'Lock/UnLock',
-                                                ),
-                                                ListTitleModal(
-                                                  onPress: () {},
-                                                  icon: Icons.delete_outline,
-                                                  content: 'Delete',
-                                                ),
+                                                owner
+                                                    ? (ListTitleModal(
+                                                        onPress: () {},
+                                                        icon: Icons
+                                                            .backup_outlined,
+                                                        content: 'Back up',
+                                                      ))
+                                                    : Container(),
+                                                owner
+                                                    ? (ListTitleModal(
+                                                        onPress: () {},
+                                                        icon: Icons.share,
+                                                        content: 'Share',
+                                                      ))
+                                                    : Container(),
+                                                owner
+                                                    ? (ListTitleModal(
+                                                        onPress: () {},
+                                                        icon: Icons
+                                                            .lock_open_outlined,
+                                                        content: 'Lock/UnLock',
+                                                      ))
+                                                    : (Container()),
+                                                owner
+                                                    ? (ListTitleModal(
+                                                        onPress: () {},
+                                                        icon: Icons
+                                                            .delete_outline,
+                                                        content: 'Delete',
+                                                      ))
+                                                    : (Container()),
                                               ],
                                             )
                                           ],
                                         ));
-                                  }));
+                                  });
                             },
                             style: ElevatedButton.styleFrom(
                               elevation: 0.0,

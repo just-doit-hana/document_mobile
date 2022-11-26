@@ -1,11 +1,10 @@
 import 'package:document_mobile/app/animation/routes_animation.dart';
 import 'package:document_mobile/app/helper/format_date_time.dart';
-import 'package:document_mobile/app/widget/widget.dart';
 import 'package:document_mobile/src/bussiness/account/bloc/account_bloc.dart';
 import 'package:document_mobile/src/bussiness/file/bloc/file_bloc.dart';
 import 'package:document_mobile/src/bussiness/versions/bloc/versions_bloc.dart';
 import 'package:document_mobile/src/data/model/file/file_detail.dart';
-import 'package:document_mobile/src/data/model/versionsfile/version_file.dart';
+import 'package:document_mobile/src/data/model/userscreen/userseen.dart';
 import 'package:document_mobile/src/screen/user/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,8 +24,8 @@ class FileDetail extends StatelessWidget {
               ..add(ViewDetailFileEvent(fileId: fileId)))),
         BlocProvider(
             create: ((context) => AccountBloc(RepositoryProvider.of(context))
-              ..add(ListUserseenEvent(fileId: fileId))
-              ..add(ListAccountEvent()))),
+              // ..add(ListAccountEvent())
+              ..add(ListUserseenEvent(fileId: fileId)))),
         BlocProvider(
             create: ((context) => VersionsBloc(RepositoryProvider.of(context))
               ..add(ListVersionEvent(fileId: fileId)))),
@@ -47,6 +46,7 @@ class FileDetail extends StatelessWidget {
                       SliverAppBar(
                         pinned: true,
                         expandedHeight: 150.0,
+                        // toolbarHeight: 50,
                         flexibleSpace: FlexibleSpaceBar(
                             title: Text(
                               detail.fileDetail.name!,
@@ -57,11 +57,15 @@ class FileDetail extends StatelessWidget {
                                   fontWeight: FontWeight.w400),
                             ),
                             centerTitle: true,
-                            background: iconType(detail.fileDetail.type!)),
-                        elevation: 10.0,
+                            background: Icon(
+                              Icons.file_open_outlined,
+                              size: 100,
+                              color: HexColor.fromHex(AppColor.backgroundIcon),
+                            )),
+                        // elevation: 10.0,
                         automaticallyImplyLeading: true,
                         floating: true,
-                        snap: true,
+                        // snap: true,
                       )
                     ];
                   },
@@ -249,7 +253,7 @@ class Detail extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Member in file',
+                        'Member seen file',
                         style: TextStyle(
                             fontSize: 18,
                             fontFamily: AppConstant.poppinsFont,
@@ -258,7 +262,8 @@ class Detail extends StatelessWidget {
                       IconButton(
                           onPressed: () {
                             Navigator.of(context).push(CustomRoutesPage(
-                                widget: const UserAccessScreen()));
+                                widget:
+                                    UserAccessScreen(fileId: fileDetail.id!)));
                           },
                           icon: const Icon(Icons.navigate_next_outlined))
                     ],
@@ -266,30 +271,62 @@ class Detail extends StatelessWidget {
                   IntrinsicHeight(
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.red,
-                          radius: 24,
-                          child: Text('Huytq'),
-                        ),
-                        const VerticalDivider(
-                          color: Colors.grey,
-                          thickness: 1,
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(
-                            height: 50,
-                            child: ListView.builder(
-                                itemCount: 10,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: ((context, index) {
-                                  return const CircleAvatar(
-                                    backgroundColor: Colors.amber,
-                                    radius: 24,
-                                    child: Text('Huytq'),
-                                  );
-                                })),
-                          ),
+                        // BlocBuilder<AccountBloc, AccountState>(
+                        //   builder: (context, state) {
+                        //     if (state is AccountListLoadedState) {
+                        //       List<Account> accounts = state.accountResponse;
+                        //       final fullName = accounts.firstWhere((element) =>
+                        //           element.id == fileDetail.ownerID);
+                        //       return CircleAvatar(
+                        //         backgroundColor: Colors.red,
+                        //         radius: 24,
+                        //         child: Text(
+                        //           fullName.fullName!,
+                        //           overflow: TextOverflow.ellipsis,
+                        //         ),
+                        //       );
+                        //     }
+                        //     return Container();
+                        //   },
+                        // ),
+                        // const VerticalDivider(
+                        //   color: Colors.grey,
+                        //   thickness: 1,
+                        // ),
+                        BlocBuilder<AccountBloc, AccountState>(
+                          builder: (context, state) {
+                            if (state is UserSeenListLoadedState) {
+                              List<UserSeen> userseen = state.userSeen;
+                              return Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 50,
+                                  child: ListView.builder(
+                                      itemCount: userseen.length,
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: ((context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 4.0, right: 2.0),
+                                          child: CircleAvatar(
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    179, 181, 180, 180),
+                                            radius: 24,
+                                            child: Text(
+                                              userseen[index].username,
+                                              style: TextStyle(
+                                                  color: HexColor.fromHex(
+                                                      AppColor.blackTextColor)),
+                                            ),
+                                          ),
+                                        );
+                                      })),
+                                ),
+                              );
+                            }
+                            return Container();
+                          },
                         ),
                       ],
                     ),
@@ -322,9 +359,15 @@ class Detail extends StatelessWidget {
                           child: ListTile(
                             contentPadding: EdgeInsets.zero,
                             leading: CircleAvatar(
-                              backgroundColor: Colors.red,
+                              backgroundColor:
+                                  const Color.fromARGB(179, 181, 180, 180),
                               radius: 24,
-                              child: Text(fileDetail.event![index].username!),
+                              child: Text(
+                                fileDetail.event![index].username!,
+                                style: TextStyle(
+                                    color: HexColor.fromHex(
+                                        AppColor.blackTextColor)),
+                              ),
                             ),
                             subtitle: Text(fileDetail.event![index].content!),
                             title: fileDetail.event![index].username!.isNotEmpty

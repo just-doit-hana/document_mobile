@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:document_mobile/app/helper/shared_preference.dart';
 import 'package:document_mobile/app/util/dio/dio_exception.dart';
 import 'package:document_mobile/src/data/model/login/user_response.dart';
-import 'package:document_mobile/src/data/model/userscreen/userseen_response.dart';
 import 'package:document_mobile/src/data/repository/core/endpoint.dart';
 import 'package:flutter/foundation.dart';
 

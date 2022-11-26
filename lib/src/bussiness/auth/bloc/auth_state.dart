@@ -5,27 +5,25 @@ abstract class AuthState extends Equatable {
   const AuthState();
 }
 
-class AuthLoadingState extends AuthState {
+class AuthenticationInitial extends AuthState {
   @override
   List<Object?> get props => [];
 }
 
-class AuthInitialState extends AuthState {
+class AuthenticationLoading extends AuthState {
   @override
   List<Object?> get props => [];
 }
 
-class AuthLoginState extends AuthState {
+class AuthenticationNotAuthenticated extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
+
+class AuthenticationAuthenticated extends AuthState {
   final UserLoginReponse userInfor;
 
-  const AuthLoginState(this.userInfor);
-
-  @override
-  List<Object?> get props => [];
-}
-
-class AuthUnauthoriedState extends AuthState {
-  const AuthUnauthoriedState();
+  const AuthenticationAuthenticated(this.userInfor);
 
   @override
   List<Object?> get props => [];

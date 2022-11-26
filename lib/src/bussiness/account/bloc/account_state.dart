@@ -32,12 +32,12 @@ class UserSeenListInitialState extends AccountState {
 }
 
 class UserSeenListLoadedState extends AccountState {
-  List<UserSeen> accountResponse;
+  List<UserSeen> userSeen;
   UserSeenListLoadedState({
-    required this.accountResponse,
+    required this.userSeen,
   });
   @override
-  List<Object> get props => [accountResponse];
+  List<Object> get props => [userSeen];
 }
 
 class UserSeenListErrorState extends AccountState {

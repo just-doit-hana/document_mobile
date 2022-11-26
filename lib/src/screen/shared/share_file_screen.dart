@@ -42,6 +42,7 @@ class ListShareFile extends StatefulWidget {
 class _ListShareFileState extends State<ListShareFile> {
   bool isType = false;
   int? count;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

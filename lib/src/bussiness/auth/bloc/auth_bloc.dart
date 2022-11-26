@@ -15,17 +15,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginRepository _loginRepository;
   AuthBloc({required LoginRepository loginRepository})
       : _loginRepository = loginRepository,
-        super(const AuthUnauthoriedState()) {
+        super(AuthenticationInitial()) {
     on<AuthLoginEvent>(_login);
   }
   void _login(AuthLoginEvent event, Emitter emit) async {
+    emit(AuthenticationLoading());
     try {
-      emit(AuthLoadingState());
       var result = await _loginRepository.loginUser(event.loginUser!);
-      emit(AuthLoginState(result));
+      if (result.infor.dmsToken!.isNotEmpty &&
+          result.infor.userID!.isNotEmpty) {
+        emit(AuthenticationAuthenticated(result));
+      } else {
+        emit(AuthenticationNotAuthenticated());
+      }
     } catch (e) {
       emit(AuthErrorState(error: e.toString()));
-      // emit(AuthUnauthoriedState);
     }
   }
 }

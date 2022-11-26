@@ -163,7 +163,7 @@ class CardList extends StatelessWidget {
           return result;
         },
         onDismissed: (_) {
-          if (recycleBin.type == 'Folder') {
+          if (recycleBin.type == AppConstant.folder) {
             context
                 .read<FolderBloc>()
                 .add(DeleteRecycleBinFolderEvent(id: recycleBin.id!));
@@ -205,7 +205,7 @@ class CardList extends StatelessWidget {
               elevation: 2,
               onSelected: (value) {
                 if (value == 1) {
-                  if (recycleBin.type == 'Folder') {
+                  if (recycleBin.type == AppConstant.folder) {
                     context
                         .read<FolderBloc>()
                         .add(DeleteRecycleBinFolderEvent(id: recycleBin.id!));
@@ -217,7 +217,7 @@ class CardList extends StatelessWidget {
                     context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
                   }
                 } else if (value == 2) {
-                  if (recycleBin.type == 'Folder') {
+                  if (recycleBin.type == AppConstant.folder) {
                     context
                         .read<FolderBloc>()
                         .add(RestoreRecycleBinFolderEvent(id: recycleBin.id!));

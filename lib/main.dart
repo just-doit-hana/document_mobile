@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:document_mobile/src/bussiness/file/bloc/file_bloc.dart';
 import 'package:document_mobile/src/data/repository/account/account_repository.dart';
 import 'package:document_mobile/src/data/repository/auth/login_repository.dart';
 import 'package:document_mobile/src/data/repository/file/file_repository.dart';
 import 'package:document_mobile/src/data/repository/quota/quota_repo.dart';
 import 'package:document_mobile/src/data/repository/version/vesion_repo.dart';
+import 'package:document_mobile/src/screen/shared/share_file_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -107,8 +107,9 @@ class MyApp extends StatelessWidget {
                 routes: {
                   "home": (context) => const App(),
                   "onboard": (context) => const OnboardingPage(),
-                  // "homeFolder": (context) => const HomeFolder(),
-                  // 'recycleBin': ((context) => const RecyclebinScreen())
+                  "homeFolder": (context) => const HomeFolder(),
+                  'recycleBin': ((context) => const RecyclebinScreen()),
+                  'sharefile': ((context) => const ShareFileScreen())
                 },
               );
             },

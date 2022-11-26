@@ -7,7 +7,8 @@ import 'src/screen/home/home_folder.dart';
 import 'src/screen/recylebin/recyclebin_screen.dart';
 
 // owner --? co tat cat quyen
-// edit  ->  Preview , viewdetail, Dowload, copy to , rename
+// edit public    ->  Preview , viewdetail, Dowload, , rename
+// edit   ->  Preview , viewdetail, Dowload, copy , rename
 // viewer public --> view detail / preview / download
 // viewer private --? preview / view detail
 
