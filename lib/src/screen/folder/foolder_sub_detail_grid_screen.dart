@@ -1,3 +1,4 @@
+import 'package:document_mobile/app/util/util.dart';
 import 'package:document_mobile/app/widget/folder_grid.dart';
 import 'package:document_mobile/src/data/model/folder/folder_result_folder.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,11 @@ class FolderSubFolderDetailGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(folderList![idIndex].name!)),
+      appBar: AppBar(
+          title: Text(
+        folderList![idIndex].name!,
+        style: h4StyleLight,
+      )),
       body: BlocProvider(
         create: (context) => FolderBloc(RepositoryProvider.of(context))
           ..add(LoadFolderItemEvent(id: folderId)),

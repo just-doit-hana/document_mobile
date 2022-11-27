@@ -114,6 +114,24 @@ class Detail extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
+          // Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: const [
+          //     Text(
+          //       'Status file',
+          //       style: TextStyle(
+          //           fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
+          //     ),
+          //     Text(
+          //       '',
+          //       style: TextStyle(
+          //           fontSize: 16.0, fontFamily: AppConstant.poppinsFont),
+          //     )
+          //   ],
+          // ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

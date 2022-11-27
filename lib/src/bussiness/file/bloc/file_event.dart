@@ -13,3 +13,9 @@ class ViewDetailFileEvent extends FileEvent {
 
   const ViewDetailFileEvent({required this.fileId});
 }
+
+class BackupFileEvent extends FileEvent {
+  final String fileId;
+
+  const BackupFileEvent({required this.fileId});
+}

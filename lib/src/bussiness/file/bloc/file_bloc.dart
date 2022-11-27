@@ -11,6 +11,7 @@ class FileBloc extends Bloc<FileEvent, FileState> {
   final FileRepository _fileRepository;
   FileBloc(this._fileRepository) : super(ViewDetailLoadingState()) {
     on<ViewDetailFileEvent>(_fileDetails);
+    on<BackupFileEvent>(_backupFile);
   }
 
   void _fileDetails(ViewDetailFileEvent event, Emitter emit) async {
@@ -20,6 +21,16 @@ class FileBloc extends Bloc<FileEvent, FileState> {
       emit(ViewDetaiFilelLoadedState(fileDetailResponse: viewDetail!));
     } catch (e) {
       emit(ViewDetailFileErrorState(error: e.toString()));
+    }
+  }
+
+  void _backupFile(BackupFileEvent event, Emitter emit) async {
+    emit(BackupFileLoadingState());
+    try {
+      final backupFile = await _fileRepository.backupFile(event.fileId);
+      emit(BackupFilelLoadedState(fileId: backupFile!.fileId!));
+    } catch (e) {
+      emit(BackupFileErrorState(error: e.toString()));
     }
   }
 }

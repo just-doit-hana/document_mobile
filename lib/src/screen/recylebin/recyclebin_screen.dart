@@ -152,11 +152,10 @@ class CardList extends StatelessWidget {
           ),
         ),
         confirmDismiss: (_) async {
-          final result = showConfimation(
-            context,
-            title: "Are you sure?",
-            content: " Do you want to delete ${recycleBin.name}?",
-          );
+          final result = showConfimation(context,
+              title: "Are you sure?",
+              content: " Do you want to delete ${recycleBin.name}?",
+              nameBtn: 'Delete');
           return result;
         },
         onDismissed: (_) {

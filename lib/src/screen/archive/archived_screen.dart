@@ -111,25 +111,6 @@ class CardList extends StatelessWidget {
 
   final ResultItemFolder recycleBin;
   final void Function(ResultItemFolder)? onPressed;
-  // void _showDialog(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text("Alert!!"),
-  //         content: Text("You are awesome!"),
-  //         actions: [
-  //           MaterialButton(
-  //             child: Text("OK"),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,9 @@ void showMessageSnackbar(BuildContext context, String messgae, {Color? color}) {
 }
 
 Future<bool> showConfimation(BuildContext context,
-    {required String title, required String content}) async {
+    {required String title,
+    required String content,
+    required String nameBtn}) async {
   bool shouldDismiss = false;
   await showDialog(
       context: context,
@@ -42,7 +44,7 @@ Future<bool> showConfimation(BuildContext context,
                         shouldDismiss = true;
                       },
                       child: Text(
-                        'Delete',
+                        nameBtn,
                         style: TextStyle(
                             color: HexColor.fromHex(AppColor.primaryBtnColor),
                             fontFamily: AppConstant.poppinsFont),

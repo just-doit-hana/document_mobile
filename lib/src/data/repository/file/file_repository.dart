@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:document_mobile/app/util/dio/dio_client.dart';
+import 'package:document_mobile/src/data/model/file/file_backup.dart';
 import 'package:document_mobile/src/data/model/file/file_detail.dart';
+import 'package:document_mobile/src/data/model/file/file_rename.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../../app/util/dio/dio_exception.dart';
@@ -28,4 +30,65 @@ class FileRepository {
       throw e.toString();
     }
   }
+
+  Future<FileDetailResponse?> lockFile(String fileId, bool isBlock) async {
+    try {
+      final res = await _dioClient.put(
+          '${Endpoints.ENDPOINTDOC}metadata/files/$fileId/lock',
+          queryParameters: {'isLocked': isBlock},
+          data: isBlock);
+      var fileBlock = res.data;
+      final value = FileDetailResponse.fromMap(fileBlock);
+      return value;
+    } on DioError catch (e) {
+      final err = DiorException.fromDioError(e).toString();
+      throw err;
+    } catch (e) {
+      if (kDebugMode) {
+        print('File block $e');
+      }
+    }
+    return null;
+  }
+
+  Future<FileDetailResponse?> renameFile(
+      String fileId, FileRename fileRename) async {
+    try {
+      final res = await _dioClient.put(
+          '${Endpoints.ENDPOINTDOC}metadata/files/$fileId',
+          data: fileRename.toMap());
+      var fileBlock = res.data;
+      final value = FileDetailResponse.fromMap(fileBlock);
+      return value;
+    } on DioError catch (e) {
+      final err = DiorException.fromDioError(e).toString();
+      throw err.toString();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Rename file $e');
+      }
+    }
+    return null;
+  }
+
+  Future<FileBackUp?> backupFile(String fileId) async {
+    try {
+      final res = await _dioClient.post(
+          '${Endpoints.ENDPOINTDOC}metadata/files/$fileId/backup',
+          data: fileId);
+      var backupFile = res.data;
+      final value = FileBackUp.fromMap(backupFile);
+      return value;
+    } on DioError catch (e) {
+      final err = DiorException.fromDioError(e).toString();
+      throw err.toString();
+    } catch (e) {
+      if (kDebugMode) {
+        print('File backup $e');
+        throw e.toString();
+      }
+    }
+    return null;
+  }
+  // https://docgatewayapi.hisoft.vn/metadata/files/9b8f1261-8d49-41e5-b1ae-edb66d08d5f0/archive
 }

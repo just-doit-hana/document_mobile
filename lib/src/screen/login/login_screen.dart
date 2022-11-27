@@ -1,5 +1,4 @@
 import 'package:document_mobile/src/bussiness/folder/bloc/folder_bloc.dart';
-import 'package:document_mobile/src/data/repository/folder/folder_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         }, builder: (context, state) {
           if (state is AuthenticationNotAuthenticated) {
-            return Scaffold(
+            var scaffold = Scaffold(
               body: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -147,6 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             );
+            return scaffold;
           }
           return Scaffold(
             body: SingleChildScrollView(

@@ -1,3 +1,4 @@
+import 'package:document_mobile/app/util/app_style.dart';
 import 'package:document_mobile/app/widget/folder_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +20,12 @@ class FolderSubFolderDetailList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(folderList!.result![idIndex].name!)),
+      appBar: AppBar(
+        title: Text(
+          folderList!.result![idIndex].name!,
+          style: h4StyleLight,
+        ),
+      ),
       body: BlocProvider(
         create: (context) => FolderBloc(RepositoryProvider.of(context))
           ..add(LoadFolderItemEvent(id: folderId)),

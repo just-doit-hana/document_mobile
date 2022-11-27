@@ -20,3 +20,15 @@ class ViewDetailFileErrorState extends FileState {
   final String error;
   const ViewDetailFileErrorState({required this.error});
 }
+
+class BackupFileLoadingState extends FileState {}
+
+class BackupFilelLoadedState extends FileState {
+  final String fileId;
+  const BackupFilelLoadedState({required this.fileId});
+}
+
+class BackupFileErrorState extends FileState {
+  final String error;
+  const BackupFileErrorState({required this.error});
+}

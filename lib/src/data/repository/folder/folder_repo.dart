@@ -10,6 +10,7 @@ import '../../model/folder/folder_item.dart';
 import '../../model/restore/folder_restore.dart';
 import '../core/endpoint.dart';
 
+// https://docgatewayapi.hisoft.vn/metadata/folders/6131eae4-94f7-4eea-9174-81360844e22f/lock?isLocked=true
 class FolderRepository {
   FolderRepository({
     Dio? dioClient,
@@ -252,7 +253,27 @@ class FolderRepository {
       throw e.toString();
     }
   }
+  // https://docgatewayapi.hisoft.vn/metadata/folders/6131eae4-94f7-4eea-9174-81360844e22f
 
+  Future<FolderDetailResponse?> folderRename(
+      String folderId, String name) async {
+    try {
+      final res = await _dioClient.put(
+          '${Endpoints.ENDPOINTDOC}metadata/folders/$folderId',
+          data: name);
+      var folder = res.data;
+      final value = FolderDetailResponse.fromMap(folder);
+      return value;
+    } on DioError catch (e) {
+      final errorMessage = DiorException.fromDioError(e).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Folder Detail $e');
+      }
+      throw e.toString();
+    }
+  }
   // Future<List<TestNoMap>> getTest() async {
   //   try {
   //     final res = await _dioClient
