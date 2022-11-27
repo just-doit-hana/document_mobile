@@ -1,8 +1,8 @@
+import 'package:document_mobile/src/screen/moveto/grid_private_screen.dart';
+import 'package:document_mobile/src/screen/moveto/grid_public_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/util/util.dart';
-import '../folder/private_folder_screen.dart';
-import '../folder/public_folder_screen.dart';
 
 class MovetoScreen extends StatefulWidget {
   const MovetoScreen({Key? key}) : super(key: key);
@@ -20,9 +20,15 @@ class _MovetoScreenState extends State<MovetoScreen> {
         length: 2,
         child: Scaffold(
             appBar: AppBar(
-              title: const Text('Move To'),
+              title: Text(
+                'Move To',
+                style: h4StyleLight,
+              ),
               toolbarHeight: 29,
               bottom: TabBar(
+                indicatorColor: HexColor.fromHex(AppColor.primaryDarkBtnColor),
+                unselectedLabelStyle:
+                    TextStyle(color: HexColor.fromHex(AppColor.grayTextColor)),
                 tabs: <Widget>[
                   Tab(
                     child: Text(
@@ -39,6 +45,7 @@ class _MovetoScreenState extends State<MovetoScreen> {
                 ],
               ),
             ),
-            body: const TabBarView(children: [])));
+            body: const TabBarView(
+                children: [GridPublicFolder(), GridPrivateFolder()])));
   }
 }

@@ -34,13 +34,10 @@ class DrawerAppbar extends StatelessWidget {
             child: DrawerHeader(
               decoration: BoxDecoration(
                   color: HexColor.fromHex(AppColor.primaryBtnColor)),
-              child: const Text(
+              child: Text(
                 'Document Management',
                 textAlign: TextAlign.justify,
-                // style: TextStyle(
-                //     fontFamily: AppConstant.poppinsFont,
-                //     fontSize: 17,
-                //     fontWeight: FontWeight.w500),
+                style: h4StyleLight,
               ),
             ),
           ),

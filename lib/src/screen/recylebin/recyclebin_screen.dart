@@ -45,12 +45,9 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
     return Scaffold(
       appBar: AppBar(
           // automaticallyImplyLeading: false,
-          title: const Text(
+          title: Text(
         'Recycle Bin',
-        style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontFamily: AppConstant.poppinsFont,
-            fontSize: 17),
+        style: h4StyleLight,
       )),
       body: BlocProvider(
         create: (context) => FolderBloc(RepositoryProvider.of(context))

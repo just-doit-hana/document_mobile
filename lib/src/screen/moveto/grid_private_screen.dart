@@ -1,64 +1,48 @@
-import 'package:document_mobile/app/util/util.dart';
+import 'dart:math';
+
+import 'package:document_mobile/app/util/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/util/app_constant.dart';
 import '../../../app/widget/folder_grid.dart';
-import '../../../app/widget/folder_list.dart';
 import '../../../app/widget/widget.dart';
 import '../../bussiness/folder/bloc/folder_bloc.dart';
 import '../../data/model/folder/folder_item.dart';
 
-class ShareFileScreen extends StatefulWidget {
-  const ShareFileScreen({Key? key}) : super(key: key);
+class GridPrivateFolder extends StatefulWidget {
+  const GridPrivateFolder({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _ShareFileScreenState createState() => _ShareFileScreenState();
+  _GridPrivateFolderState createState() => _GridPrivateFolderState();
 }
 
-class _ShareFileScreenState extends State<ShareFileScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Share file', style: h4StyleLight),
-        ),
-        body: const ListShareFile());
-  }
-}
-
-class ListShareFile extends StatefulWidget {
-  const ListShareFile({Key? key}) : super(key: key);
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _ListShareFileState createState() => _ListShareFileState();
-}
-
-class _ListShareFileState extends State<ListShareFile> {
+class _GridPrivateFolderState extends State<GridPrivateFolder> {
   bool isType = false;
   int? count;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          FolderBloc(RepositoryProvider.of(context))..add(ListShareFileEvent()),
+      create: (context) => FolderBloc(RepositoryProvider.of(context))
+        ..add(LoadFolderPrivateEvent()),
       child: BlocListener<FolderBloc, FolderState>(
         listener: (context, state) {
-          if (state is ListShareErrorState) {
+          if (state is FolderPrivateErrorState) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
         child: BlocBuilder<FolderBloc, FolderState>(
           builder: (context, state) {
-            if (state is ListShareLoadedState) {
-              FolderItemResponse shareFile = state.sharefile;
+            if (state is FolderPrivateLoadedState) {
+              FolderItemResponse privateFolder = state.privateFolder;
+              var newPrivateFolder = privateFolder.result!
+                  .where(((element) => element.type == AppConstant.folder))
+                  .toList();
               return RefreshIndicator(
                 onRefresh: ((() async =>
-                    context.read<FolderBloc>()..add(ListShareFileEvent()))),
+                    context.read<FolderBloc>()..add(LoadFolderPrivateEvent()))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -99,13 +83,9 @@ class _ListShareFileState extends State<ListShareFile> {
                                             : const Icon(Icons.list_outlined)),
                                   ],
                                 )),
-                            isType
-                                ? (FolderGrid(
-                                    folderGrid: shareFile.result,
-                                  ))
-                                : (FolderList(
-                                    folderList: shareFile,
-                                  )),
+                            (FolderGrid(
+                              folderGrid: newPrivateFolder,
+                            ))
                           ],
                         ),
                       ),

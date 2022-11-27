@@ -1,3 +1,4 @@
+import 'package:document_mobile/app/util/util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,11 @@ class _MyfileScreenState extends State<MyfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('My files')),
+        appBar: AppBar(
+            title: Text(
+          'My files',
+          style: h4StyleLight,
+        )),
         body: BlocBuilder<FolderBloc, FolderState>(
           builder: (context, state) {
             if (state is FolderLoadingState) {
