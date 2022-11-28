@@ -25,9 +25,22 @@ class LoadFolderItemEvent extends FolderEvent {
   List<Object?> get props => [id, resultItemFolder];
 }
 
+// ignore: must_be_immutable
 class LoadFolderRecycleBinEvent extends FolderEvent {
+  // int page = 1;
+  final List<ResultItemFolder>? recycleBinFolder;
+  LoadFolderRecycleBinEvent({this.recycleBinFolder});
   @override
   List<Object?> get props => [];
+}
+
+class LockFolderEvent extends FolderEvent {
+  final String folderId;
+  final bool isLock;
+  const LockFolderEvent({required this.folderId, required this.isLock});
+
+  @override
+  List<Object?> get props => [folderId, isLock];
 }
 
 class LoadFolderBackupEvent extends FolderEvent {

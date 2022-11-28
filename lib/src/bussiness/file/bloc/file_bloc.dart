@@ -2,7 +2,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:document_mobile/src/data/model/file/file_detail.dart';
 import 'package:document_mobile/src/data/model/file/file_rename.dart';
-import 'package:document_mobile/src/data/model/folder/folder_detail.dart';
 import 'package:document_mobile/src/data/repository/file/file_repository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,6 +15,7 @@ class FileBloc extends Bloc<FileEvent, FileState> {
     on<BackupFileEvent>(_backupFile);
     on<ArchiveFileEvent>(_archiveFile);
     on<RenameFileEvent>(_renameFile);
+    on<LockFileEvent>(_lockFile);
   }
 
   void _renameFile(RenameFileEvent event, Emitter emit) async {
@@ -56,6 +56,18 @@ class FileBloc extends Bloc<FileEvent, FileState> {
       emit(ArchiveFileLoadedState(fileId: archiveFile!.fileId!));
     } catch (e) {
       emit(ArchiveFileErrorState(error: e.toString()));
+    }
+  }
+
+  void _lockFile(LockFileEvent event, Emitter emit) async {
+    emit(LockFileLoadingState());
+    try {
+      final lockFile =
+          await _fileRepository.lockFile(event.fileId, event.isLock);
+      emit(LockFileLoadedState(
+          isLock: event.isLock, detail: lockFile!, fileId: event.fileId));
+    } catch (e) {
+      emit(LockFileErrorState(error: e.toString()));
     }
   }
 }

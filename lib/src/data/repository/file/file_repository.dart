@@ -36,7 +36,7 @@ class FileRepository {
       final res = await _dioClient.put(
           '${Endpoints.ENDPOINTDOC}metadata/files/$fileId/lock',
           queryParameters: {'isLocked': isBlock},
-          data: isBlock);
+          data: {'isLocked': isBlock});
       var fileBlock = res.data;
       final value = FileDetailResponse.fromMap(fileBlock);
       return value;
@@ -51,7 +51,6 @@ class FileRepository {
     return null;
   }
 
-// https://docgatewayapi.hisoft.vn/metadata/files/2658599f-4f28-47c6-8ba0-87958a2adc57
   Future<FileDetailResponse?> renameFile(
       String fileId, FileRename fileRename) async {
     try {
@@ -92,6 +91,7 @@ class FileRepository {
     return null;
   }
 
+// https://docgatewayapi.hisoft.vn/metadata/folders/6131eae4-94f7-4eea-9174-81360844e22f/lock?isLocked=true
   Future<FileBackUp?> archiveFile(String fileId) async {
     try {
       final res = await _dioClient

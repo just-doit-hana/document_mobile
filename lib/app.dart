@@ -1,6 +1,7 @@
 import 'package:document_mobile/src/screen/archive/archived_screen.dart';
 import 'package:document_mobile/src/screen/files/myfile_screen.dart';
 import 'package:document_mobile/src/screen/shared/share_file_screen.dart';
+import 'package:document_mobile/src/screen/testinfinination/infimation.dart';
 import 'package:flutter/material.dart';
 
 import 'app/util/util.dart';
@@ -33,7 +34,8 @@ class _AppState extends State<App> {
 
   static const List<Widget> _screen = <Widget>[
     HomeFolder(),
-    // AchiveFileScreen(),
+    AchiveFileScreen(),
+    // InfinationScroll(),
     ShareFileScreen(),
     RecyclebinScreen(),
   ];
@@ -53,10 +55,10 @@ class _AppState extends State<App> {
               icon: Icon(Icons.home_outlined),
               label: 'Home',
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.folder_outlined),
-            //   label: 'Archived',
-            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.folder_outlined),
+              label: 'Archived',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.share_outlined),
               label: 'Shared',

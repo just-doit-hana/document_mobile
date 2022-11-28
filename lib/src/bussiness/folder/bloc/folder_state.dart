@@ -80,13 +80,9 @@ class FolderRecycleLoading extends FolderState {
 class FolderRecycleLoaded extends FolderState {
   final FolderItemResponse recycleBin;
   int? page;
-  bool? isLastPage;
-  FolderRecycleLoaded(
-      {required this.recycleBin, this.page = 1, this.isLastPage = false});
+  FolderRecycleLoaded({required this.recycleBin, this.page = 1});
   @override
-  List<Object?> get props => [recycleBin];
-
-  bool get hasRecycle => recycleBin.result!.isNotEmpty;
+  List<Object?> get props => [recycleBin, page];
 }
 
 class FolderRecyleError extends FolderState {
@@ -303,6 +299,31 @@ class FolderRenameLoadedState extends FolderState {
 class FolderRenameErrorState extends FolderState {
   final String error;
   FolderRenameErrorState({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
+
+class LockFolderLoadingState extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class LockFolderLoadedState extends FolderState {
+  final FolderDetailResponse detail;
+  final String fileId;
+  final bool isLock;
+
+  LockFolderLoadedState(
+      {required this.detail, required this.fileId, required this.isLock});
+
+  @override
+  List<Object?> get props => [detail, fileId, isLock];
+}
+
+class LockFolderErrorState extends FolderState {
+  final String error;
+  LockFolderErrorState({required this.error});
+
   @override
   List<Object?> get props => [error];
 }

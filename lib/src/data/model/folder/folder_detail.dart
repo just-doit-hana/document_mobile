@@ -1,4 +1,4 @@
-import 'package:document_mobile/src/data/event/event.dart';
+import 'package:document_mobile/src/data/model/event/event.dart';
 
 class FolderDetailResponse {
   bool? isError;

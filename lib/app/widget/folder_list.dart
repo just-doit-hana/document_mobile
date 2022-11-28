@@ -49,8 +49,6 @@ class FolderList extends StatelessWidget {
           folderList.result![index].tags!.forEach(((element) {
             listIdTags.add(element.id);
           }));
-          // print('List tags $listIdTags');
-          // var isLock = folderList.result![index].isLocked;
           return Column(
             children: [
               GestureDetector(
@@ -216,13 +214,13 @@ class FolderList extends StatelessWidget {
                                                   content: 'View Details',
                                                 ))
                                               : (Container()),
-                                          owner
-                                              ? (ListTitleModal(
-                                                  onPress: () {},
-                                                  icon: Icons.update_outlined,
-                                                  content: 'Update Version',
-                                                ))
-                                              : (Container()),
+                                          // owner
+                                          //     ? (ListTitleModal(
+                                          //         onPress: () {},
+                                          //         icon: Icons.update_outlined,
+                                          //         content: 'Update Version',
+                                          //       ))
+                                          //     : (Container()),
                                           Divider(
                                             height: 4,
                                             color: HexColor.fromHex(
@@ -390,10 +388,84 @@ class FolderList extends StatelessWidget {
                                               : Container(),
                                           owner
                                               ? (ListTitleModal(
-                                                  onPress: () {},
-                                                  icon:
-                                                      Icons.lock_open_outlined,
-                                                  content: 'Lock/UnLock',
+                                                  onPress: () {
+                                                    if (folderList
+                                                            .result![index]
+                                                            .type ==
+                                                        AppConstant.folder) {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: ((contextj) {
+                                                            return DialogModalSheet(
+                                                                title:
+                                                                    'Folder ${folderList.result![index].name!}',
+                                                                content:
+                                                                    'Do you wan to ${folderList.result![index].isLocked! == true ? 'unLock' : 'lock'} folder?',
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  context.read<FolderBloc>().add(LockFolderEvent(
+                                                                      isLock: folderList.result![index].isLocked! ==
+                                                                              false
+                                                                          ? true
+                                                                          : false,
+                                                                      folderId: folderList
+                                                                          .result![
+                                                                              index]
+                                                                          .id!));
+                                                                },
+                                                                nameBtn: folderList
+                                                                            .result![index]
+                                                                            .isLocked! ==
+                                                                        true
+                                                                    ? 'UnLock'
+                                                                    : 'Lock');
+                                                          }));
+                                                    } else {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: ((contextj) {
+                                                            return DialogModalSheet(
+                                                                title:
+                                                                    'File ${folderList.result![index].name!}',
+                                                                content:
+                                                                    'Do you wan to ${folderList.result![index].isLocked! == true ? 'unLock' : 'lock'} file?',
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  context.read<FileBloc>().add(LockFileEvent(
+                                                                      isLock: folderList.result![index].isLocked! ==
+                                                                              false
+                                                                          ? true
+                                                                          : false,
+                                                                      fileId: folderList
+                                                                          .result![
+                                                                              index]
+                                                                          .id!));
+                                                                },
+                                                                nameBtn: folderList
+                                                                            .result![index]
+                                                                            .isLocked! ==
+                                                                        true
+                                                                    ? 'UnLock'
+                                                                    : 'Lock');
+                                                          }));
+                                                    }
+                                                  },
+                                                  icon: folderList
+                                                              .result![index]
+                                                              .isLocked! ==
+                                                          false
+                                                      ? Icons.lock_open_outlined
+                                                      : Icons.lock_outlined,
+                                                  content: folderList
+                                                              .result![index]
+                                                              .isLocked! ==
+                                                          false
+                                                      ? 'UnLock'
+                                                      : 'Lock',
                                                 ))
                                               : (Container()),
                                           owner

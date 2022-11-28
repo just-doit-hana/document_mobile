@@ -30,3 +30,9 @@ class RenameFileEvent extends FileEvent {
   final String fileId;
   const RenameFileEvent({required this.fileId, required this.fileRename});
 }
+
+class LockFileEvent extends FileEvent {
+  final String fileId;
+  final bool isLock;
+  const LockFileEvent({required this.fileId, required this.isLock});
+}

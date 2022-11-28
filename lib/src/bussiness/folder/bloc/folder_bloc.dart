@@ -1,3 +1,4 @@
+import 'package:document_mobile/src/data/model/folder/folder_result_folder.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,7 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     on<ViewDetailFolderEvent>(_viewDetailFolder);
     on<ArchiveFolderEvent>(_folderArchive);
     on<FolderRenameEvent>(_folderRename);
+    on<LockFolderEvent>(_lockFolder);
     // on<DomainEvent>((event, emit) async {
     //   emit(DomainLoading());
     //   try {
@@ -39,6 +41,18 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     //     emit(DomainErrorState(e.toString()));
     //   }
     // });
+  }
+
+  void _lockFolder(LockFolderEvent event, Emitter emit) async {
+    emit(LockFolderLoadingState());
+    try {
+      final folderLock =
+          await _folderRepository.lockFolder(event.folderId, event.isLock);
+      emit(LockFolderLoadedState(
+          detail: folderLock!, fileId: event.folderId, isLock: event.isLock));
+    } catch (e) {
+      emit(LockFolderErrorState(error: e.toString()));
+    }
   }
 
   void _folderRename(FolderRenameEvent event, Emitter emit) async {
@@ -115,13 +129,10 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
       LoadFolderRecycleBinEvent event, Emitter emit) async {
     emit(FolderRecycleLoading());
     try {
-      const int newPage = 0;
-
-      final recycleBin =
-          await _folderRepository.listRecycleBin(page: newPage + 1);
+      final recycleBin = await _folderRepository.listRecycleBin(page: 1);
       if (recycleBin!.statusCode == 200) {
         emit(FolderRecycleLoaded(
-            recycleBin: recycleBin, page: newPage, isLastPage: true));
+            recycleBin: recycleBin, page: recycleBin.pagination!.currentPage));
       } else {
         emit(FolderRecyleError('Error'));
       }

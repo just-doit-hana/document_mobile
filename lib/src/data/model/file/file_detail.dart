@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:document_mobile/src/data/event/event.dart';
+import 'package:document_mobile/src/data/model/event/event.dart';
 
 import '../tags/tags.dart';
 

@@ -10,13 +10,33 @@ import '../../model/folder/folder_item.dart';
 import '../../model/restore/folder_restore.dart';
 import '../core/endpoint.dart';
 
-// https://docgatewayapi.hisoft.vn/metadata/folders/6131eae4-94f7-4eea-9174-81360844e22f/lock?isLocked=true
 class FolderRepository {
   FolderRepository({
     Dio? dioClient,
   }) : _dioClient = dioClient ?? DioClient().dio;
 
   final Dio _dioClient;
+
+  Future<FolderDetailResponse?> lockFolder(
+      String folderId, bool isBlock) async {
+    try {
+      final res = await _dioClient.put(
+          '${Endpoints.ENDPOINTDOC}metadata/folders/$folderId/lock',
+          queryParameters: {'isLocked': isBlock},
+          data: {'isLocked': isBlock});
+      var fileBlock = res.data;
+      final value = FolderDetailResponse.fromMap(fileBlock);
+      return value;
+    } on DioError catch (e) {
+      final err = DiorException.fromDioError(e).toString();
+      throw err;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Folder lock $e');
+      }
+    }
+    return null;
+  }
 
   Future<dynamic> listPublicFolder() async {
     try {
@@ -92,7 +112,33 @@ class FolderRepository {
 
   Future<FolderItemResponse?> listRecycleBin({
     required int page,
-    int pageSize = 15,
+    int pageSize = 10,
+  }) async {
+    try {
+      final res = await _dioClient.get(
+          '${Endpoints.ENDPOINTDOC}metadata/folders/items/archived',
+          queryParameters: {
+            'PageNumber': page,
+            'MaxPageSize': pageSize,
+          });
+
+      var recycleBin = res.data;
+      final value = FolderItemResponse.fromMap(recycleBin);
+      return value;
+    } on DioError catch (e) {
+      final errorMessage = DiorException.fromDioError(e).toString();
+      throw errorMessage;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Recycle bin $e');
+      }
+      throw e.toString();
+    }
+  }
+
+  Future<FolderItemResponse> listRecycleBinTest({
+    required int page,
+    int pageSize = 10,
   }) async {
     try {
       final res = await _dioClient.get(

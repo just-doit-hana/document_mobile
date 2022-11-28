@@ -58,3 +58,21 @@ class RenameFileErrorState extends FileState {
   final String error;
   const RenameFileErrorState({required this.error});
 }
+
+class LockFileLoadingState extends FileState {}
+
+class LockFileLoadedState extends FileState {
+  final FileDetailResponse detail;
+  final String fileId;
+  final bool isLock;
+  const LockFileLoadedState({
+    required this.isLock,
+    required this.detail,
+    required this.fileId,
+  });
+}
+
+class LockFileErrorState extends FileState {
+  final String error;
+  const LockFileErrorState({required this.error});
+}
