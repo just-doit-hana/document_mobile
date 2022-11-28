@@ -304,7 +304,7 @@ class FolderGrid extends StatelessWidget {
                                                                   ((context) {
                                                                 return DialogModalRenameSheet(
                                                                   nameBtn:
-                                                                      'Rename folder',
+                                                                      'Rename Folder',
                                                                   title:
                                                                       'Rename folder ${folderGrid![index].name}',
                                                                   onPressed:
@@ -329,7 +329,7 @@ class FolderGrid extends StatelessWidget {
                                                                   ((contexts) {
                                                                 return DialogModalRenameSheet(
                                                                   nameBtn:
-                                                                      'Rename file',
+                                                                      'Rename File',
                                                                   title:
                                                                       'Rename file ${folderGrid![index].name}',
                                                                   onPressed:

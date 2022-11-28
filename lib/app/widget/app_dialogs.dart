@@ -83,8 +83,16 @@ class DialogModalSheet extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Cancel')),
-            TextButton(onPressed: onPressed, child: Text(nameBtn))
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                      color: HexColor.fromHex(AppColor.primaryBtnColor)),
+                )),
+            TextButton(
+                onPressed: onPressed,
+                child: Text(nameBtn,
+                    style: TextStyle(
+                        color: HexColor.fromHex(AppColor.primaryBtnColor))))
           ],
         )
       ],
@@ -132,8 +140,14 @@ class DialogModalRenameSheet extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Cancel')),
-            TextButton(onPressed: onPressed, child: Text(nameBtn))
+                child: Text('Cancel',
+                    style: TextStyle(
+                        color: HexColor.fromHex(AppColor.primaryBtnColor)))),
+            TextButton(
+                onPressed: onPressed,
+                child: Text(nameBtn,
+                    style: TextStyle(
+                        color: HexColor.fromHex(AppColor.primaryBtnColor))))
           ],
         )
       ],

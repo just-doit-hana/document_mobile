@@ -259,7 +259,7 @@ class FolderList extends StatelessWidget {
                                                           builder: ((context) {
                                                             return DialogModalRenameSheet(
                                                               nameBtn:
-                                                                  'Rename folder',
+                                                                  'Rename Folder',
                                                               title:
                                                                   'Rename folder ${folderList.result![index].name}',
                                                               onPressed: () {
@@ -284,7 +284,7 @@ class FolderList extends StatelessWidget {
                                                           builder: ((contexts) {
                                                             return DialogModalRenameSheet(
                                                               nameBtn:
-                                                                  'Rename file',
+                                                                  'Rename File',
                                                               title:
                                                                   'Rename file ${folderList.result![index].name}',
                                                               onPressed: () {
