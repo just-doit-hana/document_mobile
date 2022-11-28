@@ -55,12 +55,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
         providers: [
-          RepositoryProvider(
-            create: (_) => FolderRepository(),
-          ),
           RepositoryProvider(create: (_) => QuotaRepository()),
           RepositoryProvider(create: (_) => LoginRepository()),
           RepositoryProvider(create: (_) => FileRepository()),
+          RepositoryProvider(create: (_) => FolderRepository()),
           RepositoryProvider(create: (_) => AccountRepository()),
           RepositoryProvider(create: (_) => VersionRepository())
         ],

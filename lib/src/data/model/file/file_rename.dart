@@ -1,11 +1,11 @@
 class FileRename {
-  List<int>? tagsId;
-  String? description;
-  String? name;
+  List<dynamic> tagsId;
+  String description;
+  String name;
   FileRename({
-    this.tagsId,
-    this.description,
-    this.name,
+    required this.tagsId,
+    required this.description,
+    required this.name,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,10 +18,9 @@ class FileRename {
 
   factory FileRename.fromMap(Map<String, dynamic> map) {
     return FileRename(
-      tagsId: map['tagIDs'] != null ? List<int>.from(map['tagIDs']) : [],
-      description:
-          map['description'] != null ? map['description'] as String : null,
-      name: map['name'] != null ? map['name'] as String : null,
+      tagsId: List<dynamic>.from(map['tagIDs']),
+      description: map['description'],
+      name: map['name'],
     );
   }
 }

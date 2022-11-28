@@ -259,7 +259,7 @@ class FolderRepository {
     try {
       final res = await _dioClient.put(
           '${Endpoints.ENDPOINTDOC}metadata/folders/$folderId',
-          data: name);
+          data: {'name': name});
       var folder = res.data;
       final value = FolderDetailResponse.fromMap(folder);
       return value;
@@ -277,7 +277,7 @@ class FolderRepository {
   Future<FolderDetailResponse?> archiveFolder(String folderId) async {
     try {
       final res = await _dioClient
-          .post('${Endpoints.ENDPOINTDOC}metadata/files/$folderId/archive');
+          .post('${Endpoints.ENDPOINTDOC}metadata/folders/$folderId/archive');
       var archiveFolder = res.data;
       final value = FolderDetailResponse.fromMap(archiveFolder);
       return value;

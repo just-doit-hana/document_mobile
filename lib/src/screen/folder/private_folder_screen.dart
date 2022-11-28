@@ -1,3 +1,4 @@
+import 'package:document_mobile/src/bussiness/file/bloc/file_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,9 +22,16 @@ class _PrivateFolderState extends State<PrivateFolder> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FolderBloc(RepositoryProvider.of(context))
-        ..add(LoadFolderPrivateEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => FolderBloc(RepositoryProvider.of(context))
+            ..add(LoadFolderPrivateEvent()),
+        ),
+        BlocProvider(
+          create: (context) => FileBloc((RepositoryProvider.of(context))),
+        )
+      ],
       child: BlocListener<FolderBloc, FolderState>(
         listener: (context, state) {
           if (state is FolderPrivateErrorState) {

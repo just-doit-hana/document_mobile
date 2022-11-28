@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +29,7 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     on<RestoreRecycleBinFolderEvent>(_restoreRecycleBinFolder);
     on<ViewDetailFolderEvent>(_viewDetailFolder);
     on<ArchiveFolderEvent>(_folderArchive);
+    on<FolderRenameEvent>(_folderRename);
     // on<DomainEvent>((event, emit) async {
     //   emit(DomainLoading());
     //   try {
@@ -40,6 +39,19 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     //     emit(DomainErrorState(e.toString()));
     //   }
     // });
+  }
+
+  void _folderRename(FolderRenameEvent event, Emitter emit) async {
+    emit(FolderRenameLoadingState());
+    try {
+      final folderRename =
+          await _folderRepository.folderRename(event.folderId, event.name);
+      emit(FolderRenameLoadedState(
+          folderId: folderRename!.folderDeTail!.id!,
+          name: folderRename.folderDeTail!.name!));
+    } catch (e) {
+      emit(FolderRenameErrorState(error: e.toString()));
+    }
   }
 
   void _folderArchive(ArchiveFolderEvent event, Emitter emit) async {

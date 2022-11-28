@@ -286,6 +286,26 @@ class ArchiveFolderErrorState extends FolderState {
   List<Object?> get props => [error];
 }
 
+class FolderRenameLoadingState extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class FolderRenameLoadedState extends FolderState {
+  final String folderId;
+  final String name;
+
+  FolderRenameLoadedState({required this.folderId, required this.name});
+  @override
+  List<Object?> get props => [folderId];
+}
+
+class FolderRenameErrorState extends FolderState {
+  final String error;
+  FolderRenameErrorState({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
 
 
 // class DomainLoading extends FolderState {

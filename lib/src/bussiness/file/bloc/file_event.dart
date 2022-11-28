@@ -24,3 +24,9 @@ class ArchiveFileEvent extends FileEvent {
   final String fileId;
   const ArchiveFileEvent({required this.fileId});
 }
+
+class RenameFileEvent extends FileEvent {
+  final FileRename fileRename;
+  final String fileId;
+  const RenameFileEvent({required this.fileId, required this.fileRename});
+}

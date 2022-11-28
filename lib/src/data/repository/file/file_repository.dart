@@ -51,6 +51,7 @@ class FileRepository {
     return null;
   }
 
+// https://docgatewayapi.hisoft.vn/metadata/files/2658599f-4f28-47c6-8ba0-87958a2adc57
   Future<FileDetailResponse?> renameFile(
       String fileId, FileRename fileRename) async {
     try {

@@ -98,6 +98,16 @@ class ArchiveFolderEvent extends FolderEvent {
   List<Object?> get props => [fileId];
 }
 
+class FolderRenameEvent extends FolderEvent {
+  final String folderId;
+  final String name;
+
+  const FolderRenameEvent(this.folderId, this.name);
+
+  @override
+  List<Object?> get props => [folderId, name];
+}
+
 class DomainEvent extends FolderEvent {
   @override
   List<Object?> get props => [];

@@ -1,6 +1,8 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:document_mobile/src/data/model/file/file_detail.dart';
+import 'package:document_mobile/src/data/model/file/file_rename.dart';
+import 'package:document_mobile/src/data/model/folder/folder_detail.dart';
 import 'package:document_mobile/src/data/repository/file/file_repository.dart';
 import 'package:equatable/equatable.dart';
 
@@ -13,6 +15,18 @@ class FileBloc extends Bloc<FileEvent, FileState> {
     on<ViewDetailFileEvent>(_fileDetails);
     on<BackupFileEvent>(_backupFile);
     on<ArchiveFileEvent>(_archiveFile);
+    on<RenameFileEvent>(_renameFile);
+  }
+
+  void _renameFile(RenameFileEvent event, Emitter emit) async {
+    emit(RenameFileLoadingState());
+    try {
+      final renameFile =
+          await _fileRepository.renameFile(event.fileId, event.fileRename);
+      emit(RenameFileLoadedState(fileRename: renameFile!));
+    } catch (e) {
+      emit(RenameFileErrorState(error: e.toString()));
+    }
   }
 
   void _fileDetails(ViewDetailFileEvent event, Emitter emit) async {

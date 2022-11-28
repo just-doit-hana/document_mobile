@@ -1,5 +1,6 @@
 import 'package:document_mobile/src/bussiness/file/bloc/file_bloc.dart';
 import 'package:document_mobile/src/bussiness/folder/bloc/folder_bloc.dart';
+import 'package:document_mobile/src/data/model/file/file_rename.dart';
 import 'package:document_mobile/src/screen/copyto/copyto_screen.dart';
 import 'package:document_mobile/src/screen/files/file_detail.dart';
 import 'package:document_mobile/src/screen/folder/foolder_sub_detail_list_screen.dart';
@@ -44,6 +45,11 @@ class FolderList extends StatelessWidget {
               (folderList.result![index].accessScope == AppConstant.viewer);
           var editor =
               (folderList.result![index].accessScope == AppConstant.editor);
+          var listIdTags = [];
+          folderList.result![index].tags!.forEach(((element) {
+            listIdTags.add(element.id);
+          }));
+          // print('List tags $listIdTags');
           // var isLock = folderList.result![index].isLocked;
           return Column(
             children: [
@@ -257,7 +263,18 @@ class FolderList extends StatelessWidget {
                                                                   'Rename folder',
                                                               title:
                                                                   'Rename folder ${folderList.result![index].name}',
-                                                              onPressed: () {},
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                                context.read<FolderBloc>().add(FolderRenameEvent(
+                                                                    folderList
+                                                                        .result![
+                                                                            index]
+                                                                        .id!,
+                                                                    controllerFolder
+                                                                        .text));
+                                                              },
                                                               controller:
                                                                   controllerFolder,
                                                             );
@@ -265,13 +282,34 @@ class FolderList extends StatelessWidget {
                                                     } else {
                                                       showDialog(
                                                           context: context,
-                                                          builder: ((context) {
+                                                          builder: ((contexts) {
                                                             return DialogModalRenameSheet(
                                                               nameBtn:
                                                                   'Rename file',
                                                               title:
                                                                   'Rename file ${folderList.result![index].name}',
-                                                              onPressed: () {},
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                                FileRename fileRename = FileRename(
+                                                                    description:
+                                                                        '',
+                                                                    name: controllerFile
+                                                                        .text,
+                                                                    tagsId: listIdTags
+                                                                            .isNotEmpty
+                                                                        ? listIdTags
+                                                                        : []);
+
+                                                                context.read<FileBloc>().add(RenameFileEvent(
+                                                                    fileId: folderList
+                                                                        .result![
+                                                                            index]
+                                                                        .id!,
+                                                                    fileRename:
+                                                                        fileRename));
+                                                              },
                                                               controller:
                                                                   controllerFile,
                                                             );
@@ -301,57 +339,46 @@ class FolderList extends StatelessWidget {
                                                 AppColor.grayTextColor),
                                           ),
                                           owner
-                                              ? (BlocProvider(
-                                                  create: (context) => FileBloc(
-                                                      RepositoryProvider.of(
-                                                          context)),
-                                                  child: BlocBuilder<FileBloc,
-                                                      FileState>(
-                                                    builder: (context, state) {
-                                                      return ListTitleModal(
-                                                        onPress: () {
-                                                          if (folderList
-                                                                  .result![
-                                                                      index]
-                                                                  .type ==
-                                                              AppConstant
-                                                                  .folder) {
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                                    const SnackBar(
-                                                                        content:
-                                                                            Text('Cant not back up folder')));
-                                                          } else {
-                                                            showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    ((contextj) {
-                                                                  return DialogModalSheet(
-                                                                      title:
-                                                                          'Backup File ${folderList.result![index].id!}',
-                                                                      content:
-                                                                          'Do you wan to back up file?',
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.of(context)
-                                                                            .pop();
-                                                                        context
-                                                                            .read<FileBloc>()
-                                                                            .add(BackupFileEvent(fileId: folderList.result![index].id!));
-                                                                      },
-                                                                      nameBtn:
-                                                                          'Back up');
-                                                                }));
-                                                          }
-                                                        },
-                                                        icon: Icons
-                                                            .backup_outlined,
-                                                        content: 'Back up',
-                                                      );
-                                                    },
-                                                  ),
+                                              ? (ListTitleModal(
+                                                  onPress: () {
+                                                    if (folderList
+                                                            .result![index]
+                                                            .type ==
+                                                        AppConstant.folder) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                              const SnackBar(
+                                                                  content: Text(
+                                                                      'Cant not back up folder')));
+                                                    } else {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: ((contextj) {
+                                                            return DialogModalSheet(
+                                                                title:
+                                                                    'Backup File ${folderList.result![index].name!}',
+                                                                content:
+                                                                    'Do you wan to back up file?',
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  context
+                                                                      .read<
+                                                                          FileBloc>()
+                                                                      .add(BackupFileEvent(
+                                                                          fileId: folderList
+                                                                              .result![index]
+                                                                              .id!));
+                                                                },
+                                                                nameBtn:
+                                                                    'Back up');
+                                                          }));
+                                                    }
+                                                  },
+                                                  icon: Icons.backup_outlined,
+                                                  content: 'Back up',
                                                 ))
                                               : Container(),
                                           owner
@@ -388,6 +415,7 @@ class FolderList extends StatelessWidget {
                                                                   Navigator.of(
                                                                           context)
                                                                       .pop();
+
                                                                   context
                                                                       .read<
                                                                           FolderBloc>()
@@ -412,6 +440,16 @@ class FolderList extends StatelessWidget {
                                                                   Navigator.of(
                                                                           context)
                                                                       .pop();
+                                                                  // BlocProvider.of<
+                                                                  //             FileBloc>(
+                                                                  //         contexts,
+                                                                  //         listen:
+                                                                  //             false)
+                                                                  //     .add(ArchiveFileEvent(
+                                                                  //         fileId: folderList
+                                                                  //             .result![index]
+                                                                  //             .id!));
+
                                                                   context
                                                                       .read<
                                                                           FileBloc>()

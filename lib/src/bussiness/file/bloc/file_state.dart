@@ -45,3 +45,16 @@ class ArchiveFileErrorState extends FileState {
   final String error;
   const ArchiveFileErrorState({required this.error});
 }
+
+class RenameFileLoadingState extends FileState {}
+
+class RenameFileLoadedState extends FileState {
+  final FileDetailResponse fileRename;
+  final String? fileId;
+  const RenameFileLoadedState({required this.fileRename, this.fileId});
+}
+
+class RenameFileErrorState extends FileState {
+  final String error;
+  const RenameFileErrorState({required this.error});
+}
