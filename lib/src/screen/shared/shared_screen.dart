@@ -12,9 +12,9 @@ class _SharedScreenState extends State<SharedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Shared Member')),
+      appBar: AppBar(title: const Text('Shared file member')),
       body: const Center(
-        child: Text('Shared Member'),
+        child: Text('Shared file member'),
       ),
     );
   }

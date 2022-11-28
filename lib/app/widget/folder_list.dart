@@ -12,6 +12,7 @@ import '../../../app/widget/widget.dart';
 import '../../src/data/model/folder/folder_item.dart';
 import '../../src/screen/previewer/sysnfusion.dart';
 import '../../src/screen/folder/folder_detail_sceen.dart';
+import '../../src/screen/shared/shared_screen.dart';
 import '../animation/routes_animation.dart';
 import '../util/util.dart';
 import 'app_dialogs.dart';
@@ -381,7 +382,12 @@ class FolderList extends StatelessWidget {
                                               : Container(),
                                           owner
                                               ? (ListTitleModal(
-                                                  onPress: () {},
+                                                  onPress: () {
+                                                    Navigator.of(context).push(
+                                                        CustomRoutesPage(
+                                                            widget:
+                                                                const SharedScreen()));
+                                                  },
                                                   icon: Icons.share,
                                                   content: 'Share',
                                                 ))

@@ -1,6 +1,9 @@
-import 'package:document_mobile/src/screen/folder/foolder_sub_detail_list_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../src/bussiness/file/bloc/file_bloc.dart';
+import '../../src/bussiness/folder/bloc/folder_bloc.dart';
+import '../../src/data/model/file/file_rename.dart';
 import '../../src/data/model/folder/folder_result_folder.dart';
 import '../../src/screen/copyto/copyto_screen.dart';
 import '../../src/screen/files/file_detail.dart';
@@ -8,8 +11,10 @@ import '../../src/screen/folder/folder_detail_sceen.dart';
 import '../../src/screen/folder/foolder_sub_detail_grid_screen.dart';
 import '../../src/screen/moveto/moveto_screen.dart';
 import '../../src/screen/previewer/sysnfusion.dart';
+import '../../src/screen/shared/shared_screen.dart';
 import '../animation/routes_animation.dart';
 import '../util/util.dart';
+import 'app_dialogs.dart';
 import 'icon_type.dart';
 import 'list_title.dart';
 
@@ -32,6 +37,8 @@ class FolderGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controllerFile = TextEditingController();
+    TextEditingController controllerFolder = TextEditingController();
     if (MediaQuery.of(context).orientation == Orientation.landscape) {
       count = 4;
     } else {
@@ -49,7 +56,12 @@ class FolderGrid extends StatelessWidget {
         var owner = (folderGrid![index].accessScope == AppConstant.owner);
         var viewer = (folderGrid![index].accessScope == AppConstant.viewer);
         var editor = (folderGrid![index].accessScope == AppConstant.editor);
-
+        var type = folderGrid![index].type == AppConstant.folder;
+        var isLock = folderGrid![index].isLocked;
+        var listIdTags = [];
+        folderGrid![index].tags!.forEach(((element) {
+          listIdTags.add(element.id);
+        }));
         return GestureDetector(
           onDoubleTap: (() {
             if (folderGrid![index].type == AppConstant.folder) {
@@ -98,7 +110,7 @@ class FolderGrid extends StatelessWidget {
                       ),
                       ElevatedButton(
                           onPressed: () {
-                            (showModalBottomSheet(
+                            showModalBottomSheet(
                                 isDismissible: true,
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -248,14 +260,14 @@ class FolderGrid extends StatelessWidget {
                                                       content: 'View Details',
                                                     ))
                                                   : (Container()),
-                                              owner
-                                                  ? (ListTitleModal(
-                                                      onPress: () {},
-                                                      icon:
-                                                          Icons.update_outlined,
-                                                      content: 'Update Version',
-                                                    ))
-                                                  : (Container()),
+                                              // owner
+                                              //     ? (ListTitleModal(
+                                              //         onPress: () {},
+                                              //         icon:
+                                              //             Icons.update_outlined,
+                                              //         content: 'Update Version',
+                                              //       ))
+                                              //     : (Container()),
                                               Divider(
                                                 height: 4,
                                                 color: HexColor.fromHex(
@@ -285,58 +297,66 @@ class FolderGrid extends StatelessWidget {
                                               owner || editor
                                                   ? (ListTitleModal(
                                                       onPress: () {
-                                                        showDialog(
-                                                            context: context,
-                                                            builder:
-                                                                ((context) {
-                                                              return AlertDialog(
-                                                                shape: const RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.all(
-                                                                            Radius.circular(10.0))),
-                                                                title: const Text(
-                                                                    'Rename folder'),
-                                                                content:
-                                                                    SizedBox(
-                                                                  width: 400.0,
-                                                                  height: 50,
-                                                                  child:
-                                                                      TextField(
-                                                                    autofocus:
-                                                                        true,
-                                                                    keyboardType:
-                                                                        TextInputType
+                                                        if (type) {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  ((context) {
+                                                                return DialogModalRenameSheet(
+                                                                  nameBtn:
+                                                                      'Rename folder',
+                                                                  title:
+                                                                      'Rename folder ${folderGrid![index].name}',
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                    context.read<FolderBloc>().add(FolderRenameEvent(
+                                                                        folderGrid![index]
+                                                                            .id!,
+                                                                        controllerFolder
+                                                                            .text));
+                                                                  },
+                                                                  controller:
+                                                                      controllerFolder,
+                                                                );
+                                                              }));
+                                                        } else {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  ((contexts) {
+                                                                return DialogModalRenameSheet(
+                                                                  nameBtn:
+                                                                      'Rename file',
+                                                                  title:
+                                                                      'Rename file ${folderGrid![index].name}',
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                    FileRename fileRename = FileRename(
+                                                                        description:
+                                                                            '',
+                                                                        name: controllerFile
                                                                             .text,
-                                                                    decoration: InputDecoration(
-                                                                        filled:
-                                                                            true,
-                                                                        border: OutlineInputBorder(
-                                                                            borderSide:
-                                                                                BorderSide.none,
-                                                                            borderRadius: BorderRadius.circular(8.0))),
-                                                                  ),
-                                                                ),
-                                                                actions: [
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .end,
-                                                                    children: [
-                                                                      TextButton(
-                                                                          onPressed:
-                                                                              () {},
-                                                                          child:
-                                                                              const Text('Cancel')),
-                                                                      TextButton(
-                                                                          onPressed:
-                                                                              () {},
-                                                                          child:
-                                                                              const Text('Rename'))
-                                                                    ],
-                                                                  )
-                                                                ],
-                                                              );
-                                                            }));
+                                                                        tagsId: listIdTags.isNotEmpty
+                                                                            ? listIdTags
+                                                                            : []);
+
+                                                                    context.read<FileBloc>().add(RenameFileEvent(
+                                                                        fileId: folderGrid![index]
+                                                                            .id!,
+                                                                        fileRename:
+                                                                            fileRename));
+                                                                  },
+                                                                  controller:
+                                                                      controllerFile,
+                                                                );
+                                                              }));
+                                                        }
                                                       },
                                                       icon: Icons
                                                           .drive_file_rename_outline,
@@ -363,7 +383,40 @@ class FolderGrid extends StatelessWidget {
                                               ),
                                               owner
                                                   ? (ListTitleModal(
-                                                      onPress: () {},
+                                                      onPress: () {
+                                                        if (type) {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                                  const SnackBar(
+                                                                      content: Text(
+                                                                          'Cant not back up folder')));
+                                                        } else {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  ((contextj) {
+                                                                return DialogModalSheet(
+                                                                    title:
+                                                                        'Backup File ${folderGrid![index].name!}',
+                                                                    content:
+                                                                        'Do you wan to back up file?',
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                      context
+                                                                          .read<
+                                                                              FileBloc>()
+                                                                          .add(BackupFileEvent(
+                                                                              fileId: folderGrid![index].id!));
+                                                                    },
+                                                                    nameBtn:
+                                                                        'Back up');
+                                                              }));
+                                                        }
+                                                      },
                                                       icon:
                                                           Icons.backup_outlined,
                                                       content: 'Back up',
@@ -371,22 +424,139 @@ class FolderGrid extends StatelessWidget {
                                                   : Container(),
                                               owner
                                                   ? (ListTitleModal(
-                                                      onPress: () {},
+                                                      onPress: () {
+                                                        Navigator.of(context).push(
+                                                            CustomRoutesPage(
+                                                                widget:
+                                                                    const SharedScreen()));
+                                                      },
                                                       icon: Icons.share,
                                                       content: 'Share',
                                                     ))
                                                   : Container(),
                                               owner
                                                   ? (ListTitleModal(
-                                                      onPress: () {},
-                                                      icon: Icons
-                                                          .lock_open_outlined,
-                                                      content: 'Lock/UnLock',
+                                                      onPress: () {
+                                                        if (type) {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  ((contextj) {
+                                                                return DialogModalSheet(
+                                                                    title:
+                                                                        'Folder ${folderGrid![index].name!}',
+                                                                    content:
+                                                                        'Do you wan to ${isLock == true ? 'unLock' : 'lock'} folder?',
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                      context.read<FolderBloc>().add(LockFolderEvent(
+                                                                          isLock: isLock == false
+                                                                              ? true
+                                                                              : false,
+                                                                          folderId:
+                                                                              folderGrid![index].id!));
+                                                                    },
+                                                                    nameBtn: isLock ==
+                                                                            true
+                                                                        ? 'UnLock'
+                                                                        : 'Lock');
+                                                              }));
+                                                        } else {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  ((contextj) {
+                                                                return DialogModalSheet(
+                                                                    title:
+                                                                        'File ${folderGrid![index].name!}',
+                                                                    content:
+                                                                        'Do you wan to ${isLock == true ? 'unLock' : 'lock'} file?',
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                      context.read<FileBloc>().add(LockFileEvent(
+                                                                          isLock: isLock == false
+                                                                              ? true
+                                                                              : false,
+                                                                          fileId:
+                                                                              folderGrid![index].id!));
+                                                                    },
+                                                                    nameBtn: isLock ==
+                                                                            true
+                                                                        ? 'UnLock'
+                                                                        : 'Lock');
+                                                              }));
+                                                        }
+                                                      },
+                                                      icon: isLock == false
+                                                          ? Icons
+                                                              .lock_open_outlined
+                                                          : Icons.lock_outlined,
+                                                      content: isLock == false
+                                                          ? 'UnLock'
+                                                          : 'Lock',
                                                     ))
                                                   : (Container()),
                                               owner
                                                   ? (ListTitleModal(
-                                                      onPress: () {},
+                                                      onPress: () {
+                                                        if (type) {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  ((contextj) {
+                                                                return DialogModalSheet(
+                                                                    title:
+                                                                        'Delete Folder',
+                                                                    content:
+                                                                        'Do you wan to delete ${folderGrid![index].name} folder',
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+
+                                                                      context
+                                                                          .read<
+                                                                              FolderBloc>()
+                                                                          .add(ArchiveFolderEvent(
+                                                                              fileId: folderGrid![index].id!));
+                                                                    },
+                                                                    nameBtn:
+                                                                        'Delete');
+                                                              }));
+                                                        } else {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  ((contexts) {
+                                                                return DialogModalSheet(
+                                                                    title:
+                                                                        'Delete File',
+                                                                    content:
+                                                                        'Do you wan to file ${folderGrid![index].name} folder',
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+
+                                                                      context
+                                                                          .read<
+                                                                              FileBloc>()
+                                                                          .add(ArchiveFileEvent(
+                                                                              fileId: folderGrid![index].id!));
+                                                                    },
+                                                                    nameBtn:
+                                                                        'Delete');
+                                                              }));
+                                                        }
+                                                      },
                                                       icon:
                                                           Icons.delete_outline,
                                                       content: 'Delete',
@@ -396,7 +566,7 @@ class FolderGrid extends StatelessWidget {
                                           )
                                         ],
                                       ));
-                                }));
+                                });
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 0.0,
