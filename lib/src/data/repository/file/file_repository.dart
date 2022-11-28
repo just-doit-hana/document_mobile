@@ -90,5 +90,22 @@ class FileRepository {
     }
     return null;
   }
-  // https://docgatewayapi.hisoft.vn/metadata/files/9b8f1261-8d49-41e5-b1ae-edb66d08d5f0/archive
+
+  Future<FileBackUp?> archiveFile(String fileId) async {
+    try {
+      final res = await _dioClient
+          .post('${Endpoints.ENDPOINTDOC}metadata/files/$fileId/archive');
+      var archiveFile = res.data;
+      final value = FileBackUp.fromMap(archiveFile);
+      return value;
+    } on DioError catch (e) {
+      final err = DiorException.fromDioError(e).toString();
+      throw err.toString();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Archive Delete $e');
+      }
+    }
+    return null;
+  }
 }

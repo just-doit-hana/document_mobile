@@ -12,7 +12,7 @@ class CopytoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle tabStyle =
-        TextStyle(color: HexColor.fromHex(AppColor.primaryTextColor));
+        TextStyle(color: HexColor.fromHex(AppColor.whiteTextColor));
     return DefaultTabController(
       length: 2,
       child: Scaffold(

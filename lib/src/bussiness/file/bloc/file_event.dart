@@ -19,3 +19,8 @@ class BackupFileEvent extends FileEvent {
 
   const BackupFileEvent({required this.fileId});
 }
+
+class ArchiveFileEvent extends FileEvent {
+  final String fileId;
+  const ArchiveFileEvent({required this.fileId});
+}

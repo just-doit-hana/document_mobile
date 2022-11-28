@@ -266,6 +266,28 @@ class ViewDetailFolderErrorState extends FolderState {
   List<Object?> get props => throw [error];
 }
 
+class ArchiveFolderLoadingState extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class ArchiveFolderLoadedState extends FolderState {
+  final String fileId;
+
+  ArchiveFolderLoadedState({required this.fileId});
+  @override
+  List<Object?> get props => [fileId];
+}
+
+class ArchiveFolderErrorState extends FolderState {
+  final String error;
+  ArchiveFolderErrorState({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
+
+
+
 // class DomainLoading extends FolderState {
 //   @override
 //   List<Object?> get props => [];

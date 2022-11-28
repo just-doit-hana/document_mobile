@@ -32,3 +32,16 @@ class BackupFileErrorState extends FileState {
   final String error;
   const BackupFileErrorState({required this.error});
 }
+
+class ArchiveFileLoadingState extends FileState {}
+
+class ArchiveFileLoadedState extends FileState {
+  final String fileId;
+
+  const ArchiveFileLoadedState({required this.fileId});
+}
+
+class ArchiveFileErrorState extends FileState {
+  final String error;
+  const ArchiveFileErrorState({required this.error});
+}

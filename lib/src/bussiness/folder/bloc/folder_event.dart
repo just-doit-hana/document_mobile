@@ -90,6 +90,14 @@ class ViewDetailFolderEvent extends FolderEvent {
   List<Object?> get props => [folderId];
 }
 
+class ArchiveFolderEvent extends FolderEvent {
+  final String fileId;
+  const ArchiveFolderEvent({required this.fileId});
+
+  @override
+  List<Object?> get props => [fileId];
+}
+
 class DomainEvent extends FolderEvent {
   @override
   List<Object?> get props => [];
