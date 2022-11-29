@@ -41,11 +41,11 @@ class FolderList extends StatelessWidget {
         itemCount: folderList.result!.length,
         itemBuilder: ((context, index) {
           var owner =
-              (folderList.result![index].accessScope == AppConstant.owner);
+              folderList.result![index].accessScope == AppConstant.owner;
           var viewer =
-              (folderList.result![index].accessScope == AppConstant.viewer);
+              folderList.result![index].accessScope == AppConstant.viewer;
           var editor =
-              (folderList.result![index].accessScope == AppConstant.editor);
+              folderList.result![index].accessScope == AppConstant.editor;
           var listIdTags = [];
           folderList.result![index].tags!.forEach(((element) {
             listIdTags.add(element.id);
@@ -154,6 +154,8 @@ class FolderList extends StatelessWidget {
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(
@@ -172,6 +174,8 @@ class FolderList extends StatelessWidget {
                                                                             AppColor.primaryTextColor)),
                                                                   )));
                                                     } else {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       Navigator.of(context).push(
                                                           CustomRoutesPage(
                                                               widget:
@@ -192,6 +196,8 @@ class FolderList extends StatelessWidget {
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       Navigator.of(context).push(
                                                           CustomRoutesPage(
                                                               widget:
@@ -201,6 +207,8 @@ class FolderList extends StatelessWidget {
                                                             .toString(),
                                                       )));
                                                     } else {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       Navigator.of(context).push(
                                                           CustomRoutesPage(
                                                               widget:
@@ -229,7 +237,47 @@ class FolderList extends StatelessWidget {
                                           ),
                                           owner || viewer || editor
                                               ? (ListTitleModal(
-                                                  onPress: () {},
+                                                  onPress: () {
+                                                    if (folderList
+                                                            .result![index]
+                                                            .type! ==
+                                                        AppConstant.folder) {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                              const SnackBar(
+                                                                  content: Text(
+                                                                      'Can not download folder ')));
+                                                    } else {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: ((contextj) {
+                                                            return DialogModalSheet(
+                                                                title:
+                                                                    'Dowlown File ${folderList.result![index].name!}',
+                                                                content:
+                                                                    'Do you want to dowload file?',
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                  context
+                                                                      .read<
+                                                                          FileBloc>()
+                                                                      .add(DowloadFileEvent(
+                                                                          fileId: folderList
+                                                                              .result![index]
+                                                                              .id!));
+                                                                },
+                                                                nameBtn:
+                                                                    'Download');
+                                                          }));
+                                                    }
+                                                  },
                                                   icon: Icons.download_outlined,
                                                   content: 'Download',
                                                 ))
@@ -237,6 +285,7 @@ class FolderList extends StatelessWidget {
                                           owner
                                               ? (ListTitleModal(
                                                   onPress: () {
+                                                    Navigator.of(context).pop();
                                                     Navigator.of(context).push(
                                                         CustomRoutesPage(
                                                             widget:
@@ -254,6 +303,8 @@ class FolderList extends StatelessWidget {
                                                             .result![index]
                                                             .type! ==
                                                         AppConstant.folder) {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       showDialog(
                                                           context: context,
                                                           builder: ((context) {
@@ -279,6 +330,8 @@ class FolderList extends StatelessWidget {
                                                             );
                                                           }));
                                                     } else {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       showDialog(
                                                           context: context,
                                                           builder: ((contexts) {
@@ -323,6 +376,7 @@ class FolderList extends StatelessWidget {
                                           owner
                                               ? (ListTitleModal(
                                                   onPress: () {
+                                                    Navigator.of(context).pop();
                                                     Navigator.of(context).push(
                                                         CustomRoutesPage(
                                                             widget:
@@ -340,10 +394,13 @@ class FolderList extends StatelessWidget {
                                           owner
                                               ? (ListTitleModal(
                                                   onPress: () {
+                                                    Navigator.of(context).pop();
                                                     if (folderList
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(
@@ -351,6 +408,8 @@ class FolderList extends StatelessWidget {
                                                                   content: Text(
                                                                       'Cant not back up folder')));
                                                     } else {
+                                                      // Navigator.of(context)
+                                                      //     .pop();
                                                       showDialog(
                                                           context: context,
                                                           builder: ((contextj) {
@@ -383,6 +442,7 @@ class FolderList extends StatelessWidget {
                                           owner
                                               ? (ListTitleModal(
                                                   onPress: () {
+                                                    Navigator.of(context).pop();
                                                     Navigator.of(context).push(
                                                         CustomRoutesPage(
                                                             widget:
@@ -399,6 +459,8 @@ class FolderList extends StatelessWidget {
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       showDialog(
                                                           context: context,
                                                           builder: ((contextj) {
@@ -429,6 +491,8 @@ class FolderList extends StatelessWidget {
                                                                     : 'Lock');
                                                           }));
                                                     } else {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       showDialog(
                                                           context: context,
                                                           builder: ((contextj) {
@@ -481,6 +545,8 @@ class FolderList extends StatelessWidget {
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       showDialog(
                                                           context: context,
                                                           builder: ((contextj) {
@@ -506,6 +572,8 @@ class FolderList extends StatelessWidget {
                                                                     'Delete');
                                                           }));
                                                     } else {
+                                                      Navigator.of(context)
+                                                          .pop();
                                                       showDialog(
                                                           context: context,
                                                           builder: ((contexts) {

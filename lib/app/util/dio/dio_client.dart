@@ -6,7 +6,6 @@ import 'package:document_mobile/app/helper/shared_preference.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../util.dart';
-import 'dior_authorization_interceptor.dart';
 
 class DioClient {
   // late final Dio _dio;
@@ -26,6 +25,7 @@ class DioClient {
     print('Toen $token');
     final dio = Dio(BaseOptions(
         // connectTimeout: AppConstant.connectionTimeout,
+
         receiveTimeout: AppConstant.receiveTimeout,
         responseType: ResponseType.json,
         contentType: 'application/json; charset=utf-8',

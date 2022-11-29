@@ -16,6 +16,17 @@ class FileBloc extends Bloc<FileEvent, FileState> {
     on<ArchiveFileEvent>(_archiveFile);
     on<RenameFileEvent>(_renameFile);
     on<LockFileEvent>(_lockFile);
+    on<DowloadFileEvent>(_dowloadFile);
+  }
+
+  void _dowloadFile(DowloadFileEvent event, Emitter emit) async {
+    emit(DownloadFileLoadingState());
+    try {
+      _fileRepository.downloadFile(event.fileId);
+      emit(DowloadFileLoadedState());
+    } catch (e) {
+      emit(DowloadFileErrorState(error: e.toString()));
+    }
   }
 
   void _renameFile(RenameFileEvent event, Emitter emit) async {

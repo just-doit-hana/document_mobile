@@ -109,4 +109,19 @@ class FileRepository {
     }
     return null;
   }
+
+  Future<void> downloadFile(String fileId) async {
+    try {
+      _dioClient.get(
+          '${Endpoints.ENDPOINTDOC}content/files/$fileId/content-base64',
+          options: Options(method: 'GET'));
+    } on DioError catch (e) {
+      final err = DiorException.fromDioError(e).toString();
+      throw err.toString();
+    } catch (e) {
+      if (kDebugMode) {
+        print('Dowload File $e');
+      }
+    }
+  }
 }

@@ -36,3 +36,8 @@ class LockFileEvent extends FileEvent {
   final bool isLock;
   const LockFileEvent({required this.fileId, required this.isLock});
 }
+
+class DowloadFileEvent extends FileEvent {
+  final String fileId;
+  DowloadFileEvent({required this.fileId});
+}

@@ -1,3 +1,4 @@
+import 'package:document_mobile/app/util/util.dart';
 import 'package:flutter/material.dart';
 
 class SharedScreen extends StatefulWidget {
@@ -13,8 +14,11 @@ class _SharedScreenState extends State<SharedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Shared file member')),
-      body: const Center(
-        child: Text('Shared file member'),
+      body: Center(
+        child: Text(
+          'Shared file member',
+          style: h4StyleLight,
+        ),
       ),
     );
   }

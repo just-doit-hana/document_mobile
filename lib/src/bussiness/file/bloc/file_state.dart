@@ -76,3 +76,12 @@ class LockFileErrorState extends FileState {
   final String error;
   const LockFileErrorState({required this.error});
 }
+
+class DownloadFileLoadingState extends FileState {}
+
+class DowloadFileLoadedState extends FileState {}
+
+class DowloadFileErrorState extends FileState {
+  final String error;
+  DowloadFileErrorState({required this.error});
+}
