@@ -89,7 +89,7 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
   }
 
   void _restoreRecycleBinFolder(
-      RestoreRecycleBinFolderEvent event, Emitter emit) async {
+      RestoreRecycleBinFolderEvent event, Emitter<FolderState> emit) async {
     emit(RestoreRecycleBinFolderLoading());
     try {
       final idRestore =
@@ -201,7 +201,8 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     }
   }
 
-  void _loadFolderPrivate(LoadFolderPrivateEvent event, Emitter emit) async {
+  void _loadFolderPrivate(
+      LoadFolderPrivateEvent event, Emitter<FolderState> emit) async {
     emit(FolderPrivateLoadingState());
     try {
       final privateFolder = await _folderRepository.listPrivateFolder();

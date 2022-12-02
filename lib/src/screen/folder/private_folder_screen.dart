@@ -21,6 +21,11 @@ class _PrivateFolderState extends State<PrivateFolder> {
   int? count;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
@@ -32,15 +37,37 @@ class _PrivateFolderState extends State<PrivateFolder> {
           create: (context) => FileBloc((RepositoryProvider.of(context))),
         )
       ],
-      child: BlocListener<FolderBloc, FolderState>(
-        listener: (context, state) {
-          if (state is FolderPrivateErrorState) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(state.error)));
-          }
-        },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<FolderBloc, FolderState>(
+            listener: (context, state) {
+              if (state is FolderPrivateErrorState) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(state.error)));
+              }
+            },
+          ),
+          // BlocListener<FileBloc, FileState>(
+          //   listener: (context, state) {
+          //     if (state is RenameFileLoadedState) {
+          //       const Center(
+          //         child: CircularProgressIndicator(
+          //           color: Colors.redAccent,
+          //         ),
+          //       );
+          //     }
+          //   },
+          // ),
+        ],
         child: BlocBuilder<FolderBloc, FolderState>(
           builder: (context, state) {
+            // if (state is FolderPrivateLoadingState) {
+            //   return const Center(
+            //     child: CircularProgressIndicator(
+            //       color: Colors.redAccent,
+            //     ),
+            //   );
+            // }
             if (state is FolderPrivateLoadedState) {
               FolderItemResponse privateFolder = state.privateFolder;
               return RefreshIndicator(

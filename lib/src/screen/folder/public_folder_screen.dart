@@ -34,6 +34,13 @@ class _PublicFolderState extends State<PublicFolder> {
         },
         child: BlocBuilder<FolderBloc, FolderState>(
           builder: (context, state) {
+            if (state is FolderLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.redAccent,
+                ),
+              );
+            }
             if (state is FolderLoadedState) {
               Result folderList = state.folder;
               return RefreshIndicator(

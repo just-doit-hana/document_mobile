@@ -83,5 +83,5 @@ class DowloadFileLoadedState extends FileState {}
 
 class DowloadFileErrorState extends FileState {
   final String error;
-  DowloadFileErrorState({required this.error});
+  const DowloadFileErrorState({required this.error});
 }

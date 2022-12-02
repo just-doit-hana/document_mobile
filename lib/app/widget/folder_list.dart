@@ -18,10 +18,15 @@ import '../util/util.dart';
 import 'app_dialogs.dart';
 
 // ignore: must_be_immutable
-class FolderList extends StatelessWidget {
+class FolderList extends StatefulWidget {
   const FolderList({Key? key, required this.folderList}) : super(key: key);
   final FolderItemResponse folderList;
 
+  @override
+  State<FolderList> createState() => _FolderListState();
+}
+
+class _FolderListState extends State<FolderList> {
   Widget imgIcon(String iconImage, {double height = 28.0, width = 28.0}) {
     return Image.asset(
       '${AppImage.path}/$iconImage',
@@ -38,36 +43,38 @@ class FolderList extends StatelessWidget {
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: folderList.result!.length,
+        itemCount: widget.folderList.result!.length,
         itemBuilder: ((context, index) {
           var owner =
-              folderList.result![index].accessScope == AppConstant.owner;
-          var viewer =
-              folderList.result![index].accessScope == AppConstant.viewer;
-          var editor =
-              folderList.result![index].accessScope == AppConstant.editor;
+              widget.folderList.result![index].accessScope == AppConstant.owner;
+          var viewer = widget.folderList.result![index].accessScope ==
+              AppConstant.viewer;
+          var editor = widget.folderList.result![index].accessScope ==
+              AppConstant.editor;
           var listIdTags = [];
-          folderList.result![index].tags!.forEach(((element) {
+          widget.folderList.result![index].tags!.forEach(((element) {
             listIdTags.add(element.id);
           }));
           return Column(
             children: [
               GestureDetector(
                 onDoubleTap: () {
-                  if (folderList.result![index].type == AppConstant.folder) {
+                  if (widget.folderList.result![index].type ==
+                      AppConstant.folder) {
                     Navigator.of(context).push(CustomRoutesPage(
                         widget: FolderSubFolderDetailList(
-                            folderList: folderList,
+                            folderList: widget.folderList,
                             idIndex: index,
-                            folderId: folderList.result![index].id!)));
+                            folderId: widget.folderList.result![index].id!)));
                   } else {
                     return;
                   }
                 },
                 child: Card(
                     child: ListTile(
-                  title: Text(folderList.result![index].name.toString()),
-                  leading: iconType(folderList.result![index].type.toString()),
+                  title: Text(widget.folderList.result![index].name.toString()),
+                  leading: iconType(
+                      widget.folderList.result![index].type.toString()),
                   trailing: ElevatedButton(
                       onPressed: () {
                         showModalBottomSheet(
@@ -105,14 +112,17 @@ class FolderList extends StatelessWidget {
                                                   MainAxisAlignment.start,
                                               children: [
                                                 Container(
-                                                  child: folderList
+                                                  child: widget
+                                                              .folderList
                                                               .result![index]
                                                               .type ==
                                                           AppConstant.folder
                                                       ? imgIcon(
                                                           AppImage.iconFolder)
-                                                      : iconType(folderList
-                                                          .result![index].type
+                                                      : iconType(widget
+                                                          .folderList
+                                                          .result![index]
+                                                          .type
                                                           .toString()),
                                                 ),
                                                 Padding(
@@ -120,7 +130,7 @@ class FolderList extends StatelessWidget {
                                                       const EdgeInsets.only(
                                                           left: 11),
                                                   child: Text(
-                                                    folderList
+                                                    widget.folderList
                                                         .result![index].name
                                                         .toString(),
                                                     maxLines: 1,
@@ -150,7 +160,8 @@ class FolderList extends StatelessWidget {
                                           owner || viewer || editor
                                               ? (ListTitleModal(
                                                   onPress: () {
-                                                    if (folderList
+                                                    if (widget
+                                                            .folderList
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
@@ -180,8 +191,10 @@ class FolderList extends StatelessWidget {
                                                           CustomRoutesPage(
                                                               widget:
                                                                   Sysnfusion(
-                                                        fileId: folderList
-                                                            .result![index].id!,
+                                                        fileId: widget
+                                                            .folderList
+                                                            .result![index]
+                                                            .id!,
                                                       )));
                                                     }
                                                   },
@@ -192,7 +205,8 @@ class FolderList extends StatelessWidget {
                                           owner || viewer || editor
                                               ? (ListTitleModal(
                                                   onPress: () {
-                                                    if (folderList
+                                                    if (widget
+                                                            .folderList
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
@@ -202,8 +216,10 @@ class FolderList extends StatelessWidget {
                                                           CustomRoutesPage(
                                                               widget:
                                                                   FolderViewDetail(
-                                                        folderId: folderList
-                                                            .result![index].id
+                                                        folderId: widget
+                                                            .folderList
+                                                            .result![index]
+                                                            .id
                                                             .toString(),
                                                       )));
                                                     } else {
@@ -213,8 +229,10 @@ class FolderList extends StatelessWidget {
                                                           CustomRoutesPage(
                                                               widget:
                                                                   FileDetail(
-                                                        fileId: folderList
-                                                            .result![index].id
+                                                        fileId: widget
+                                                            .folderList
+                                                            .result![index]
+                                                            .id
                                                             .toString(),
                                                       )));
                                                     }
@@ -238,7 +256,8 @@ class FolderList extends StatelessWidget {
                                           owner || viewer || editor
                                               ? (ListTitleModal(
                                                   onPress: () {
-                                                    if (folderList
+                                                    if (widget
+                                                            .folderList
                                                             .result![index]
                                                             .type! ==
                                                         AppConstant.folder) {
@@ -258,20 +277,19 @@ class FolderList extends StatelessWidget {
                                                           builder: ((contextj) {
                                                             return DialogModalSheet(
                                                                 title:
-                                                                    'Dowlown File ${folderList.result![index].name!}',
+                                                                    'Dowlown File ${widget.folderList.result![index].name!}',
                                                                 content:
                                                                     'Do you want to dowload file?',
                                                                 onPressed: () {
                                                                   Navigator.of(
                                                                           context)
                                                                       .pop();
-                                                                  context
-                                                                      .read<
-                                                                          FileBloc>()
-                                                                      .add(DowloadFileEvent(
-                                                                          fileId: folderList
-                                                                              .result![index]
-                                                                              .id!));
+                                                                  context.read<FileBloc>().add(DowloadFileEvent(
+                                                                      fileId: widget
+                                                                          .folderList
+                                                                          .result![
+                                                                              index]
+                                                                          .id!));
                                                                 },
                                                                 nameBtn:
                                                                     'Download');
@@ -299,7 +317,8 @@ class FolderList extends StatelessWidget {
                                           owner || editor
                                               ? (ListTitleModal(
                                                   onPress: () {
-                                                    if (folderList
+                                                    if (widget
+                                                            .folderList
                                                             .result![index]
                                                             .type! ==
                                                         AppConstant.folder) {
@@ -312,13 +331,14 @@ class FolderList extends StatelessWidget {
                                                               nameBtn:
                                                                   'Rename Folder',
                                                               title:
-                                                                  'Rename folder ${folderList.result![index].name}',
+                                                                  'Rename folder ${widget.folderList.result![index].name}',
                                                               onPressed: () {
                                                                 Navigator.of(
                                                                         context)
                                                                     .pop();
                                                                 context.read<FolderBloc>().add(FolderRenameEvent(
-                                                                    folderList
+                                                                    widget
+                                                                        .folderList
                                                                         .result![
                                                                             index]
                                                                         .id!,
@@ -339,7 +359,7 @@ class FolderList extends StatelessWidget {
                                                               nameBtn:
                                                                   'Rename File',
                                                               title:
-                                                                  'Rename file ${folderList.result![index].name}',
+                                                                  'Rename file ${widget.folderList.result![index].name}',
                                                               onPressed: () {
                                                                 Navigator.of(
                                                                         context)
@@ -355,7 +375,8 @@ class FolderList extends StatelessWidget {
                                                                         : []);
 
                                                                 context.read<FileBloc>().add(RenameFileEvent(
-                                                                    fileId: folderList
+                                                                    fileId: widget
+                                                                        .folderList
                                                                         .result![
                                                                             index]
                                                                         .id!,
@@ -395,12 +416,11 @@ class FolderList extends StatelessWidget {
                                               ? (ListTitleModal(
                                                   onPress: () {
                                                     Navigator.of(context).pop();
-                                                    if (folderList
+                                                    if (widget
+                                                            .folderList
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
-                                                      Navigator.of(context)
-                                                          .pop();
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(
@@ -408,27 +428,30 @@ class FolderList extends StatelessWidget {
                                                                   content: Text(
                                                                       'Cant not back up folder')));
                                                     } else {
-                                                      // Navigator.of(context)
-                                                      //     .pop();
                                                       showDialog(
                                                           context: context,
                                                           builder: ((contextj) {
                                                             return DialogModalSheet(
                                                                 title:
-                                                                    'Backup File ${folderList.result![index].name!}',
+                                                                    'Backup File ${widget.folderList.result![index].name!}',
                                                                 content:
                                                                     'Do you wan to back up file?',
                                                                 onPressed: () {
                                                                   Navigator.of(
                                                                           context)
                                                                       .pop();
+
+                                                                  context.read<FileBloc>().add(BackupFileEvent(
+                                                                      fileId: widget
+                                                                          .folderList
+                                                                          .result![
+                                                                              index]
+                                                                          .id!));
                                                                   context
                                                                       .read<
-                                                                          FileBloc>()
-                                                                      .add(BackupFileEvent(
-                                                                          fileId: folderList
-                                                                              .result![index]
-                                                                              .id!));
+                                                                          FolderBloc>()
+                                                                      .add(
+                                                                          LoadFolderPrivateEvent());
                                                                 },
                                                                 nameBtn:
                                                                     'Back up');
@@ -455,7 +478,8 @@ class FolderList extends StatelessWidget {
                                           owner
                                               ? (ListTitleModal(
                                                   onPress: () {
-                                                    if (folderList
+                                                    if (widget
+                                                            .folderList
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
@@ -466,24 +490,26 @@ class FolderList extends StatelessWidget {
                                                           builder: ((contextj) {
                                                             return DialogModalSheet(
                                                                 title:
-                                                                    'Folder ${folderList.result![index].name!}',
+                                                                    'Folder ${widget.folderList.result![index].name!}',
                                                                 content:
-                                                                    'Do you wan to ${folderList.result![index].isLocked! == true ? 'unLock' : 'lock'} folder?',
+                                                                    'Do you wan to ${widget.folderList.result![index].isLocked! == true ? 'unLock' : 'lock'} folder?',
                                                                 onPressed: () {
                                                                   Navigator.of(
                                                                           context)
                                                                       .pop();
                                                                   context.read<FolderBloc>().add(LockFolderEvent(
-                                                                      isLock: folderList.result![index].isLocked! ==
+                                                                      isLock: widget.folderList.result![index].isLocked! ==
                                                                               false
                                                                           ? true
                                                                           : false,
-                                                                      folderId: folderList
+                                                                      folderId: widget
+                                                                          .folderList
                                                                           .result![
                                                                               index]
                                                                           .id!));
                                                                 },
-                                                                nameBtn: folderList
+                                                                nameBtn: widget
+                                                                            .folderList
                                                                             .result![index]
                                                                             .isLocked! ==
                                                                         true
@@ -498,24 +524,26 @@ class FolderList extends StatelessWidget {
                                                           builder: ((contextj) {
                                                             return DialogModalSheet(
                                                                 title:
-                                                                    'File ${folderList.result![index].name!}',
+                                                                    'File ${widget.folderList.result![index].name!}',
                                                                 content:
-                                                                    'Do you wan to ${folderList.result![index].isLocked! == true ? 'unLock' : 'lock'} file?',
+                                                                    'Do you wan to ${widget.folderList.result![index].isLocked! == true ? 'unLock' : 'lock'} file?',
                                                                 onPressed: () {
                                                                   Navigator.of(
                                                                           context)
                                                                       .pop();
                                                                   context.read<FileBloc>().add(LockFileEvent(
-                                                                      isLock: folderList.result![index].isLocked! ==
+                                                                      isLock: widget.folderList.result![index].isLocked! ==
                                                                               false
                                                                           ? true
                                                                           : false,
-                                                                      fileId: folderList
+                                                                      fileId: widget
+                                                                          .folderList
                                                                           .result![
                                                                               index]
                                                                           .id!));
                                                                 },
-                                                                nameBtn: folderList
+                                                                nameBtn: widget
+                                                                            .folderList
                                                                             .result![index]
                                                                             .isLocked! ==
                                                                         true
@@ -524,13 +552,15 @@ class FolderList extends StatelessWidget {
                                                           }));
                                                     }
                                                   },
-                                                  icon: folderList
+                                                  icon: widget
+                                                              .folderList
                                                               .result![index]
                                                               .isLocked! ==
                                                           false
                                                       ? Icons.lock_open_outlined
                                                       : Icons.lock_outlined,
-                                                  content: folderList
+                                                  content: widget
+                                                              .folderList
                                                               .result![index]
                                                               .isLocked! ==
                                                           false
@@ -541,7 +571,8 @@ class FolderList extends StatelessWidget {
                                           owner
                                               ? (ListTitleModal(
                                                   onPress: () {
-                                                    if (folderList
+                                                    if (widget
+                                                            .folderList
                                                             .result![index]
                                                             .type ==
                                                         AppConstant.folder) {
@@ -554,19 +585,18 @@ class FolderList extends StatelessWidget {
                                                                 title:
                                                                     'Delete Folder',
                                                                 content:
-                                                                    'Do you wan to delete ${folderList.result![index].name} folder',
+                                                                    'Do you wan to delete ${widget.folderList.result![index].name} folder',
                                                                 onPressed: () {
                                                                   Navigator.of(
                                                                           context)
                                                                       .pop();
 
-                                                                  context
-                                                                      .read<
-                                                                          FolderBloc>()
-                                                                      .add(ArchiveFolderEvent(
-                                                                          fileId: folderList
-                                                                              .result![index]
-                                                                              .id!));
+                                                                  context.read<FolderBloc>().add(ArchiveFolderEvent(
+                                                                      fileId: widget
+                                                                          .folderList
+                                                                          .result![
+                                                                              index]
+                                                                          .id!));
                                                                 },
                                                                 nameBtn:
                                                                     'Delete');
@@ -581,7 +611,7 @@ class FolderList extends StatelessWidget {
                                                                 title:
                                                                     'Delete File',
                                                                 content:
-                                                                    'Do you wan to file ${folderList.result![index].name} folder',
+                                                                    'Do you wan to file ${widget.folderList.result![index].name} folder',
                                                                 onPressed: () {
                                                                   Navigator.of(
                                                                           context)
@@ -595,14 +625,17 @@ class FolderList extends StatelessWidget {
                                                                   //         fileId: folderList
                                                                   //             .result![index]
                                                                   //             .id!));
-
                                                                   context
                                                                       .read<
-                                                                          FileBloc>()
-                                                                      .add(ArchiveFileEvent(
-                                                                          fileId: folderList
-                                                                              .result![index]
-                                                                              .id!));
+                                                                          FolderBloc>()
+                                                                      .add(
+                                                                          LoadFolderPrivateEvent());
+                                                                  context.read<FileBloc>().add(ArchiveFileEvent(
+                                                                      fileId: widget
+                                                                          .folderList
+                                                                          .result![
+                                                                              index]
+                                                                          .id!));
                                                                 },
                                                                 nameBtn:
                                                                     'Delete');

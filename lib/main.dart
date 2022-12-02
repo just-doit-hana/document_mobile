@@ -76,11 +76,11 @@ class MyApp extends StatelessWidget {
                 create: (context) =>
                     FolderBloc(context.read<FolderRepository>())
                       ..add(LoadFolderBackupEvent())),
-            BlocProvider(
-                child: const HomeFolder(),
-                create: (context) =>
-                    FolderBloc(context.read<FolderRepository>())
-                      ..add(LoadFolderPrivateEvent())),
+            // BlocProvider(
+            //     child: const HomeFolder(),
+            //     create: (context) =>
+            //         FolderBloc(context.read<FolderRepository>())
+            //           ..add(LoadFolderPrivateEvent())),
             BlocProvider(
                 child: const HomeFolder(),
                 create: (context) =>
