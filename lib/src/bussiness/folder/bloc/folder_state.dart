@@ -47,6 +47,25 @@ class FolderPrivateErrorState extends FolderState {
   List<Object?> get props => [error];
 }
 
+class PrivateSearchLoading extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class PrivateSearchLoaded extends FolderState {
+  final FolderItemResponse privateFolderSearch;
+  PrivateSearchLoaded({required this.privateFolderSearch});
+  @override
+  List<Object?> get props => [privateFolderSearch];
+}
+
+class PrivateSearchError extends FolderState {
+  final String error;
+  PrivateSearchError({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
+
 class FolderItemLoading extends FolderState {
   @override
   List<Object?> get props => [];

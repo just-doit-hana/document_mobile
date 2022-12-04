@@ -77,7 +77,8 @@ class FolderRepository {
   Future<FolderItemResponse?> listPrivateFolder() async {
     try {
       final res = await _dioClient.get(
-          '${Endpoints.ENDPOINTDOC}metadata/folders/items?PageNumber=1&MaxPageSize=10');
+          '${Endpoints.ENDPOINTDOC}metadata/folders/items',
+          queryParameters: {'PageNumber': 1, 'MaxPageSize': 10});
       var folderPrivate = res.data;
       final value = FolderItemResponse.fromMap(folderPrivate);
       return value;
@@ -87,6 +88,30 @@ class FolderRepository {
     } catch (e) {
       if (kDebugMode) {
         print('List private public $e');
+      }
+      throw e.toString();
+    }
+  }
+
+  Future<FolderItemResponse?> listPrivateFolderSearch(String searchText) async {
+    try {
+      // metadata/folders/items?SearchText=s&PageNumber=1&MaxPageSize=10
+      final res = await _dioClient.get(
+          '${Endpoints.ENDPOINTDOC}metadata/folders/items',
+          queryParameters: {
+            'SearchText': searchText,
+            'PageNumber': 1,
+            'MaxPageSize': 10
+          });
+      var folderPrivateSearch = res.data;
+      final value = FolderItemResponse.fromMap(folderPrivateSearch);
+      return value;
+    } on DioError catch (e) {
+      final error = DiorException.fromDioError(e).toString();
+      throw error;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Search item private error');
       }
       throw e.toString();
     }

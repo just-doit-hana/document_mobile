@@ -16,6 +16,13 @@ class LoadFolderPrivateEvent extends FolderEvent {
   List<Object?> get props => [];
 }
 
+class FolderPrivateSearchEvent extends FolderEvent {
+  final String searchText;
+  const FolderPrivateSearchEvent({required this.searchText});
+  @override
+  List<Object?> get props => [searchText];
+}
+
 class LoadFolderItemEvent extends FolderEvent {
   final String? id;
   final FolderItemResponse? resultItemFolder;
@@ -29,7 +36,7 @@ class LoadFolderItemEvent extends FolderEvent {
 class LoadFolderRecycleBinEvent extends FolderEvent {
   // int page = 1;
   final List<ResultItemFolder>? recycleBinFolder;
-  LoadFolderRecycleBinEvent({this.recycleBinFolder});
+  const LoadFolderRecycleBinEvent({this.recycleBinFolder});
   @override
   List<Object?> get props => [];
 }

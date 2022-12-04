@@ -22,6 +22,7 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     on<LoadFolderBackupEvent>(_folderbackup);
     on<ListShareFileEvent>(_listshareFile);
     on<LoadFolderItemEvent>(_loadFolderItem);
+    on<FolderPrivateSearchEvent>(_searchFolderItem);
     on<DeleteRecycleBinFileEvent>(_deleteRecycleBin);
     on<RestoreBackupEvent>(_restoreBackup);
     on<LoadFolderRecycleBinEvent>(_loadFolderRecyleBin);
@@ -41,6 +42,17 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     //     emit(DomainErrorState(e.toString()));
     //   }
     // });
+  }
+
+  void _searchFolderItem(FolderPrivateSearchEvent event, Emitter emit) async {
+    emit(PrivateSearchLoading());
+    try {
+      final privateSearch =
+          await _folderRepository.listPrivateFolderSearch(event.searchText);
+      emit(PrivateSearchLoaded(privateFolderSearch: privateSearch!));
+    } catch (e) {
+      emit(PrivateSearchError(error: e.toString()));
+    }
   }
 
   void _lockFolder(LockFolderEvent event, Emitter emit) async {

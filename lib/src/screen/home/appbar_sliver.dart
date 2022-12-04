@@ -1,7 +1,9 @@
+import 'package:document_mobile/app/animation/routes_animation.dart';
+import 'package:document_mobile/src/screen/search/search_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../app/util/util.dart';
-import '../search/full_screen_search.dart';
+// import '../search/search_screen.dart';
 
 class AppSliverAppBar extends StatelessWidget {
   const AppSliverAppBar({
@@ -39,10 +41,9 @@ class AppSliverAppBar extends StatelessWidget {
       ),
       actions: [
         IconButton(
-          // style: ButtonStyle(),
           icon: const Icon(Icons.search_rounded),
           onPressed: () {
-            Navigator.of(context).push(FullScreenSearchFolder());
+            showSearch(context: context, delegate: FolderSearch());
           },
         ),
       ],
