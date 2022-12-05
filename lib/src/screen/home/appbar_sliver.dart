@@ -1,4 +1,3 @@
-import 'package:document_mobile/app/animation/routes_animation.dart';
 import 'package:document_mobile/src/screen/search/search_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +42,8 @@ class AppSliverAppBar extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.search_rounded),
           onPressed: () {
-            showSearch(context: context, delegate: FolderSearch());
+            showSearch(
+                context: context, delegate: FolderSearch('Search Folder'));
           },
         ),
       ],

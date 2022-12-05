@@ -1,7 +1,5 @@
 import 'package:document_mobile/src/screen/archive/archived_screen.dart';
-import 'package:document_mobile/src/screen/files/myfile_screen.dart';
 import 'package:document_mobile/src/screen/shared/share_file_screen.dart';
-import 'package:document_mobile/src/screen/testinfinination/infimation.dart';
 import 'package:flutter/material.dart';
 
 import 'app/util/util.dart';
@@ -25,19 +23,19 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   int selectedItem = 0;
-  // GlobalKey<ScaffoldState>? _scaffoldKey;
   void onSelectedItem(int value) {
     setState(() {
       selectedItem = value;
     });
   }
 
-  static const List<Widget> _screen = <Widget>[
-    HomeFolder(),
-    AchiveFileScreen(),
+  static final List<Widget> _screen = <Widget>[
+    const HomeFolder(),
+    const AchiveFileScreen(),
     // InfinationScroll(),
-    ShareFileScreen(),
-    RecyclebinScreen(),
+    // HomePage(),
+    const ShareFileScreen(),
+    const RecyclebinScreen(),
   ];
 
   @override

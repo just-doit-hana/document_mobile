@@ -18,27 +18,28 @@ class RecyclebinScreen extends StatefulWidget {
 }
 
 class _RecyclebinScreenState extends State<RecyclebinScreen> {
-  ScrollController? _scrollController;
-
+  // ScrollController? _scrollController;
+  late List<ResultItemFolder> selectedList;
   @override
   void initState() {
+    selectedList = [];
     super.initState();
-    _scrollController = ScrollController();
+    // _scrollController = ScrollController();
   }
 
   @override
   void dispose() {
-    _scrollController?.dispose();
+    // _scrollController?.dispose();
     super.dispose();
   }
 
-  bool _onScrollNotification(ScrollNotification notification) {
-    if (notification is ScrollEndNotification &&
-        _scrollController!.position.extentAfter == 0) {
-      context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
-    }
-    return false;
-  }
+  // bool _onScrollNotification(ScrollNotification notification) {
+  //   if (notification is ScrollEndNotification &&
+  //       _scrollController!.position.extentAfter == 0) {
+  //     context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
+  //   }
+  //   return false;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +47,14 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
       appBar: AppBar(
           // automaticallyImplyLeading: false,
           title: Text(
-        'Recycle Bin',
+        selectedList.isEmpty
+            ? 'Recycle Bin'
+            : "${selectedList.length} folder selected",
         style: h4StyleLight,
       )),
       body: BlocProvider(
         create: (context) => FolderBloc(RepositoryProvider.of(context))
-          ..add(LoadFolderRecycleBinEvent()),
+          ..add(const LoadFolderRecycleBinEvent()),
         child: BlocConsumer<FolderBloc, FolderState>(
           listener: (context, state) {
             if (state is FolderRecyleError) {
@@ -73,45 +76,53 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
               FolderItemResponse recycleBin = state.recycleBin;
               return RefreshIndicator(
                 onRefresh: () async => context.read<FolderBloc>()
-                  ..add(LoadFolderRecycleBinEvent()),
-                child: NotificationListener<ScrollNotification>(
-                  onNotification: (notification) =>
-                      _onScrollNotification(notification),
-                  child: ListView.builder(
-                      controller: _scrollController,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      primary: false,
-                      itemCount: recycleBin.result!.length,
-                      itemBuilder: (context, index) {
-                        return CardList(
-                          recycleBin: recycleBin.result![index],
-                          onPressed: (r) {},
-                        );
-                      }),
-                ),
+                  ..add(const LoadFolderRecycleBinEvent()),
+                // child: NotificationListener<ScrollNotification>(
+                //   onNotification: (notification) =>
+                //       _onScrollNotification(notification),
+                child: ListView.builder(
+                    // controller: _scrollController,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    primary: false,
+                    itemCount: recycleBin.result!.length,
+                    itemBuilder: (context, index) {
+                      return CardList(
+                        isSelected: ((value) {
+                          setState(() {
+                            if (value) {
+                              selectedList.add(recycleBin.result![index]);
+                            } else {
+                              selectedList.remove(recycleBin.result![index]);
+                            }
+                          });
+                        }),
+                        recycleBin: recycleBin.result![index],
+                        // onPressed: (r) {},
+                      );
+                    }),
+                // ),
               );
             }
 
-            if (state is FolderRecyleError) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      context
-                          .read<FolderBloc>()
-                          // ..isFetching = true
-                          .add(LoadFolderRecycleBinEvent());
-                    },
-                    icon: const Icon(Icons.refresh),
-                  ),
-                  const SizedBox(height: 15),
-                  Text(state.error, textAlign: TextAlign.center),
-                ],
-              );
-            }
+            // if (state is FolderRecyleError) {
+            //   return Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       IconButton(
+            //         onPressed: () {
+            //           context
+            //               .read<FolderBloc>()
+            //               .add(const LoadFolderRecycleBinEvent());
+            //         },
+            //         icon: const Icon(Icons.refresh),
+            //       ),
+            //       const SizedBox(height: 15),
+            //       Text(state.error, textAlign: TextAlign.center),
+            //     ],
+            //   );
+            // }
             return Container();
           },
         ),
@@ -120,117 +131,158 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
   }
 }
 
-class CardList extends StatelessWidget {
-  const CardList({Key? key, required this.recycleBin, this.onPressed})
+class CardList extends StatefulWidget {
+  const CardList(
+      {Key? key,
+      required this.recycleBin,
+      // this.onPressed,
+      required this.isSelected})
       : super(key: key);
-
+  final ValueChanged<bool> isSelected;
   final ResultItemFolder recycleBin;
-  final void Function(ResultItemFolder)? onPressed;
+  // final void Function(ResultItemFolder)? onPressed;
 
+  @override
+  State<CardList> createState() => _CardListState();
+}
+
+class _CardListState extends State<CardList> {
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (() => onPressed),
-      child: Dismissible(
-        key: ValueKey("dismissable-${recycleBin.id}"),
-        direction: DismissDirection.endToStart,
-        background: Container(
-          color: HexColor.fromHex(AppColor.lightBackgroundColor).withOpacity(1),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                width: 100.0,
-                height: double.infinity,
-                child: Icon(
-                  Icons.delete,
-                  color: HexColor.fromHex(AppColor.primaryBtnColor),
-                  size: 40.0,
-                ),
-              )
-            ],
-          ),
-        ),
-        confirmDismiss: (_) async {
-          final result = showConfimation(context,
-              title: "Are you sure?",
-              content: " Do you want to delete ${recycleBin.name}?",
-              nameBtn: 'Delete');
-          return result;
-        },
-        onDismissed: (_) {
-          if (recycleBin.type == AppConstant.folder) {
-            context
-                .read<FolderBloc>()
-                .add(DeleteRecycleBinFolderEvent(id: recycleBin.id!));
-            context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
-          } else {
-            context
-                .read<FolderBloc>()
-                .add(DeleteRecycleBinFileEvent(id: recycleBin.id!));
-            context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
-          }
-        },
-        child: Card(
-          child: ListTile(
-            leading: iconType(recycleBin.type!),
-            title: Text(recycleBin.name!),
-            trailing: PopupMenuButton(
-              icon: const Icon(Icons.more_vert_outlined),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                    value: 1,
-                    child: Row(
-                      children: const [
-                        Icon(Icons.delete_outline),
-                        SizedBox(width: 10),
-                        Text('Delete')
-                      ],
-                    )),
-                PopupMenuItem(
-                    value: 2,
-                    child: Row(
-                      children: const [
-                        Icon(Icons.restore_outlined),
-                        SizedBox(width: 10),
-                        Text('Restore')
-                      ],
-                    )),
-              ],
-              offset: const Offset(0, 70),
-              elevation: 2,
-              onSelected: (value) {
-                if (value == 1) {
-                  if (recycleBin.type == AppConstant.folder) {
-                    context
-                        .read<FolderBloc>()
-                        .add(DeleteRecycleBinFolderEvent(id: recycleBin.id!));
-                    context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
-                  } else {
-                    context
-                        .read<FolderBloc>()
-                        .add(DeleteRecycleBinFileEvent(id: recycleBin.id!));
-                    context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
-                  }
-                } else if (value == 2) {
-                  if (recycleBin.type == AppConstant.folder) {
-                    context
-                        .read<FolderBloc>()
-                        .add(RestoreRecycleBinFolderEvent(id: recycleBin.id!));
-                    context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
-                  } else {
-                    context
-                        .read<FolderBloc>()
-                        .add(RestoreRecycleBinFileEvent(id: recycleBin.id!));
-                    context.read<FolderBloc>().add(LoadFolderRecycleBinEvent());
-                  }
-                }
-              },
+      // onTap: () {},
+      onTap: () {
+        setState(() {
+          isSelected = !isSelected;
+          widget.isSelected(isSelected);
+        });
+      },
+      child: Stack(
+        children: <Widget>[
+          Dismissible(
+            key: ValueKey("dismissable-${widget.recycleBin.id}"),
+            direction: DismissDirection.endToStart,
+            background: Container(
+              color: HexColor.fromHex(AppColor.lightBackgroundColor)
+                  .withOpacity(1),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    width: 100.0,
+                    height: double.infinity,
+                    child: Icon(
+                      Icons.delete,
+                      color: HexColor.fromHex(AppColor.primaryBtnColor),
+                      size: 40.0,
+                    ),
+                  )
+                ],
+              ),
             ),
-            subtitle:
-                Text(formatDateTime(recycleBin.lastModified!, hastime: true)),
+            confirmDismiss: (_) async {
+              final result = showConfimation(context,
+                  title: "Are you sure?",
+                  content: " Do you want to delete ${widget.recycleBin.name}?",
+                  nameBtn: 'Delete');
+              return result;
+            },
+            onDismissed: (_) {
+              if (widget.recycleBin.type == AppConstant.folder) {
+                context.read<FolderBloc>().add(
+                    DeleteRecycleBinFolderEvent(id: widget.recycleBin.id!));
+                context
+                    .read<FolderBloc>()
+                    .add(const LoadFolderRecycleBinEvent());
+              } else {
+                context
+                    .read<FolderBloc>()
+                    .add(DeleteRecycleBinFileEvent(id: widget.recycleBin.id!));
+                context
+                    .read<FolderBloc>()
+                    .add(const LoadFolderRecycleBinEvent());
+              }
+            },
+            child: Card(
+              color: isSelected ? Colors.grey.withOpacity(0.5) : Colors.white,
+              child: ListTile(
+                leading: iconType(widget.recycleBin.type!),
+                title: Text(widget.recycleBin.name!),
+                trailing: PopupMenuButton(
+                  icon: const Icon(Icons.more_vert_outlined),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                        value: 1,
+                        child: Row(
+                          children: const [
+                            Icon(Icons.delete_outline),
+                            SizedBox(width: 10),
+                            Text('Delete')
+                          ],
+                        )),
+                    PopupMenuItem(
+                        value: 2,
+                        child: Row(
+                          children: const [
+                            Icon(Icons.restore_outlined),
+                            SizedBox(width: 10),
+                            Text('Restore')
+                          ],
+                        )),
+                  ],
+                  offset: const Offset(0, 70),
+                  elevation: 2,
+                  onSelected: (value) {
+                    if (value == 1) {
+                      if (widget.recycleBin.type == AppConstant.folder) {
+                        context.read<FolderBloc>().add(
+                            DeleteRecycleBinFolderEvent(
+                                id: widget.recycleBin.id!));
+                        context
+                            .read<FolderBloc>()
+                            .add(const LoadFolderRecycleBinEvent());
+                      } else {
+                        context.read<FolderBloc>().add(
+                            DeleteRecycleBinFileEvent(
+                                id: widget.recycleBin.id!));
+                        context
+                            .read<FolderBloc>()
+                            .add(const LoadFolderRecycleBinEvent());
+                      }
+                    } else if (value == 2) {
+                      if (widget.recycleBin.type == AppConstant.folder) {
+                        context.read<FolderBloc>().add(
+                            RestoreRecycleBinFolderEvent(
+                                id: widget.recycleBin.id!));
+                        context
+                            .read<FolderBloc>()
+                            .add(const LoadFolderRecycleBinEvent());
+                      } else {
+                        context.read<FolderBloc>().add(
+                            RestoreRecycleBinFileEvent(
+                                id: widget.recycleBin.id!));
+                        context
+                            .read<FolderBloc>()
+                            .add(const LoadFolderRecycleBinEvent());
+                      }
+                    }
+                  },
+                ),
+                subtitle: Text(formatDateTime(widget.recycleBin.lastModified!,
+                    hastime: true)),
+              ),
+            ),
           ),
-        ),
+          isSelected
+              ? const Center(
+                  child: Icon(
+                    Icons.check_outlined,
+                    color: Colors.redAccent,
+                  ),
+                )
+              : Container(),
+        ],
       ),
     );
   }

@@ -1,13 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:document_mobile/app/widget/folder_list.dart';
 import 'package:flutter/material.dart';
-
-import 'package:document_mobile/src/bussiness/folder/bloc/folder_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:document_mobile/app/widget/folder_list.dart';
+import 'package:document_mobile/src/bussiness/folder/bloc/folder_bloc.dart';
 
 class FolderSearch extends SearchDelegate<List> {
   String? searchText;
+  final String? hintText;
+  FolderSearch(this.hintText) : super(searchFieldLabel: "My own hint");
 
+  @override
+  String? get searchFieldLabel => hintText;
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
