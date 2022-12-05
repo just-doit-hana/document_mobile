@@ -45,7 +45,6 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          // automaticallyImplyLeading: false,
           title: Text(
         selectedList.isEmpty
             ? 'Recycle Bin'
@@ -104,25 +103,6 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
                 // ),
               );
             }
-
-            // if (state is FolderRecyleError) {
-            //   return Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       IconButton(
-            //         onPressed: () {
-            //           context
-            //               .read<FolderBloc>()
-            //               .add(const LoadFolderRecycleBinEvent());
-            //         },
-            //         icon: const Icon(Icons.refresh),
-            //       ),
-            //       const SizedBox(height: 15),
-            //       Text(state.error, textAlign: TextAlign.center),
-            //     ],
-            //   );
-            // }
             return Container();
           },
         ),
@@ -132,15 +112,10 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
 }
 
 class CardList extends StatefulWidget {
-  const CardList(
-      {Key? key,
-      required this.recycleBin,
-      // this.onPressed,
-      required this.isSelected})
+  const CardList({Key? key, required this.recycleBin, required this.isSelected})
       : super(key: key);
   final ValueChanged<bool> isSelected;
   final ResultItemFolder recycleBin;
-  // final void Function(ResultItemFolder)? onPressed;
 
   @override
   State<CardList> createState() => _CardListState();
@@ -151,7 +126,6 @@ class _CardListState extends State<CardList> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () {},
       onTap: () {
         setState(() {
           isSelected = !isSelected;

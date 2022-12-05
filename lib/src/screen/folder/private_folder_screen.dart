@@ -115,7 +115,7 @@ class _PrivateFolderState extends State<PrivateFolder> {
                                 )),
                             isType
                                 ? (FolderGrid(
-                                    folderGrid: privateFolder.result,
+                                    folderGrid: privateFolder.result!,
                                   ))
                                 : (FolderList(
                                     folderList: privateFolder,

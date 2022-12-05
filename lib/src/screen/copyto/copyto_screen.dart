@@ -40,8 +40,12 @@ class CopytoScreen extends StatelessWidget {
                   )
                 ]),
           ),
-          body: const TabBarView(
-              children: [GridPublicFolder(), GridPrivateFolder()])),
+          body: TabBarView(children: [
+            GridPublicFolder(
+              selectedList: [],
+            ),
+            const GridPrivateFolder()
+          ])),
     );
   }
 }

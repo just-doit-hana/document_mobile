@@ -41,7 +41,7 @@ class FolderSubFolderDetailGrid extends StatelessWidget {
               if (state is FolderItemLoaded) {
                 FolderItemResponse itemFolder = state.resultItemFolder!;
 
-                return FolderGrid(folderGrid: itemFolder.result);
+                return FolderGrid(folderGrid: itemFolder.result!);
               }
               return Container();
             },

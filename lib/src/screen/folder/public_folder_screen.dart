@@ -99,7 +99,7 @@ class _PublicFolderState extends State<PublicFolder> {
                                   )),
                               isType
                                   ? (FolderGrid(
-                                      folderGrid: folderItemResponse!.result,
+                                      folderGrid: folderItemResponse!.result!,
                                     ))
                                   : (FolderList(
                                       folderList: folderItemResponse!,
