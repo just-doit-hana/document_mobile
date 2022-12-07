@@ -81,6 +81,7 @@ class FolderViewDetail extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ViewDetail extends StatelessWidget {
   ViewDetail({Key? key, required this.folderDetail}) : super(key: key);
   FolderDeTail folderDetail;

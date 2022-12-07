@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:document_mobile/app/util/dio/dio_client.dart';
 import 'package:document_mobile/src/data/model/file/file_backup.dart';
 import 'package:document_mobile/src/data/model/file/file_detail.dart';
+import 'package:document_mobile/src/data/model/file/file_moveto.dart';
 import 'package:document_mobile/src/data/model/file/file_rename.dart';
 import 'package:flutter/foundation.dart';
 
@@ -123,5 +124,45 @@ class FileRepository {
         print('Dowload File $e');
       }
     }
+  }
+
+  Future<FileMoveTo?> moveToFile(
+      String fileId, String destinationFolderID) async {
+    try {
+      final res = await _dioClient.put(
+          '${Endpoints.ENDPOINTDOC}metadata/files/$fileId/location',
+          queryParameters: {'destinationFolderID': destinationFolderID});
+      var movetofile = res.data;
+      final value = FileMoveTo.fromMap(movetofile);
+      return value;
+    } on DioError catch (e) {
+      final err = DiorException.fromDioError(e).toString();
+      throw err;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Move to file $e');
+      }
+    }
+    return null;
+  }
+
+  Future<FileDetailResponse?> copyToFile(
+      String fileId, String destinationFolderID) async {
+    try {
+      final res = await _dioClient.put(
+          '${Endpoints.ENDPOINTDOC}metadata/files/$fileId/copy',
+          queryParameters: {'destinationFolderID': destinationFolderID});
+      var copyFile = res.data;
+      final value = FileDetailResponse.fromMap(copyFile);
+      return value;
+    } on DioError catch (e) {
+      final err = DiorException.fromDioError(e).toString();
+      throw err;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Move to file $e');
+      }
+    }
+    return null;
   }
 }

@@ -39,5 +39,20 @@ class LockFileEvent extends FileEvent {
 
 class DowloadFileEvent extends FileEvent {
   final String fileId;
-  DowloadFileEvent({required this.fileId});
+  const DowloadFileEvent({required this.fileId});
+}
+
+class MoveToFileEvent extends FileEvent {
+  final String fileId;
+  final String destinationFolderID;
+  const MoveToFileEvent(
+      {required this.fileId, required this.destinationFolderID});
+}
+
+class CopyToFileEvent extends FileEvent {
+  final String fileId;
+  final String destinationFolderID;
+
+  const CopyToFileEvent(
+      {required this.fileId, required this.destinationFolderID});
 }

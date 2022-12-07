@@ -347,6 +347,55 @@ class LockFolderErrorState extends FolderState {
   List<Object?> get props => [error];
 }
 
+class MoveToFolderLoadingState extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class MoveToFolderLoadedState extends FolderState {
+  final FolderDetailResponse moveToFolder;
+  final String folderId;
+  final String destinationFolderId;
+  MoveToFolderLoadedState(
+      {required this.moveToFolder,
+      required this.folderId,
+      required this.destinationFolderId});
+  @override
+  List<Object?> get props => [folderId, destinationFolderId, moveToFolder];
+}
+
+class MoveToFolderErrorState extends FolderState {
+  final String error;
+  MoveToFolderErrorState({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
+
+class CopyFolderToLoadingState extends FolderState {
+  @override
+  List<Object?> get props => [];
+}
+
+class CopyFolderToLoadedState extends FolderState {
+  final FolderDetailResponse moveToFolder;
+  final String folderId;
+  final String destinationFolderId;
+  CopyFolderToLoadedState(
+      {required this.moveToFolder,
+      required this.folderId,
+      required this.destinationFolderId});
+  @override
+  List<Object?> get props => [folderId, destinationFolderId, moveToFolder];
+}
+
+class CopyFolderToErrorState extends FolderState {
+  final String error;
+  CopyFolderToErrorState({required this.error});
+  @override
+  List<Object?> get props => [error];
+}
+
+
 
 // class DomainLoading extends FolderState {
 //   @override

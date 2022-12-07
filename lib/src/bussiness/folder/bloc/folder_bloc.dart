@@ -33,6 +33,8 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     on<ArchiveFolderEvent>(_folderArchive);
     on<FolderRenameEvent>(_folderRename);
     on<LockFolderEvent>(_lockFolder);
+    on<MoveToFolderEvent>(_moveToFolder);
+    on<CopyToFolderEvent>(_copyToFolder);
     // on<DomainEvent>((event, emit) async {
     //   emit(DomainLoading());
     //   try {
@@ -42,6 +44,33 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     //     emit(DomainErrorState(e.toString()));
     //   }
     // });
+  }
+  void _moveToFolder(MoveToFolderEvent event, Emitter emit) async {
+    emit(MoveToFolderLoadingState());
+    try {
+      final moveToFolder = await _folderRepository.moveToFolder(
+          event.folderId, event.destinationFolderId);
+      emit(MoveToFolderLoadedState(
+          moveToFolder: moveToFolder!,
+          folderId: event.folderId,
+          destinationFolderId: event.destinationFolderId));
+    } catch (e) {
+      emit(MoveToFolderErrorState(error: e.toString()));
+    }
+  }
+
+  void _copyToFolder(CopyToFolderEvent event, Emitter emit) async {
+    emit(CopyFolderToLoadingState());
+    try {
+      final copyToFolder = await _folderRepository.copyToFolder(
+          event.folderId, event.destinationFolderId);
+      emit(CopyFolderToLoadedState(
+          moveToFolder: copyToFolder!,
+          folderId: event.folderId,
+          destinationFolderId: event.destinationFolderId));
+    } catch (e) {
+      emit(CopyFolderToErrorState(error: e.toString()));
+    }
   }
 
   void _searchFolderItem(FolderPrivateSearchEvent event, Emitter emit) async {
@@ -142,12 +171,9 @@ class FolderBloc extends Bloc<FolderEvent, FolderState> {
     emit(FolderRecycleLoading());
     try {
       final recycleBin = await _folderRepository.listRecycleBin(page: 1);
-      if (recycleBin!.statusCode == 200) {
-        emit(FolderRecycleLoaded(
-            recycleBin: recycleBin, page: recycleBin.pagination!.currentPage));
-      } else {
-        emit(FolderRecyleError('Error'));
-      }
+
+      emit(FolderRecycleLoaded(
+          recycleBin: recycleBin!, page: recycleBin.pagination!.currentPage));
     } catch (e) {
       emit(FolderRecyleError(e.toString()));
     }

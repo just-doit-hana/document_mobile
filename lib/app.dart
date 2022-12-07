@@ -34,8 +34,10 @@ class _AppState extends State<App> {
     const AchiveFileScreen(),
     // InfinationScroll(),
     // HomePage(),
+
     const ShareFileScreen(),
     const RecyclebinScreen(),
+    // const GridPublicFolder(),
   ];
 
   @override

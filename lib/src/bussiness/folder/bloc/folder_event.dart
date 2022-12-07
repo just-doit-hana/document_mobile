@@ -128,6 +128,24 @@ class FolderRenameEvent extends FolderEvent {
   List<Object?> get props => [folderId, name];
 }
 
+class MoveToFolderEvent extends FolderEvent {
+  final String folderId;
+  final String destinationFolderId;
+  const MoveToFolderEvent(
+      {required this.folderId, required this.destinationFolderId});
+  @override
+  List<Object?> get props => [folderId, destinationFolderId];
+}
+
+class CopyToFolderEvent extends FolderEvent {
+  final String folderId;
+  final String destinationFolderId;
+  const CopyToFolderEvent(
+      {required this.folderId, required this.destinationFolderId});
+  @override
+  List<Object?> get props => [folderId, destinationFolderId];
+}
+
 class DomainEvent extends FolderEvent {
   @override
   List<Object?> get props => [];

@@ -5,6 +5,8 @@ import 'package:document_mobile/src/data/model/file/file_rename.dart';
 import 'package:document_mobile/src/data/repository/file/file_repository.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../data/model/file/file_moveto.dart';
+
 part 'file_event.dart';
 part 'file_state.dart';
 
@@ -17,6 +19,35 @@ class FileBloc extends Bloc<FileEvent, FileState> {
     on<RenameFileEvent>(_renameFile);
     on<LockFileEvent>(_lockFile);
     on<DowloadFileEvent>(_dowloadFile);
+    on<MoveToFileEvent>(_moveToFile);
+    on<CopyToFileEvent>(_copyToFile);
+  }
+  void _moveToFile(MoveToFileEvent event, Emitter emit) async {
+    emit(MoveToFileLoadingState());
+    try {
+      final moveToFile = await _fileRepository.moveToFile(
+          event.fileId, event.destinationFolderID);
+      emit(MoveToFileLoadedState(
+          fileMoveTo: moveToFile!,
+          fileId: event.fileId,
+          destinationFolderId: event.destinationFolderID));
+    } catch (e) {
+      emit(MoveToFileError(error: e.toString()));
+    }
+  }
+
+  void _copyToFile(CopyToFileEvent event, Emitter emit) async {
+    emit(CopyFileLoadingState());
+    try {
+      final copyFile = await _fileRepository.copyToFile(
+          event.fileId, event.destinationFolderID);
+      emit(CopyFileLoadedState(
+          fileId: event.fileId,
+          fileDetail: copyFile!,
+          destinationFolderId: event.destinationFolderID));
+    } catch (e) {
+      emit(CopyFileErrorState(error: e.toString()));
+    }
   }
 
   void _dowloadFile(DowloadFileEvent event, Emitter emit) async {

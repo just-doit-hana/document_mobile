@@ -19,7 +19,7 @@ class AchiveFileScreen extends StatefulWidget {
 }
 
 class _AchiveFileScreenState extends State<AchiveFileScreen> {
-  final ScrollController _scrollController = ScrollController();
+  // final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,33 +37,32 @@ class _AchiveFileScreenState extends State<AchiveFileScreen> {
               if (state is FolderBackupError) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(state.error)));
-                // } else if (state is FolderRecycleLoading) {
-                //   ScaffoldMessenger.of(context)
-                //       .showSnackBar(const SnackBar(content: Text('Loading folder')));
-                // } else if (state is FolderRecycleLoaded &&
-                //     state.recycleBin.result!.isEmpty) {
-                //   ScaffoldMessenger.of(context)
-                //       .showSnackBar(const SnackBar(content: Text('No more folder')));
-                //   context.read<FolderBloc>().isFetching = false;
               }
             },
             builder: (context, state) {
+              if (state is FolderBackupLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.redAccent,
+                  ),
+                );
+              }
               if (state is FolderBackupLoaded) {
                 FolderItemResponse recycleBin = state.folderBackup;
                 return RefreshIndicator(
                   onRefresh: () async =>
                       context.read<FolderBloc>()..add(LoadFolderBackupEvent()),
                   child: ListView.builder(
-                      controller: _scrollController
-                        ..addListener(() {
-                          if (_scrollController.offset ==
-                                  _scrollController.position.maxScrollExtent &&
-                              !context.read<FolderBloc>().isFetching) {
-                            context.read<FolderBloc>()
-                              ..isFetching = true
-                              ..add(LoadFolderBackupEvent());
-                          }
-                        }),
+                      // controller: _scrollController
+                      //   ..addListener(() {
+                      //     if (_scrollController.offset ==
+                      //             _scrollController.position.maxScrollExtent &&
+                      //         !context.read<FolderBloc>().isFetching) {
+                      //       context.read<FolderBloc>()
+                      //         ..isFetching = true
+                      //         ..add(LoadFolderBackupEvent());
+                      //     }
+                      //   }),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       primary: false,
@@ -71,7 +70,6 @@ class _AchiveFileScreenState extends State<AchiveFileScreen> {
                       itemBuilder: (context, index) {
                         return CardList(
                           recycleBin: recycleBin.result![index],
-                          onPressed: (r) {},
                         );
                       }),
                 );
@@ -81,41 +79,17 @@ class _AchiveFileScreenState extends State<AchiveFileScreen> {
           ),
         ));
   }
-  // if (state is FolderRecyleError) {
-  //   return Column(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     crossAxisAlignment: CrossAxisAlignment.center,
-  //     children: [
-  //       IconButton(
-  //         onPressed: () {
-  //           context.read<FolderBloc>()
-  //             ..isFetching = true
-  //             ..add(LoadFolderRecycleBinEvent());
-  //         },
-  //         icon: const Icon(Icons.refresh),
-  //       ),
-  //       const SizedBox(height: 15),
-  //       Text(state.error, textAlign: TextAlign.center),
-  //     ],
-  //   );
-  // }
-
-  //     ),
-  //   ),
-  // );
 }
 
 class CardList extends StatelessWidget {
-  const CardList({Key? key, required this.recycleBin, this.onPressed})
-      : super(key: key);
+  const CardList({Key? key, required this.recycleBin}) : super(key: key);
 
   final ResultItemFolder recycleBin;
-  final void Function(ResultItemFolder)? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: (() => onPressed),
+        onTap: (() => {}),
         child: Card(
           child: ListTile(
               leading: iconType(recycleBin.type!),
@@ -125,10 +99,8 @@ class CardList extends StatelessWidget {
               trailing: PopupMenuButton(
                 icon: const Icon(Icons.more_vert),
                 itemBuilder: (context) => [
-                  // PopupMenuItem 1
                   PopupMenuItem(
                     value: 1,
-                    // row with 2 children
                     child: Row(
                       children: const [
                         Icon(Icons.info_outline),
@@ -139,10 +111,8 @@ class CardList extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // PopupMenuItem 2
                   PopupMenuItem(
                     value: 2,
-                    // row with two children
                     child: Row(
                       children: const [
                         Icon(Icons.restore_outlined),
@@ -155,22 +125,17 @@ class CardList extends StatelessWidget {
                   ),
                 ],
                 offset: const Offset(0, 70),
-                // color: Colors.transparent,
                 elevation: 2,
-                // on selected we show the dialog box
                 onSelected: (value) {
-                  // if value 1 show dialog
                   if (value == 1) {
                     Navigator.of(context).push(CustomRoutesPage(
                         widget: FileDetail(
                       fileId: recycleBin.id!,
                     )));
-                    // if value 2 show dialog
                   } else if (value == 2) {
                     context
                         .read<FolderBloc>()
                         .add(RestoreBackupEvent(id: recycleBin.id!));
-                    context.read<FolderBloc>().add(LoadFolderBackupEvent());
                   }
                 },
               )),

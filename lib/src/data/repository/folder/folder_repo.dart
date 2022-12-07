@@ -363,6 +363,45 @@ class FolderRepository {
     }
   }
 
+  Future<FolderDetailResponse?> moveToFolder(
+      String folderId, String destinationFolderID) async {
+    try {
+      final res = await _dioClient.put(
+          '${Endpoints.ENDPOINTDOC}metadata/folders/$folderId/location?destinationFolderID',
+          queryParameters: {'destinationFolderID': destinationFolderID});
+      var moveFolder = res.data;
+      final value = FolderDetailResponse.fromMap(moveFolder);
+      return value;
+    } on DioError catch (e) {
+      final error = DiorException.fromDioError(e).toString();
+      throw error;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Move to folder $e');
+      }
+    }
+    return null;
+  }
+
+  Future<FolderDetailResponse?> copyToFolder(
+      String folderId, String destinationFolderID) async {
+    try {
+      final res = await _dioClient.put(
+          '${Endpoints.ENDPOINTDOC}metadata/folders/$folderId/copy?destinationFolderID',
+          queryParameters: {'destinationFolderID': destinationFolderID});
+      var copyFolder = res.data;
+      final value = FolderDetailResponse.fromMap(copyFolder);
+      return value;
+    } on DioError catch (e) {
+      final error = DiorException.fromDioError(e).toString();
+      throw error;
+    } catch (e) {
+      if (kDebugMode) {
+        print('Copy to folder $e');
+      }
+    }
+    return null;
+  }
   // Future<List<TestNoMap>> getTest() async {
   //   try {
   //     final res = await _dioClient

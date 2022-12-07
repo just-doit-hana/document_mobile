@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'file_bloc.dart';
 
 abstract class FileState extends Equatable {
@@ -84,4 +85,40 @@ class DowloadFileLoadedState extends FileState {}
 class DowloadFileErrorState extends FileState {
   final String error;
   const DowloadFileErrorState({required this.error});
+}
+
+class MoveToFileLoadingState extends FileState {}
+
+class MoveToFileLoadedState extends FileState {
+  final FileMoveTo fileMoveTo;
+  final String fileId;
+  final String destinationFolderId;
+  const MoveToFileLoadedState({
+    required this.fileMoveTo,
+    required this.fileId,
+    required this.destinationFolderId,
+  });
+}
+
+class MoveToFileError extends FileState {
+  final String error;
+  const MoveToFileError({required this.error});
+}
+
+class CopyFileLoadingState extends FileState {}
+
+class CopyFileLoadedState extends FileState {
+  final String fileId;
+  final String destinationFolderId;
+  final FileDetailResponse fileDetail;
+
+  const CopyFileLoadedState(
+      {required this.fileId,
+      required this.fileDetail,
+      required this.destinationFolderId});
+}
+
+class CopyFileErrorState extends FileState {
+  final String error;
+  const CopyFileErrorState({required this.error});
 }

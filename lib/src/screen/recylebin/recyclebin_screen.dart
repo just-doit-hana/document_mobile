@@ -60,17 +60,15 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.error)));
             }
-            //  else if (state is FolderRecycleLoading) {
-            //   ScaffoldMessenger.of(context).showSnackBar(
-            //       const SnackBar(content: Text('Loading folder')));
-            // } else if (state is FolderRecycleLoaded &&
-            //     state.recycleBin.result!.isEmpty) {
-            //   ScaffoldMessenger.of(context).showSnackBar(
-            //       const SnackBar(content: Text('No more folder')));
-            //   context.read<FolderBloc>().isFetching = false;
-            // }
           },
           builder: (context, state) {
+            // if (state is FolderRecycleLoading) {
+            //   const Center(
+            //     child: CircularProgressIndicator(
+            //       color: Colors.redAccent,
+            //     ),
+            //   );
+            // }
             if (state is FolderRecycleLoaded) {
               FolderItemResponse recycleBin = state.recycleBin;
               return RefreshIndicator(
@@ -80,7 +78,6 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
                 //   onNotification: (notification) =>
                 //       _onScrollNotification(notification),
                 child: ListView.builder(
-                    // controller: _scrollController,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     primary: false,
@@ -100,7 +97,6 @@ class _RecyclebinScreenState extends State<RecyclebinScreen> {
                         // onPressed: (r) {},
                       );
                     }),
-                // ),
               );
             }
             return Container();
@@ -166,16 +162,10 @@ class _CardListState extends State<CardList> {
               if (widget.recycleBin.type == AppConstant.folder) {
                 context.read<FolderBloc>().add(
                     DeleteRecycleBinFolderEvent(id: widget.recycleBin.id!));
-                context
-                    .read<FolderBloc>()
-                    .add(const LoadFolderRecycleBinEvent());
               } else {
                 context
                     .read<FolderBloc>()
                     .add(DeleteRecycleBinFileEvent(id: widget.recycleBin.id!));
-                context
-                    .read<FolderBloc>()
-                    .add(const LoadFolderRecycleBinEvent());
               }
             },
             child: Card(
@@ -213,32 +203,20 @@ class _CardListState extends State<CardList> {
                         context.read<FolderBloc>().add(
                             DeleteRecycleBinFolderEvent(
                                 id: widget.recycleBin.id!));
-                        context
-                            .read<FolderBloc>()
-                            .add(const LoadFolderRecycleBinEvent());
                       } else {
                         context.read<FolderBloc>().add(
                             DeleteRecycleBinFileEvent(
                                 id: widget.recycleBin.id!));
-                        context
-                            .read<FolderBloc>()
-                            .add(const LoadFolderRecycleBinEvent());
                       }
                     } else if (value == 2) {
                       if (widget.recycleBin.type == AppConstant.folder) {
                         context.read<FolderBloc>().add(
                             RestoreRecycleBinFolderEvent(
                                 id: widget.recycleBin.id!));
-                        context
-                            .read<FolderBloc>()
-                            .add(const LoadFolderRecycleBinEvent());
                       } else {
                         context.read<FolderBloc>().add(
                             RestoreRecycleBinFileEvent(
                                 id: widget.recycleBin.id!));
-                        context
-                            .read<FolderBloc>()
-                            .add(const LoadFolderRecycleBinEvent());
                       }
                     }
                   },

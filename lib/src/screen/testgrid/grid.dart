@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'home_grid.dart';
 
 class GridItem extends StatefulWidget {
+  @override
+  // ignore: overridden_fields
   final Key key;
   final Item item;
   final ValueChanged<bool> isSelected;
@@ -14,6 +16,7 @@ class GridItem extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _GridItemState createState() => _GridItemState();
 }
 

@@ -79,6 +79,7 @@ class FileDetail extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class Detail extends StatelessWidget {
   Detail({Key? key, required this.fileDetail}) : super(key: key);
   FileDetails fileDetail;

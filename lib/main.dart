@@ -69,18 +69,13 @@ class MyApp extends StatelessWidget {
             BlocProvider(
                 create: ((context) =>
                     FolderBloc(context.read<FolderRepository>())
-                      ..add(LoadFolderRecycleBinEvent())),
+                      ..add(const LoadFolderRecycleBinEvent())),
                 child: const RecyclebinScreen()),
             BlocProvider(
                 child: const AchiveFileScreen(),
                 create: (context) =>
                     FolderBloc(context.read<FolderRepository>())
                       ..add(LoadFolderBackupEvent())),
-            // BlocProvider(
-            //     child: const HomeFolder(),
-            //     create: (context) =>
-            //         FolderBloc(context.read<FolderRepository>())
-            //           ..add(LoadFolderPrivateEvent())),
             BlocProvider(
                 child: const HomeFolder(),
                 create: (context) =>

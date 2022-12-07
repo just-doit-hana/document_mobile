@@ -67,7 +67,6 @@ class _HomePageState extends State<HomePage> {
                       selectedList.remove(itemList[index]);
                     }
                   });
-                  print("$index : $value");
                 },
                 key: Key(itemList[index].rank.toString()));
           }),

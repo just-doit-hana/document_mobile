@@ -26,22 +26,6 @@ class GridPublicFolder extends StatefulWidget {
 class _GridPublicFolderState extends State<GridPublicFolder> {
   @override
   Widget build(BuildContext context) {
-    print('TEST 123 ok Recy: ${widget.selectedList.length}');
-
-    return Test(selectedItem: widget.selectedList);
-  }
-}
-
-class Test extends StatelessWidget {
-  const Test({
-    Key? key,
-    required this.selectedItem,
-  }) : super(key: key);
-
-  final List<ResultItemFolder> selectedItem;
-
-  @override
-  Widget build(BuildContext context) {
     final int? count;
     if (MediaQuery.of(context).orientation == Orientation.landscape) {
       count = 4;
@@ -147,10 +131,12 @@ class Test extends StatelessWidget {
                                     }),
                                     isSelected: ((value) {
                                       if (value) {
-                                        selectedItem.add(folderPublic[index]);
+                                        widget.selectedList
+                                            .add(folderPublic[index]);
                                       } else {
-                                        selectedItem
+                                        widget.selectedList
                                             .remove(folderPublic[index]);
+                                        // .remove(folderPublic[index]);
                                       }
                                     }));
                               }),

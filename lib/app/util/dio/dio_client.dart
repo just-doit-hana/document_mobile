@@ -22,10 +22,8 @@ class DioClient {
 
   static Dio createDioClient() {
     late String? token = SharedPreferenceHelper.instance.getString("token");
-    print('Toen $token');
     final dio = Dio(BaseOptions(
         // connectTimeout: AppConstant.connectionTimeout,
-
         receiveTimeout: AppConstant.receiveTimeout,
         responseType: ResponseType.json,
         contentType: 'application/json; charset=utf-8',
